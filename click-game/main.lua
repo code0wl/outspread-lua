@@ -38,11 +38,11 @@ function love.draw()
 
     love.graphics.setFont(myFont)
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print(score)
+    love.graphics.printf(score, 0 ,0 , 'center')
     love.graphics.print(math.ceil(timer), love.graphics.getWidth() / 2)
 
     if gameState == 1 then
-        love.graphics.print('click anywhere to start', 100, 300)
+        love.graphics.printf('click anywhere to start', 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), 'center')
     end
 end
 
