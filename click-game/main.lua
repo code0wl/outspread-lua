@@ -24,7 +24,7 @@ function love.update(dt)
 
         if timer < 0 then
             timer = 0
-            gameState =
+            gameState = 1
         end
     end
 end
@@ -37,7 +37,7 @@ function love.draw()
 
     love.graphics.setFont(myFont)
     love.graphics.setColor(1, 1, 1)
-    love.graphics.printf(score, 0 ,0 , 'center')
+    love.graphics.printf(score, 0, 0, 'center')
     love.graphics.print(math.ceil(timer), love.graphics.getWidth() / 2)
 
     if gameState == 1 then
