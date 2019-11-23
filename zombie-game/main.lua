@@ -21,10 +21,11 @@ function spawnBullet()
     local bullet = {}
     bullet.y = player.y
     bullet.x = player.x
-    bullet.speed = 0
+    bullet.dead = false
+    bullet.speed = 400
     bullet.width = 64
     bullet.height = 64
-    bullet.direction = player.r
+    bullet.direction = player.rotation + math.pi
 
     table.insert(bullets, bullet)
 end
@@ -34,6 +35,7 @@ function spawnZombie()
     zombie.x = math.random(0, love.graphics.getWidth())
     zombie.width = 43
     zombie.height = 43
+    zombie.dead = false
     zombie.y = math.random(0, love.graphics.getHeight())
     zombie.r = 0
     zombie.speed = 100
@@ -71,6 +73,41 @@ function love.update(dt)
         end
     end
 
+    for i, b in ipairs(bullets) do
+        b.x = b.x - math.cos(b.direction) * b.speed * dt
+        b.y = b.y - math.sin(b.direction) * b.speed * dt
+    end
+
+    for i = #bullets, 1, -1 do
+        local b = bullets[i]
+        if isOutOfBounds(b) then
+            table.remove(bullets, i)
+        end
+    end
+
+    for i, z in ipairs(zombies) do
+        for j, b in ipairs(bullets) do
+            if distanceBetween(z.x, z.y, b.x, b.y) < 20 then
+                z.dead = true
+                b.dead = true
+            end
+        end
+    end
+
+    for i = #zombies, 1, -1 do
+        local z = zombies[i]
+        if z.dead then
+            table.remove(zombies, i)
+        end
+    end
+
+    for i = #bullets, 1, -1 do
+        local b = bullets[i]
+        if b.dead then
+            table.remove(bullets, i)
+        end
+    end
+
     local mouseVector = {
         x = love.mouse.getX(),
         y = love.mouse.getY()
@@ -88,6 +125,10 @@ function newGame()
     player.y = getCenter(love.graphics.getHeight())
 end
 
+function isOutOfBounds(element)
+    return element.x < 0 or element.y < 0 or element.x > love.graphics.getWidth() or element.y > love.graphics.getHeight()
+end
+
 function love.draw()
     love.graphics.draw(sprites.background, 0, 0)
 
@@ -96,7 +137,7 @@ function love.draw()
     end
 
     for i, b in ipairs(bullets) do
-        love.graphics.draw(sprites.bullet, b.x, b.y, nil, .5, .5)
+        love.graphics.draw(sprites.bullet, b.x, b.y, nil, .5, .5, getCenter(b.width), getCenter(b.height))
     end
 
     love.graphics.draw(sprites.player, player.x, player.y, player.rotation, nil, nil, getCenter(player.width), getCenter(player.height))
