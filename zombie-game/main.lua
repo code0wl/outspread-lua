@@ -15,6 +15,9 @@ function love.load()
 
     zombies = {}
     bullets = {}
+
+    maxTime = 2
+    timer = maxTime
 end
 
 function spawnBullet()
@@ -27,18 +30,34 @@ function spawnBullet()
     bullet.height = 64
     bullet.direction = player.rotation + math.pi
 
+    gameState = 2
     table.insert(bullets, bullet)
 end
 
 function spawnZombie()
     local zombie = {}
-    zombie.x = math.random(0, love.graphics.getWidth())
+    local side = math.random(1, 4)
+
     zombie.width = 43
     zombie.height = 43
     zombie.dead = false
-    zombie.y = math.random(0, love.graphics.getHeight())
     zombie.r = 0
     zombie.speed = 100
+
+    if side == 1 then
+        zombie.x = -30
+        zombie.y = math.random(0, love.graphics.getHeight())
+    elseif side == 2 then
+        zombie.x = math.random(0, love.graphics.getWidth())
+        zombie.y = -30
+    elseif side == 3 then
+        zombie.x = love.graphics.getWidth() + 30
+        zombie.y = math.random(0, love.graphics.getHeight())
+    else
+        zombie.x = math.random(0, love.graphics.getWidth())
+        zombie.y = love.graphics.getHeight() + 30
+    end
+
     table.insert(zombies, zombie)
 end
 
@@ -114,12 +133,29 @@ function love.update(dt)
     }
 
     player.rotation = getAngle(player, mouseVector)
+
+    if gameState == 2 then
+        timer = timer - dt
+
+        if timer <= 0 then
+            spawnZombie()
+            maxTime = maxTime * .50
+            timer = maxTime
+        end
+    end
 end
 
 function newGame()
     for k in pairs(zombies) do
         zombies[k] = nil
     end
+
+    for k in pairs(bullets) do
+        bullets[k] = nil
+    end
+
+    maxTime = 2
+    timer = maxTime
 
     player.x = getCenter(love.graphics.getWidth())
     player.y = getCenter(love.graphics.getHeight())
@@ -153,12 +189,6 @@ end
 
 function distanceBetween(x1, y1, x2, y2)
     return math.sqrt((y2 - y1) ^ 2 + (x2 - x1) ^ 2)
-end
-
-function love.keypressed(key)
-    if key == "space" then
-        spawnZombie()
-    end
 end
 
 function love.mousepressed(x, y, b, istouch)
