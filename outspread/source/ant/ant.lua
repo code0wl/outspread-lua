@@ -3,9 +3,9 @@ Ant = {}
 function Ant:create(type)
     self.type = type
     self.images = {
-        walk = lg.newImage("images/ants/spritesheets/ant1/_ant_walk-small.png"),
-        dead = lg.newImage("images/ants/spritesheets/ant1/_ant_dead-small.png"),
-        idle = lg.newImage("images/ants/spritesheets/ant1/_ant_idle-small.png")
+        walk = lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_walk-small.png"),
+        dead = lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_dead-small.png"),
+        idle = lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_idle-small.png")
     }
     self.x = 0
     self.y = 0
@@ -17,7 +17,7 @@ function Ant:create(type)
     self.direction = 1
     self.alive = true
     self.body:setFixedRotation(true)
-    self.grid = anim8.newGrid(16, 26, self.currentState:getWidth(), self.currentState:getHeight())
+    self.grid = anim8.newGrid(16, 27, self.currentState:getWidth(), self.currentState:getHeight() + 1)
     self.animation = anim8.newAnimation(self.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04)
     return self
 end
