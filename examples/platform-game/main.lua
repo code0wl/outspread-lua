@@ -6,7 +6,8 @@ require("player")
 
 function love.load()
     platforms = {}
-    myWorld:setCallbacks(beginContact, endContact, preSolve, postSolve)
+
+
 
     gameMap = sti("maps/platform.lua")
 

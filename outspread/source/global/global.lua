@@ -14,7 +14,7 @@ local camera = require('libs/hump/camera')
 cam = camera()
 
 -- create physics world
-antWorld = lp.newWorld(100, 0, false)
+antWorld = lp.newWorld(100, 500, false)
 
 -- own util
 util = require("util.utils")
