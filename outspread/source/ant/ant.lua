@@ -1,7 +1,6 @@
 Ant = {}
 
-blackAnts = {}
-redAnts = {}
+ants = {}
 
 function Ant:create(type, x, y)
     local ant = {}
@@ -23,12 +22,7 @@ function Ant:create(type, x, y)
     ant.body:setFixedRotation(true)
     ant.grid = anim8.newGrid(16, 27, ant.currentState:getWidth(), ant.currentState:getHeight() + 1)
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04)
-    if type == 1 then
-        table.insert(blackAnts, ant)
-    else
-        table.insert(redAnts, ant)
-    end
-    return ant
+    table.insert(ants, ant)
 end
 
 
