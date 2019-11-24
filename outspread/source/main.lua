@@ -1,8 +1,8 @@
 require("ant/ant")
 require("global/global")
 
-local someAnt2 = Ant:create(2, 500, 500)
-local someAnt = Ant:create(1, 300, 500)
+local someAnt2 = Ant:create(2, 500, 500, 3)
+local someAnt = Ant:create(1, 300, 500, 1)
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
