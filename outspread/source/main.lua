@@ -1,3 +1,5 @@
+require("colony/colony")
+
 require("ant/ant")
 require("global/global")
 
@@ -11,16 +13,27 @@ function love.load()
 end
 
 function love.update(dt)
-    for i, a in ipairs(ants) do
-        a.animation:update(dt)
+    for i, a in ipairs(Colony) do
+        for _, ant in ipairs(Colony[i]) do
+            ant.animation:update(dt)
+        end
     end
 end
 
 function love.draw()
     lg.draw(background, bg_quad, 0, 0)
 
-    for i, a in ipairs(ants) do
-        a.animation:draw(a.currentState, a.x, a.y)
+    -- draw ants
+    for i, a in ipairs(Colony) do
+        for _, ant in ipairs(Colony[i]) do
+            ant.animation:draw(ant.currentState,
+                ant.x,
+                ant.y,
+                ant.rotation,
+                nil, nil,
+                util.getCenter(ant.width),
+                util.getCenter(ant.height))
+        end
     end
 end
 

@@ -1,14 +1,16 @@
 Ant = {}
 
-function Ant:create(type, x, y, state)
+ants = {}
+
+function Next:create(type, x, y, state)
     local ant = {}
     ant.state = state
     ant.rotation = 0
     ant.type = type
     ant.images = {
-        lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_walk-small.png"),
-        lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_dead-small.png"),
-        lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_idle-small.png")
+        lg.newImage("images/ants/spritesheets/ant" .. ant.type .. "/_ant_walk-small.png"),
+        lg.newImage("images/ants/spritesheets/ant" .. ant.type .. "/_ant_dead-small.png"),
+        lg.newImage("images/ants/spritesheets/ant" .. ant.type .. "/_ant_idle-small.png")
     }
     ant.x = x
     ant.y = y
@@ -20,7 +22,7 @@ function Ant:create(type, x, y, state)
     ant.alive = true
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.currentState:getWidth(), ant.currentState:getHeight() + 1)
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04),
-    table.insert(Colony[ant.type], ant)
+    table.insert(ants, ant)
 end
 
 
