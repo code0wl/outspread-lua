@@ -7,8 +7,6 @@ require("player")
 function love.load()
     platforms = {}
 
-
-
     gameMap = sti("maps/platform.lua")
 
     for i, obj in ipairs(gameMap.layers["platforms"].objects) do

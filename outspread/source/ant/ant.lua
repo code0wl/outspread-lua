@@ -13,13 +13,9 @@ function Ant:create(type, x, y)
     ant.x = x
     ant.y = y
     ant.currentState = ant.images.walk
-    ant.body = lp.newBody(antWorld, 100, 100, "dynamic")
-    ant.shape = lp.newRectangleShape(15, 27)
-    ant.fixture = lp.newFixture(ant.body, ant.shape)
     ant.speed = 200
     ant.direction = 1
     ant.alive = true
-    ant.body:setFixedRotation(true)
     ant.grid = anim8.newGrid(16, 27, ant.currentState:getWidth(), ant.currentState:getHeight() + 1)
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04)
     table.insert(ants, ant)

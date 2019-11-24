@@ -8,13 +8,9 @@ function love.load()
     background = love.graphics.newImage("images/background/background.png")
     background:setWrap("repeat", "repeat")
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(), background:getWidth(), background:getHeight())
-
-    antWorld:setCallbacks(beginContact, endContact, preSolve, postSolve)
 end
 
 function love.update(dt)
-    antWorld:update(dt)
-
     for i, a in ipairs(ants) do
         a.animation:update(dt)
     end

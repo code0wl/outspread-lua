@@ -13,8 +13,5 @@ anim8 = require('libs/anim8')
 local camera = require('libs/hump/camera')
 cam = camera()
 
--- create physics world
-antWorld = lp.newWorld(100, 500, false)
-
 -- own util
 util = require("util.utils")
