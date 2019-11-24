@@ -1,10 +1,10 @@
 require("colony/colony")
-
 require("ant/ant")
+require("nest/nest")
 require("global/global")
 
-local someAnt2 = Ant:create(2, 500, 500, 3)
-local someAnt = Ant:create(1, 300, 500, 1)
+local blackNest = Nest:create(1, 100, 50, 20)
+local redNest = Nest:create(2, lg.getWidth() - 20, 1000, 20)
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
@@ -22,6 +22,12 @@ end
 
 function love.draw()
     lg.draw(background, bg_quad, 0, 0)
+
+    -- red location
+    lg.draw(terrainSprites.terrain, redNest.graphic, redNest.x, redNest.y, nil, .4, .4)
+
+    -- black location
+    lg.draw(terrainSprites.terrain, blackNest.graphic, blackNest.x, blackNest.y, nil, .4, .4)
 
     -- draw ants
     for i, a in ipairs(Colony) do

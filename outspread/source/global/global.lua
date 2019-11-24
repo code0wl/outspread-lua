@@ -15,3 +15,8 @@ cam = camera()
 
 -- own util
 util = require("util.utils")
+
+-- terain map
+terrainSprites = {
+    terrain = lg.newImage("images/terrain/terrain.png")
+}

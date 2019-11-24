@@ -8,7 +8,6 @@ function Ant:create(type, x, y, state)
     ant.images = {
         lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_walk-small.png"),
         lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_dead-small.png"),
-        lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_idle-small.png")
     }
     ant.x = x
     ant.y = y
