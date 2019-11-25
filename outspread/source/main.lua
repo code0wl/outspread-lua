@@ -2,7 +2,6 @@ require("global")
 
 local Colony = require("entities/Colony")
 Colony(1, 100, 100, 100)
-Colony(2, 400, 400, 10)
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
@@ -16,6 +15,8 @@ function love.update(dt)
             ant.animation:update(dt)
         end
     end
+
+    myWorld:update(dt)
 end
 
 function love.draw()
@@ -26,8 +27,8 @@ function love.draw()
         colony.nest.draw()
         for _, ant in ipairs(colony.nest.ants) do
             ant.animation:draw(ant.currentState,
-                ant.x,
-                ant.y,
+                ant.body:getX(),
+                ant.body:getY(),
                 ant.rotation,
                 nil, nil,
                 util.getCenter(ant.width),
