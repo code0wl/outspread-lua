@@ -3,13 +3,13 @@ local Colony = require("entities/Colony")
 local Food = require("entities/Food")
 local Control = require("entities/Control")
 
-Colony(1, 100, 100, 100)
+Colony(1, 100, 100, 0)
 
 local food = Food(1, 500, 500, 100)
 
 local maxZoom = 4
 local maxOut = .5
-local control = Control(300)
+local control = Control({ panspeed = 300 })
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
@@ -19,6 +19,10 @@ function love.load()
 end
 
 function love.update(dt)
+
+    myWorld:update(dt)
+
+    local cols
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
             ant.animation:update(dt)
@@ -40,12 +44,9 @@ function love.draw()
         colony.nest.draw()
         for _, ant in ipairs(colony.nest.ants) do
             ant.animation:draw(ant.currentState,
-                ant.y,
-                ant.x,
-                ant.rotation,
-                nil, nil,
-                util.getCenter(ant.width),
-                util.getCenter(ant.height))
+                ant.body:getX(),
+                ant.body:getY(),
+                util.getAngle(ant, food))
         end
     end
 

@@ -183,8 +183,8 @@ function getCenter(value)
     return value / 2
 end
 
-function getAngle(player, vector)
-    return math.atan2(player.y - vector.y, player.x - vector.x) + math.pi
+function getAngle(vectorA, vectorB)
+    return math.atan2(vectorA.y - vectorB.y, vectorA.x - vectorB.x)
 end
 
 function distanceBetween(x1, y1, x2, y2)

@@ -16,6 +16,7 @@ function Nest:init(type, x, y, population)
     for i = 0, self.population do
         table.insert(self.ants, Ant(self.type, x + i, y + i, 1))
     end
+
 end
 
 return Nest
