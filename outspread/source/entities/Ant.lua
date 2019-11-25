@@ -18,7 +18,7 @@ function Ant:init(type, x, y, state)
     self.y = y
     self.hasFood = nil
     self.currentState = self.images[self.state]
-    self.speed = 50
+    self.speed = 7
     self.width = 16
     self.height = 27
     self.alive = true

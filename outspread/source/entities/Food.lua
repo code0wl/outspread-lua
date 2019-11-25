@@ -9,7 +9,7 @@ function Food:init(foodConfig)
     self.width = 30
     self.height = 50
     self.body = lp.newBody(myWorld, self.x, self.y, 'static')
-    self.shape = lp.newRectangleShape(10, 10)
+    self.shape = lp.newRectangleShape(30, 30)
     self.fixture = lp.newFixture(self.body, self.shape)
     self.body:setFixedRotation(true)
     if self.amount < 10 then
