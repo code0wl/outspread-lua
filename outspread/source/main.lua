@@ -14,7 +14,8 @@ Colony({
 local food = Food({
     type = 1,
     x = 500,
-    y = 500, 100
+    y = 500,
+    amount = 100
 })
 
 local maxZoom = 4
@@ -35,6 +36,10 @@ function love.update(dt)
         for _, ant in ipairs(colony.nest.ants) do
             ant:update(dt)
         end
+    end
+
+    if love.mouse.isDown(1) then
+        moveSwarm()
     end
 
     control:update(dt)
@@ -58,6 +63,18 @@ function love.draw()
     cam:detach()
 end
 
+function moveSwarm()
+    for _, colony in ipairs(Colony) do
+        if colony.type == 1 then
+            for _, ant in ipairs(colony.nest.ants) do
+                local x, y = love.mouse.getPosition()
+                ant.body:setX(x)
+                ant.body:setY(y)
+            end
+        end
+    end
+end
+
 -- love specific
 function love.wheelmoved(x, y)
     if y > 0 and cam.scale < maxZoom then
@@ -66,5 +83,4 @@ function love.wheelmoved(x, y)
         cam:zoom(.95)
     end
 end
-
 

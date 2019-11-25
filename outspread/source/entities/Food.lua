@@ -12,9 +12,9 @@ function Food:init(foodConfig)
     self.shape = lp.newRectangleShape(10, 10)
     self.fixture = lp.newFixture(self.body, self.shape)
     self.body:setFixedRotation(true)
-    if amount < 10 then
+    if self.amount < 10 then
         graphicY = 342
-    else if amount < 40 then
+    else if self.amount < 40 then
         graphicY = 390
     else
         graphicY = 420
