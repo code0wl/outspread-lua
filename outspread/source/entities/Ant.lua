@@ -18,11 +18,7 @@ function Ant:init(type, x, y, state)
     self.alive = true
     self.grid = anim8.newGrid(self.width, self.height, self.currentState:getWidth(), self.currentState:getHeight() + 1)
     self.animation = anim8.newAnimation(self.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04)
-end
-
-
-function Ant:grather(food)
-
+    world:add(self, self.x, self.y, self.width, self.height)
 end
 
 return Ant

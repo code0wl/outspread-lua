@@ -1,13 +1,15 @@
 require("global")
 local Colony = require("entities/Colony")
 local Food = require("entities/Food")
+local Control = require("entities/Control")
+
 Colony(1, 100, 100, 100)
 
-local food = Food(1, 500, 500, 9)
+local food = Food(1, 500, 500, 100)
 
 local maxZoom = 4
 local maxOut = .5
-local panspeed = 10
+local control = Control(300)
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
@@ -23,16 +25,14 @@ function love.update(dt)
         end
     end
 
-    if love.keyboard.isDown("up") then cam:move(0, -panspeed) end
-    if love.keyboard.isDown("left") then cam:move(-panspeed, 0) end
-    if love.keyboard.isDown("right") then cam:move(panspeed, 0) end
-    if love.keyboard.isDown("down") then cam:move(0, panspeed) end
+    control:update(dt)
 end
 
 function love.draw()
     cam:attach()
     lg.draw(background, bg_quad, 0, 0)
 
+    -- Later to come with tilemaps
     food.draw()
 
     -- draw ants
