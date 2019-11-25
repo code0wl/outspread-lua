@@ -8,10 +8,6 @@ function Food:init(foodConfig)
     self.type = foodConfig.type
     self.width = 30
     self.height = 50
-    self.body = lp.newBody(myWorld, self.x, self.y, 'static')
-    self.shape = lp.newRectangleShape(30, 30)
-    self.fixture = lp.newFixture(self.body, self.shape)
-    self.body:setFixedRotation(true)
     if self.amount < 10 then
         graphicY = 342
     else if self.amount < 40 then
@@ -25,7 +21,7 @@ function Food:init(foodConfig)
 end
 
 function Food:draw()
-    lg.draw(foodSprites.food, self.graphic, self.body:getX(), self.body:getY())
+    lg.draw(foodSprites.food, self.graphic, self.x, self.y)
 end
 
 return Food

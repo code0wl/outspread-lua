@@ -8,7 +8,7 @@ Colony({
     type = 1,
     x = 100,
     y = 100,
-    population = 100
+    population = 1
 })
 
 local food = Food({
@@ -27,23 +27,17 @@ function love.load()
     background:setWrap("repeat", "repeat")
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(), background:getWidth(), background:getHeight())
     cam:zoom(1)
-    dx = 0
-    dy = 0
 end
 
 function love.update(dt)
-    myWorld:update(dt)
-
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
-            ant.body:setX(ant.body:getX() - dx * dt)
-            ant.body:setY(ant.body:getY() - dy * dt)
             ant:update(dt)
         end
     end
 
     if love.mouse.isDown(1) then
-        moveSwarm(dt, love.mouse.getX(), love.mouse.getY())
+
     end
 
     control:update(dt)
@@ -65,17 +59,6 @@ function love.draw()
     end
 
     cam:detach()
-end
-
-function moveSwarm(dt, x, y)
-    for _, colony in ipairs(Colony) do
-        if colony.type == 1 then
-            for _, ant in ipairs(colony.nest.ants) do
-                dx = (ant.body:getX() - x) / ant.speed
-                dy = (ant.body:getX() - y) / ant.speed
-            end
-        end
-    end
 end
 
 -- love specific

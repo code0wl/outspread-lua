@@ -4,11 +4,6 @@ function Ant:init(type, x, y, state)
     self.state = state
     self.type = type
 
-    -- move to physics components
-    self.body = lp.newBody(myWorld, x, y, 'dynamic')
-    self.shape = lp.newRectangleShape(3, 3)
-    self.fixture = lp.newFixture(self.body, self.shape)
-
     self.images = {
         lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_walk-small.png"),
         lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_dead-small.png"),
@@ -32,10 +27,10 @@ end
 
 function Ant:draw()
     self.animation:draw(self.currentState,
-        self.body:getX(),
-        self.body:getY(),
-        self.body:getAngle(),
-        nil, nil,
+        self.y,
+        self.x,
+        nil,
+        .6, .6,
         util.getCenter(self.width),
         util.getCenter(self.height))
 end
