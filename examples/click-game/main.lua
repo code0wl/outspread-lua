@@ -60,3 +60,4 @@ function love.mousepressed(x, y, b, istouch)
         score = 0
     end
 end
+

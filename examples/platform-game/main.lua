@@ -16,6 +16,7 @@ function love.load()
     for i, obj in ipairs(gameMap.layers["coins"].objects) do
         spawnCoin(obj.x, obj.y, obj.width, obj.height)
     end
+
 end
 
 function love.update(dt)
