@@ -23,5 +23,11 @@ function Ant:create(type, x, y, state)
     return ant
 end
 
+
+function Ant:move()
+    local ant = {}
+    return ant
+end
+
 return Ant
 

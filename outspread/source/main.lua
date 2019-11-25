@@ -1,8 +1,8 @@
 require("global")
 
 local Colony = require("colony")
-local black = Colony:create(1, 100, 100, 20)
-local red = Colony:create(2, 400, 400, 30)
+Colony:create(1, 100, 100, 100)
+Colony:create(2, 400, 400, 10)
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
