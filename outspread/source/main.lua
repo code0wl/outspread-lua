@@ -27,10 +27,6 @@ function love.update(dt)
     if love.keyboard.isDown("left") then cam:move(-panspeed, 0) end
     if love.keyboard.isDown("right") then cam:move(panspeed, 0) end
     if love.keyboard.isDown("down") then cam:move(0, panspeed) end
-
-    myWorld:update(dt)
-
-    print(cam:position())
 end
 
 function love.draw()
@@ -44,8 +40,8 @@ function love.draw()
         colony.nest.draw()
         for _, ant in ipairs(colony.nest.ants) do
             ant.animation:draw(ant.currentState,
-                ant.body:getX(),
-                ant.body:getY(),
+                ant.y,
+                ant.x,
                 ant.rotation,
                 nil, nil,
                 util.getCenter(ant.width),

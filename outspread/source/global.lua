@@ -10,7 +10,6 @@ sti = require("libs/sti")
 anim8 = require('libs/anim8')
 class = require('libs.30logs/30logs')
 tiny = require("libs.tiny/tiny")
-myWorld = lp.newWorld(0, 0, false)
 
 -- create instance for camera
 local camera = require('libs/hump/camera')
