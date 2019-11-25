@@ -1,4 +1,4 @@
-Ant = {}
+local Ant = {}
 
 function Ant:create(type, x, y, state)
     local ant = {}
@@ -18,9 +18,10 @@ function Ant:create(type, x, y, state)
     ant.direction = 1
     ant.alive = true
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.currentState:getWidth(), ant.currentState:getHeight() + 1)
-    ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04),
-    table.insert(Colony[ant.type], ant)
+    ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04)
+
+    return ant
 end
 
-
+return Ant
 

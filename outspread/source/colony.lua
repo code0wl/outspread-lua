@@ -1,14 +1,15 @@
-Colony = {
-    {}, {}
-}
+local Nest = require("nest")
 
-function Colony:create(type)
+local Colony = {}
+
+function Colony:create(type, x, y, population)
     local colony = {}
-    local ants = {}
-    local food = {}
-    local nests = {}
     colony.type = type
+    colony.population = population
+    colony.nest = Nest:create(type, x, y, population)
+
+    table.insert(Colony, colony)
 end
 
-
+return Colony
 
