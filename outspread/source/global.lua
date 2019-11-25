@@ -8,7 +8,9 @@ love.window.setMode(2000, 2000)
 -- helper libs
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
-system = require('libs/knife/system')
+tiny = require('libs/tiny/system')
+talkingSystem = tiny.processingSystem()
+world = tiny.world(talkingSystem, joe)
 
 -- create instance for camera
 local camera = require('libs/hump/camera')

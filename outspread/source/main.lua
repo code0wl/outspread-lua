@@ -16,6 +16,8 @@ function love.update(dt)
             ant.animation:update(dt)
         end
     end
+
+    world:update(dt)
 end
 
 function love.draw()
