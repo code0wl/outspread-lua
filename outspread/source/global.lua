@@ -8,24 +8,11 @@ love.window.setMode(2000, 2000)
 -- helper libs
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
-tiny = require('libs/tiny/system')
-talkingSystem = tiny.processingSystem()
+bump = require('libs/bump/bump')
+class = require('libs.30logs/30logs')
+tiny = require("libs.tiny/tiny")
 
-talkingSystem.filter = tiny.requireAll("name", "mass", "phrase")
-
-function talkingSystem:process(e, dt)
-    e.mass = e.mass + dt * 3
-    print(("%s who weighs %d pounds, says %q."):format(e.name, e.mass, e.phrase))
-end
-
-local joe = {
-    name = "Joe",
-    phrase = "I'm a plumber.",
-    mass = 150,
-    hairColor = "brown"
-}
-
-world = tiny.world(talkingSystem, joe)
+world = bump.newWorld(20)
 
 -- create instance for camera
 local camera = require('libs/hump/camera')

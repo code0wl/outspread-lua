@@ -1,8 +1,8 @@
 require("global")
 
-local Colony = require("colony")
-Colony:create(1, 100, 100, 100)
-Colony:create(2, 400, 400, 10)
+local Colony = require("entities/Colony")
+Colony(1, 100, 100, 100)
+Colony(2, 400, 400, 10)
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
@@ -16,8 +16,6 @@ function love.update(dt)
             ant.animation:update(dt)
         end
     end
-
-    world:update(dt)
 end
 
 function love.draw()
