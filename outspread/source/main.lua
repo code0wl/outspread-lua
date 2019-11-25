@@ -1,4 +1,7 @@
 require("global")
+
+myWorld = lp.newWorld(0, 0, false)
+
 local Colony = require("entities/Colony")
 local Food = require("entities/Food")
 local Control = require("entities/Control")
@@ -11,15 +14,19 @@ local maxZoom = 4
 local maxOut = .5
 local control = Control({ panspeed = 300 })
 
+local poop = 1
+
 function love.load()
+
     background = love.graphics.newImage("images/background/background.png")
     background:setWrap("repeat", "repeat")
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(), background:getWidth(), background:getHeight())
     cam:zoom(1)
+    -- initiate physics world
 end
 
 function love.update(dt)
-
+    poop = poop + 1
     myWorld:update(dt)
 
     local cols
@@ -37,22 +44,27 @@ function love.draw()
     lg.draw(background, bg_quad, 0, 0)
 
     -- Later to come with tilemaps
-    food.draw()
+    food:draw()
 
     -- draw ants
     for _, colony in ipairs(Colony) do
-        colony.nest.draw()
+        colony.nest:draw()
         for _, ant in ipairs(colony.nest.ants) do
             ant.animation:draw(ant.currentState,
                 ant.body:getX(),
                 ant.body:getY(),
-                util.getAngle(ant, food))
+                util.getAngle(ant, colony.nest) + math.pi,
+                nil,
+                nil,
+                util.getCenter(ant.currentState:getWidth()),
+                util.getCenter(ant.currentState:getHeight()))
         end
     end
 
     cam:detach()
 end
 
+-- love specific
 function love.wheelmoved(x, y)
     if y > 0 and cam.scale < maxZoom then
         cam:zoom(1.05)
@@ -60,4 +72,5 @@ function love.wheelmoved(x, y)
         cam:zoom(.95)
     end
 end
+
 

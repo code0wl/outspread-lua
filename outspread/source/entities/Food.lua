@@ -8,7 +8,7 @@ function Food:init(type, x, y, amount)
     self.type = type
     self.width = 30
     self.height = 50
-    self.body = lp.newBody(myWorld, x, y, 'dynamic')
+    self.body = lp.newBody(myWorld, x, y, 'static')
     self.shape = lp.newRectangleShape(self.width, self.height)
     self.fixture = lp.newFixture(self.body, self.shape)
     self.body:setFixedRotation(true)
@@ -22,7 +22,10 @@ function Food:init(type, x, y, amount)
     end
 
     self.graphic = lg.newQuad(770, graphicY, self.width, self.height, foodSprites.food:getDimensions())
-    self.draw = function() lg.draw(foodSprites.food, self.graphic, self.x, self.y) end
+end
+
+function Food:draw()
+    lg.draw(foodSprites.food, self.graphic, self.body:getX(), self.body:getY())
 end
 
 return Food

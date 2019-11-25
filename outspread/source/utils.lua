@@ -5,7 +5,8 @@ function util.getCenter(value)
 end
 
 function util.getAngle(vectorA, vectorB)
-    return math.atan2(vectorA.y - vectorB.y, vectorA.x - vectorB.x) + math.pi
+    print(vectorA.body:getY())
+    return math.atan2(vectorA.body:getY() - vectorB.body:getY(), vectorA.body:getX() - vectorB.body:getX()) + math.pi
 end
 
 function util.distanceBetween(x1, y1, x2, y2)

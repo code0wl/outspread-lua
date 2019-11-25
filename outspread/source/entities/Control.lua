@@ -11,4 +11,6 @@ function Control:update(dt)
     if love.keyboard.isDown("down") then cam:move(0, self.speed.panspeed * dt) end
 end
 
+
+
 return Control
