@@ -7,6 +7,7 @@ function Nest:init(type, x, y, population)
     self.population = population
     self.x = x
     self.y = y
+    self.collectedFood = 0
     self.ants = {}
     self.width = 16
     self.height = 27

@@ -8,7 +8,7 @@ Colony({
     type = 1,
     x = 100,
     y = 100,
-    population = 1
+    population = 1000
 })
 
 local food = Food({
@@ -30,16 +30,34 @@ function love.load()
 end
 
 function love.update(dt)
+    local target
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
             ant:update(dt)
-            ant.x = ant.x - math.cos(util.getAngle(food, ant) + math.pi) * ant.speed * dt
-            ant.y = ant.y - math.sin(util.getAngle(food, ant) + math.pi) * ant.speed * dt
+
+            if util.distanceBetween(ant.x, ant.y, food.x, food.y) < 2 then
+                ant.hasFood = true
+            end
+
+            if util.distanceBetween(ant.x, ant.y, colony.nest.x, colony.nest.y) < 2 then
+                ant.hasFood = false
+                colony.nest.collectedFood = colony.nest.collectedFood + 1
+            end
+
+            if ant.hasFood then
+                target = colony.nest
+            else
+                target = food
+            end
+
+            ant.x = ant.x - math.cos(util.getAngle(target, ant) + math.pi) * ant.speed * dt
+            ant.y = ant.y - math.sin(util.getAngle(target, ant) + math.pi) * ant.speed * dt
         end
     end
 
     if love.mouse.isDown(1) then
     end
+
 
     control:update(dt)
 end
