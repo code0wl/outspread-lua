@@ -13,7 +13,7 @@ function Ant:init(type, x, y, state)
     self.y = y
     self.hasFood = nil
     self.currentState = self.images[self.state]
-    self.speed = 7
+    self.speed = 100
     self.width = 16
     self.height = 27
     self.alive = true
@@ -25,11 +25,11 @@ function Ant:update(dt)
     self.animation:update(dt)
 end
 
-function Ant:draw()
+function Ant:draw(target)
     self.animation:draw(self.currentState,
         self.y,
         self.x,
-        nil,
+        util.getAngle(self, target) + math.pi,
         .6, .6,
         util.getCenter(self.width),
         util.getCenter(self.height))

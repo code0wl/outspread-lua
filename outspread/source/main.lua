@@ -33,11 +33,12 @@ function love.update(dt)
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
             ant:update(dt)
+            ant.x = ant.x - math.cos(util.getAngle(food, ant) + math.pi) * ant.speed * dt
+            ant.y = ant.y - math.sin(util.getAngle(food, ant) + math.pi) * ant.speed * dt
         end
     end
 
     if love.mouse.isDown(1) then
-
     end
 
     control:update(dt)
@@ -54,7 +55,7 @@ function love.draw()
     for _, colony in ipairs(Colony) do
         colony.nest:draw()
         for _, ant in ipairs(colony.nest.ants) do
-            ant:draw()
+            ant:draw(food)
         end
     end
 
