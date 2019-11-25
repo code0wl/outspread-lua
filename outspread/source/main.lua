@@ -1,10 +1,13 @@
 require("global")
-
 local Colony = require("entities/Colony")
+local Food = require("entities/Food")
 Colony(1, 100, 100, 100)
+
+Food(1, 50, 50, 100)
 
 local maxZoom = 4
 local maxOut = .5
+local panspeed = 10
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
@@ -20,9 +23,10 @@ function love.update(dt)
         end
     end
 
-    if love.mouse.isDown(2) then
-        cam:lookAt(love.mouse.getX(), love.mouse.getY())
-    end
+    if love.keyboard.isDown("up") then cam:move(0, -panspeed) end
+    if love.keyboard.isDown("left") then cam:move(-panspeed, 0) end
+    if love.keyboard.isDown("right") then cam:move(panspeed, 0) end
+    if love.keyboard.isDown("down") then cam:move(0, panspeed) end
 
     myWorld:update(dt)
 end
@@ -53,7 +57,6 @@ function love.wheelmoved(x, y)
         cam:zoom(1.05)
     elseif y < 0 and cam.scale > maxOut then
         cam:zoom(.95)
-        util.logTable(cam)
     end
 end
 
