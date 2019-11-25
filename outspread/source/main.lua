@@ -3,7 +3,7 @@ local Colony = require("entities/Colony")
 local Food = require("entities/Food")
 Colony(1, 100, 100, 100)
 
-Food(1, 50, 50, 100)
+local food = Food(1, 500, 500, 9)
 
 local maxZoom = 4
 local maxOut = .5
@@ -29,11 +29,15 @@ function love.update(dt)
     if love.keyboard.isDown("down") then cam:move(0, panspeed) end
 
     myWorld:update(dt)
+
+    print(cam:position())
 end
 
 function love.draw()
     cam:attach()
     lg.draw(background, bg_quad, 0, 0)
+
+    food.draw()
 
     -- draw ants
     for _, colony in ipairs(Colony) do

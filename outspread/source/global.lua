@@ -24,3 +24,8 @@ util = require("utils")
 terrainSprites = {
     terrain = lg.newImage("images/terrain/terrain.png")
 }
+
+-- food map
+foodSprites = {
+    food = lg.newImage("images/food/food.png"),
+}
