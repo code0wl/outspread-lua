@@ -13,7 +13,7 @@ function util.distanceBetween(x1, y1, x2, y2)
 end
 
 function util.isOutOfBounds(element)
-    return element.x < 0 or element.y < 0 or element.x > love.graphics.getWidth() or element.y > love.graphics.getHeight()
+    return element.x < 0 or element.y < 0 or element.x > lg.getWidth() or element.y > lg.getHeight()
 end
 
 return util

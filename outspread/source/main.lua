@@ -1,7 +1,7 @@
-require("colony/colony")
-require("ant/ant")
-require("nest/nest")
-require("global/global")
+require("colony")
+require("ant")
+require("nest")
+require("global")
 
 local blackNest = Nest:create(1, 100, 50, 20)
 local redNest = Nest:create(2, lg.getWidth() - 20, 1000, 20)

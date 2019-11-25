@@ -14,7 +14,7 @@ local camera = require('libs/hump/camera')
 cam = camera()
 
 -- own util
-util = require("util.utils")
+util = require("utils")
 
 -- terain map
 terrainSprites = {
