@@ -1,38 +1,39 @@
 require("global")
 
-myWorld = lp.newWorld(0, 0, false)
-
 local Colony = require("entities/Colony")
 local Food = require("entities/Food")
 local Control = require("entities/Control")
 
-Colony(1, 100, 100, 0)
+Colony({
+    type = 1,
+    x = 100,
+    y = 100,
+    population = 100
+})
 
-local food = Food(1, 500, 500, 100)
+local food = Food({
+    type = 1,
+    x = 500,
+    y = 500, 100
+})
 
 local maxZoom = 4
 local maxOut = .5
 local control = Control({ panspeed = 300 })
 
-local poop = 1
-
 function love.load()
-
     background = love.graphics.newImage("images/background/background.png")
     background:setWrap("repeat", "repeat")
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(), background:getWidth(), background:getHeight())
     cam:zoom(1)
-    -- initiate physics world
 end
 
 function love.update(dt)
-    poop = poop + 1
     myWorld:update(dt)
 
-    local cols
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
-            ant.animation:update(dt)
+            ant:update(dt)
         end
     end
 
@@ -50,14 +51,7 @@ function love.draw()
     for _, colony in ipairs(Colony) do
         colony.nest:draw()
         for _, ant in ipairs(colony.nest.ants) do
-            ant.animation:draw(ant.currentState,
-                ant.body:getX(),
-                ant.body:getY(),
-                util.getAngle(ant, colony.nest) + math.pi,
-                nil,
-                nil,
-                util.getCenter(ant.currentState:getWidth()),
-                util.getCenter(ant.currentState:getHeight()))
+            ant:draw()
         end
     end
 

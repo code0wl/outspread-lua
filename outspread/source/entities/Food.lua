@@ -1,15 +1,15 @@
 local Food = class("Food")
 
-function Food:init(type, x, y, amount)
+function Food:init(foodConfig)
     local graphicWidth, graphicY
-    self.x = x
-    self.y = y
-    self.amount = amount
-    self.type = type
+    self.x = foodConfig.x
+    self.y = foodConfig.y
+    self.amount = foodConfig.amount
+    self.type = foodConfig.type
     self.width = 30
     self.height = 50
-    self.body = lp.newBody(myWorld, x, y, 'static')
-    self.shape = lp.newRectangleShape(self.width, self.height)
+    self.body = lp.newBody(myWorld, self.x, self.y, 'static')
+    self.shape = lp.newRectangleShape(10, 10)
     self.fixture = lp.newFixture(self.body, self.shape)
     self.body:setFixedRotation(true)
     if amount < 10 then

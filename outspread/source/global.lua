@@ -3,7 +3,7 @@ lp = love.physics
 lg = love.graphics
 
 -- set level size
-love.window.setMode(2400, 2400)
+love.window.setMode(1000, 1000)
 
 -- helper libs
 sti = require("libs/sti")
@@ -14,6 +14,9 @@ tiny = require("libs/tiny/tiny")
 -- create instance for camera
 local camera = require('libs/hump/camera')
 cam = camera()
+
+-- create world instance
+myWorld = lp.newWorld(0, 0, false)
 
 -- own util
 util = require("utils")
