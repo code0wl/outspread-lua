@@ -9,7 +9,6 @@ love.window.setMode(1000, 1000)
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
 class = require('libs/30logs/30logs')
-tiny = require("libs/tiny/tiny")
 
 -- create instance for camera
 local camera = require('libs/hump/camera')

@@ -1,25 +1,31 @@
 require("global")
 
 local Colony = require("entities/Colony")
-local Food = require("entities/Food")
 local Control = require("entities/Control")
+local FoodCollection = require("entities/FoodCollection")
+
+local foodCollection = FoodCollection({
+    type = 1,
+    x = 400,
+    y = 300,
+    amount = 10000
+})
 
 Colony({
     type = 1,
     x = 200,
     y = 600,
-    population = 100
+    population = 40
 })
 
-local food = Food({
-    type = 1,
-    x = 500,
-    y = 500,
-    amount = 100
+Colony({
+    type = 2,
+    x = 600,
+    y = 600,
+    population = 40
 })
 
-local maxZoom = 4
-local maxOut = .5
+require("events")
 local control = Control({ panspeed = 300 })
 
 function love.load()
@@ -27,6 +33,15 @@ function love.load()
     background:setWrap("repeat", "repeat")
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(), background:getWidth(), background:getHeight())
     cam:zoom(1)
+
+    function MoveSystem:update(dt)
+        for _, entity in pairs(self.targets) do
+            local position = entity:get("position")
+            local velocity = entity:get("velocity")
+            position.x = position.x + velocity.vx * dt
+            position.y = position.y + velocity.vy * dt
+        end
+    end
 end
 
 function love.update(dt)
@@ -39,12 +54,14 @@ function love.update(dt)
             if ant.hasFood then
                 ant.target = colony.nest
             else
-                ant.target = food
+                ant.target = foodCollection.food[1]
             end
 
-            if util.distanceBetween(ant.body:getX(), ant.body:getY(), food.x, food.y) < 1 then
-                ant.hasFood = true
-                food.amount = food.amount - 1
+            for i, f in ipairs(foodCollection.food) do
+                if util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) < 20 then
+                    ant.hasFood = true
+                    f.amount = f.amount - 1
+                end
             end
 
             if util.distanceBetween(ant.body:getX(), ant.body:getY(), colony.nest.x, colony.nest.y) < 10 then
@@ -60,7 +77,6 @@ function love.update(dt)
     if love.mouse.isDown(1) then
     end
 
-
     control:update(dt)
 end
 
@@ -68,8 +84,7 @@ function love.draw()
     cam:attach()
     lg.draw(background, bg_quad, 0, 0)
 
-    -- Later to come with tilemaps
-    food:draw()
+    foodCollection:draw()
 
     -- draw ants
     for _, colony in ipairs(Colony) do
@@ -80,14 +95,6 @@ function love.draw()
     end
 
     cam:detach()
-end
 
--- love specific
-function love.wheelmoved(x, y)
-    if y > 0 and cam.scale < maxZoom then
-        cam:zoom(1.05)
-    elseif y < 0 and cam.scale > maxOut then
-        cam:zoom(.95)
-    end
+    lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 end
-
