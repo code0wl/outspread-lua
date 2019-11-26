@@ -33,15 +33,6 @@ function love.load()
     background:setWrap("repeat", "repeat")
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(), background:getWidth(), background:getHeight())
     cam:zoom(1)
-
-    function MoveSystem:update(dt)
-        for _, entity in pairs(self.targets) do
-            local position = entity:get("position")
-            local velocity = entity:get("velocity")
-            position.x = position.x + velocity.vx * dt
-            position.y = position.y + velocity.vy * dt
-        end
-    end
 end
 
 function love.update(dt)
