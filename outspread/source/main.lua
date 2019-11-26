@@ -8,7 +8,7 @@ Colony({
     type = 1,
     x = 200,
     y = 600,
-    population = 10
+    population = 100
 })
 
 local food = Food({
@@ -30,6 +30,8 @@ function love.load()
 end
 
 function love.update(dt)
+    world:update(dt)
+
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
             ant:update(dt)
@@ -40,18 +42,18 @@ function love.update(dt)
                 ant.target = food
             end
 
-            if util.distanceBetween(ant.x, ant.y, food.x, food.y) < 2 then
+            if util.distanceBetween(ant.body:getX(), ant.body:getY(), food.x, food.y) < 1 then
                 ant.hasFood = true
                 food.amount = food.amount - 1
             end
 
-            if util.distanceBetween(ant.x, ant.y, colony.nest.x, colony.nest.y) < 2 then
+            if util.distanceBetween(ant.body:getX(), ant.body:getY(), colony.nest.x, colony.nest.y) < 10 then
                 ant.hasFood = false
                 colony.nest.collectedFood = colony.nest.collectedFood + 1
             end
 
-            ant.x = ant.x - math.cos(util.getAngle(ant.target.y, ant.y, ant.target.x, ant.x)) * ant.speed * dt
-            ant.y = ant.y - math.sin(util.getAngle(ant.target.y, ant.y, ant.target.x, ant.x)) * ant.speed * dt
+            ant.body:setX(ant.body:getX() - math.cos(util.getAngle(ant.target.y, ant.body:getX(), ant.target.x, ant.body:getX())) * ant.speed * dt)
+            ant.body:setY(ant.body:getY() - math.sin(util.getAngle(ant.target.y, ant.body:getY(), ant.target.x, ant.body:getY())) * ant.speed * dt)
         end
     end
 

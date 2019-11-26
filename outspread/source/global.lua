@@ -1,4 +1,5 @@
 -- shortcut to love graphics
+lp = love.physics
 lg = love.graphics
 
 -- set level size
@@ -13,6 +14,9 @@ tiny = require("libs/tiny/tiny")
 -- create instance for camera
 local camera = require('libs/hump/camera')
 cam = camera()
+
+-- create world
+world = lp.newWorld(0, 0, false)
 
 -- own util
 util = require("utils")
