@@ -4,8 +4,8 @@ function util.getCenter(value)
     return value / 2
 end
 
-function util.getAngle(vectorA, vectorB)
-    return math.atan2(vectorA.y - vectorB.y, vectorA.x - vectorB.x)
+function util.getAngle(y1, y2, x1, x2)
+    return math.atan2(y1 - y2, x1 - x2) + math.pi
 end
 
 function util.distanceBetween(x1, y1, x2, y2)

@@ -2,11 +2,12 @@ local Ant = require("entities/Ant")
 
 local Nest = class("Nest")
 
-function Nest:init(type, x, y, population)
-    self.type = type
-    self.population = population
-    self.x = x
-    self.y = y
+function Nest:init(nestConfig)
+    self.type = nestConfig.type
+    self.population = nestConfig.population
+    self.x = nestConfig.x
+    self.y = nestConfig.y
+    self.target = nil
     self.collectedFood = 0
     self.ants = {}
     self.width = 16
@@ -15,7 +16,7 @@ function Nest:init(type, x, y, population)
     self.graphic = lg.newQuad(300, 70, 80, 80, terrainSprites.terrain:getDimensions())
 
     for i = 0, self.population do
-        table.insert(self.ants, Ant(self.type, x + i, y + i, 1))
+        table.insert(self.ants, Ant({ type = self.type, x = self.x, y = self.y, state = 1 }))
     end
 end
 

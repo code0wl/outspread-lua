@@ -6,9 +6,9 @@ local Control = require("entities/Control")
 
 Colony({
     type = 1,
-    x = 100,
-    y = 100,
-    population = 1000
+    x = 200,
+    y = 600,
+    population = 10
 })
 
 local food = Food({
@@ -30,13 +30,19 @@ function love.load()
 end
 
 function love.update(dt)
-    local target
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
             ant:update(dt)
 
+            if ant.hasFood then
+                ant.target = colony.nest
+            else
+                ant.target = food
+            end
+
             if util.distanceBetween(ant.x, ant.y, food.x, food.y) < 2 then
                 ant.hasFood = true
+                food.amount = food.amount - 1
             end
 
             if util.distanceBetween(ant.x, ant.y, colony.nest.x, colony.nest.y) < 2 then
@@ -44,14 +50,8 @@ function love.update(dt)
                 colony.nest.collectedFood = colony.nest.collectedFood + 1
             end
 
-            if ant.hasFood then
-                target = colony.nest
-            else
-                target = food
-            end
-
-            ant.x = ant.x - math.cos(util.getAngle(target, ant) + math.pi) * ant.speed * dt
-            ant.y = ant.y - math.sin(util.getAngle(target, ant) + math.pi) * ant.speed * dt
+            ant.x = ant.x - math.cos(util.getAngle(ant.target.y, ant.y, ant.target.x, ant.x)) * ant.speed * dt
+            ant.y = ant.y - math.sin(util.getAngle(ant.target.y, ant.y, ant.target.x, ant.x)) * ant.speed * dt
         end
     end
 
@@ -73,7 +73,7 @@ function love.draw()
     for _, colony in ipairs(Colony) do
         colony.nest:draw()
         for _, ant in ipairs(colony.nest.ants) do
-            ant:draw(food)
+            ant:draw()
         end
     end
 

@@ -1,16 +1,16 @@
 local Ant = class("Ant")
 
-function Ant:init(type, x, y, state)
-    self.state = state
-    self.type = type
+function Ant:init(antConfig)
+    self.state = antConfig.state
+    self.type = antConfig.type
 
     self.images = {
-        lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_walk-small.png"),
-        lg.newImage("images/ants/spritesheets/ant" .. type .. "/_ant_dead-small.png"),
+        lg.newImage("images/ants/spritesheets/ant" .. self.type .. "/_ant_walk-small.png"),
+        lg.newImage("images/ants/spritesheets/ant" .. self.type .. "/_ant_dead-small.png"),
     }
 
-    self.x = x
-    self.y = y
+    self.x = antConfig.x
+    self.y = antConfig.y
     self.hasFood = nil
     self.currentState = self.images[self.state]
     self.speed = 100
@@ -25,15 +25,21 @@ function Ant:update(dt)
     self.animation:update(dt)
 end
 
-function Ant:draw(target)
+function Ant:draw()
     self.animation:draw(self.currentState,
-        self.y,
         self.x,
-        util.getAngle(self, target) + math.pi,
+        self.y,
+        util.getAngle(self.target.y, self.y, self.target.x, self.x) + 1.6 + math.pi,
         .6, .6,
         util.getCenter(self.width),
         util.getCenter(self.height))
+
+    if self.hasFood then
+        lg.setColor(255, 153, 153)
+        lg.circle("fill", self.x, self.y, 2, 10)
+    end
 end
+
 
 return Ant
 

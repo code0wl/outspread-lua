@@ -8,6 +8,10 @@ function Food:init(foodConfig)
     self.type = foodConfig.type
     self.width = 30
     self.height = 50
+end
+
+function Food:draw()
+
     if self.amount < 10 then
         graphicY = 342
     else if self.amount < 40 then
@@ -18,10 +22,12 @@ function Food:init(foodConfig)
     end
 
     self.graphic = lg.newQuad(770, graphicY, self.width, self.height, foodSprites.food:getDimensions())
-end
 
-function Food:draw()
-    lg.draw(foodSprites.food, self.graphic, self.x, self.y)
+    if self.amount > 0 then
+        lg.draw(foodSprites.food, self.graphic, self.x, self.y)
+    else
+        self = nil
+    end
 end
 
 return Food
