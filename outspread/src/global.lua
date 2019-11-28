@@ -3,7 +3,7 @@ lp = love.physics
 lg = love.graphics
 
 -- set level size
-love.window.setMode(1000, 1000)
+love.window.setMode(1280, 720)
 
 -- helper libs
 sti = require("libs/sti")

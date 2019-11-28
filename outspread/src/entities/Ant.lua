@@ -1,49 +1,49 @@
-local Ant = class("Ant")
+local Ant = {}
 
-function Ant:init(antConfig)
-    self.state = antConfig.state
-    self.type = antConfig.type
+function Ant(antConfig)
+    local ant = {}
 
-    self.images = {
-        lg.newImage("images/ants/spritesheets/ant" .. self.type .. "/_ant_walk-small.png"),
-        lg.newImage("images/ants/spritesheets/ant" .. self.type .. "/_ant_dead-small.png"),
+    ant.state = antConfig.state
+    ant.type = antConfig.type
+
+    ant.images = {
+        lg.newImage("images/ants/spritesheets/ant" .. ant.type ..
+                        "/_ant_walk-small.png"),
+        lg.newImage("images/ants/spritesheets/ant" .. ant.type ..
+                        "/_ant_dead-small.png")
     }
 
-    self.x = antConfig.x
-    self.y = antConfig.y
-    self.hasFood = nil
-    self.currentState = self.images[self.state]
-    self.speed = 100
-    self.width = 16
-    self.height = 27
+    ant.x = math.random() * 2 * antConfig.x
+    ant.y = math.random() * 2 * antConfig.y
 
-    self.body = lp.newBody(world, self.x, self.y, 'dynamic')
-    self.shape = lp.newRectangleShape(2, 2)
-    self.fixture = lp.newFixture(self.body, self.shape)
-    self.alive = true
-    self.grid = anim8.newGrid(self.width, self.height, self.currentState:getWidth(), self.currentState:getHeight() + 1)
-    self.animation = anim8.newAnimation(self.grid('1-5', 1, '1-5', 2, '1-5', 3), 0.04)
-end
+    ant.hasFood = nil
+    ant.currentState = ant.images[ant.state]
+    ant.speed = 100
+    ant.width = 16
+    ant.height = 27
 
-function Ant:update(dt)
-    self.animation:update(dt)
-end
+    ant.alive = true
+    ant.grid = anim8.newGrid(ant.width, ant.height, ant.currentState:getWidth(),
+                             ant.currentState:getHeight() + 1)
+    ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3),
+                                       0.04)
 
-function Ant:draw()
-    self.animation:draw(self.currentState,
-        self.body:getX(),
-        self.body:getY(),
-        util.getAngle(self.target.y, self.body:getY(), self.target.x, self.body:getX()) + 1.6 + math.pi,
-        .5, .5,
-        util.getCenter(self.width),
-        util.getCenter(self.height))
+    function ant.update(dt) ant.animation:update(dt) end
 
-    if self.hasFood then
-        lg.setColor(255, 153, 153)
-        lg.circle("fill",  self.body:getX(), self.body:getY(), 2, 10)
+    function ant.draw()
+        ant.animation:draw(ant.currentState, ant.x, ant.y, util.getAngle(
+                               ant.target.y, ant.y, ant.target.x, ant.x) + 1.6 +
+                               math.pi, .5, .5, util.getCenter(ant.width),
+                           util.getCenter(ant.height))
+
+        if ant.hasFood then
+            lg.setColor(255, 153, 153)
+            lg.circle("fill", ant.x, ant.y, 2, 10)
+        end
     end
-end
 
+    return ant
+end
 
 return Ant
 

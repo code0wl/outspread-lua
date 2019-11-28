@@ -8,30 +8,19 @@ local foodCollection = FoodCollection({
     type = 1,
     x = 400,
     y = 300,
-    amount = 10000
+    amount = 1000000
 })
 
-Colony({
-    type = 1,
-    x = 200,
-    y = 600,
-    population = 40
-})
-
-Colony({
-    type = 2,
-    x = 600,
-    y = 600,
-    population = 40
-})
+Colony({type = 1, x = 200, y = 600, population = 500})
 
 require("events")
-local control = Control({ panspeed = 300 })
+local control = Control({panspeed = 300})
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
     background:setWrap("repeat", "repeat")
-    bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(), background:getWidth(), background:getHeight())
+    bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(),
+                         background:getWidth(), background:getHeight())
     cam:zoom(1)
 end
 
@@ -40,7 +29,7 @@ function love.update(dt)
 
     for _, colony in ipairs(Colony) do
         for _, ant in ipairs(colony.nest.ants) do
-            ant:update(dt)
+            ant.update(dt)
 
             if ant.hasFood then
                 ant.target = colony.nest
@@ -49,24 +38,30 @@ function love.update(dt)
             end
 
             for i, f in ipairs(foodCollection.food) do
-                if util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) < 20 then
+                if util.distanceBetween(ant.x, ant.y, f.x, f.y) < 20 then
                     ant.hasFood = true
                     f.amount = f.amount - 1
                 end
             end
 
-            if util.distanceBetween(ant.body:getX(), ant.body:getY(), colony.nest.x, colony.nest.y) < 10 then
+            if util.distanceBetween(ant.x, ant.y, colony.nest.x, colony.nest.y) <
+                10 then
                 ant.hasFood = false
                 colony.nest.collectedFood = colony.nest.collectedFood + 1
             end
 
-            ant.body:setX(ant.body:getX() - math.cos(util.getAngle(ant.target.y, ant.body:getX(), ant.target.x, ant.body:getX())) * ant.speed * dt)
-            ant.body:setY(ant.body:getY() - math.sin(util.getAngle(ant.target.y, ant.body:getY(), ant.target.x, ant.body:getY())) * ant.speed * dt)
+            ant.x = (ant.x -
+                        math.cos(util.getAngle(ant.target.y, ant.x,
+                                               ant.target.x, ant.x)) * ant.speed *
+                        dt)
+            ant.y = (ant.y -
+                        math.sin(util.getAngle(ant.target.y, ant.y,
+                                               ant.target.x, ant.y)) * ant.speed *
+                        dt)
         end
     end
 
-    if love.mouse.isDown(1) then
-    end
+    if love.mouse.isDown(1) then end
 
     control:update(dt)
 end
@@ -80,9 +75,7 @@ function love.draw()
     -- draw ants
     for _, colony in ipairs(Colony) do
         colony.nest:draw()
-        for _, ant in ipairs(colony.nest.ants) do
-            ant:draw()
-        end
+        for _, ant in ipairs(colony.nest.ants) do ant.draw() end
     end
 
     cam:detach()

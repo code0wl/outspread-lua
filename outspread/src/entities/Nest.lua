@@ -1,27 +1,31 @@
 local Ant = require("entities/Ant")
 
-local Nest = class("Nest")
+function Nest(nestConfig)
+    local nest = {}
+    nest.type = nestConfig.type
+    nest.population = nestConfig.population
+    nest.x = nestConfig.x
+    nest.y = nestConfig.y
+    nest.target = nil
+    nest.collectedFood = 0
+    nest.ants = {}
+    nest.width = 16
+    nest.height = 27
 
-function Nest:init(nestConfig)
-    self.type = nestConfig.type
-    self.population = nestConfig.population
-    self.x = nestConfig.x
-    self.y = nestConfig.y
-    self.target = nil
-    self.collectedFood = 0
-    self.ants = {}
-    self.width = 16
-    self.height = 27
+    nest.graphic = lg.newQuad(300, 70, 80, 80,
+                              terrainSprites.terrain:getDimensions())
 
-    self.graphic = lg.newQuad(300, 70, 80, 80, terrainSprites.terrain:getDimensions())
-
-    for i = 0, self.population do
-        table.insert(self.ants, Ant({ type = self.type, x = self.x, y = self.y, state = 1 }))
+    for i = 0, nest.population do
+        local ant = Ant({type = nest.type, x = nest.x, y = nest.y, state = 1})
+        table.insert(nest.ants, ant)
     end
-end
 
-function Nest:draw()
-    lg.draw(terrainSprites.terrain, self.graphic, self.x, self.y, nil, .4, .4)
+    function nest.draw()
+        lg.draw(terrainSprites.terrain, nest.graphic, nest.x, nest.y, nil, .4,
+                .4)
+    end
+
+    return nest
 end
 
 return Nest

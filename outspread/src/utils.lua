@@ -92,7 +92,6 @@ function util.logTable(node)
     table.insert(output, output_str)
     output_str = table.concat(output)
 
-    print(output_str)
 end
 
 return util
