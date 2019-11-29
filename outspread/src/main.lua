@@ -11,8 +11,7 @@ local foodCollection = FoodCollection({
     amount = 1000000
 })
 
-
-Colony({type = 1, x = 200, y = 600, population = 10000})
+Colony({type = 1, x = 200, y = 600, population = 500})
 
 require("events")
 local control = Control({panspeed = 300})
@@ -37,7 +36,8 @@ function love.update(dt)
             if ant.hasFood then
                 ant.target = colony.nest
             else
-                ant.target = foodCollection.food[1]
+                ant.target.x = ant.x + math.random(1, 3)
+                ant.target.y = ant.y + math.random(1, 3)
             end
 
             for i, f in ipairs(foodCollection.food) do

@@ -21,16 +21,14 @@ function Ant(antConfig)
     ant.speed = 60
     ant.width = 16
     ant.height = 27
-
+    ant.target = {}
     ant.alive = true
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.currentState:getWidth(),
                              ant.currentState:getHeight() + 1)
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3),
                                        0.04)
 
-    function ant.update(dt)
-        ant.animation:update(dt)
-    end
+    function ant.update(dt) ant.animation:update(dt) end
 
     function ant.draw()
         ant.animation:draw(ant.currentState, ant.x, ant.y, util.getAngle(
