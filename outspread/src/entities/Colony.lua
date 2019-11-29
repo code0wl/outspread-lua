@@ -12,6 +12,8 @@ function Colony(colonyConfig)
         y = colonyConfig.y,
         population = colonyConfig.population
     })
+    world:add(colony.nest, colony.nest.x, colony.nest.y, colony.nest.height,
+              colony.nest.width)
     table.insert(Colonies, colony)
 
     return colony

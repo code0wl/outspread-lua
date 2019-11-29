@@ -18,7 +18,7 @@ function Ant(antConfig)
 
     ant.hasFood = nil
     ant.currentState = ant.images[ant.state]
-    ant.speed = 100
+    ant.speed = 60
     ant.width = 16
     ant.height = 27
 
@@ -37,6 +37,7 @@ function Ant(antConfig)
                            util.getCenter(ant.height))
 
         if ant.hasFood then
+            ant.speed = 40
             lg.setColor(255, 153, 153)
             lg.circle("fill", ant.x, ant.y, 2, 10)
         end

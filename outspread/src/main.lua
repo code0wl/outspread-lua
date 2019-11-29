@@ -10,7 +10,7 @@ local foodCollection = FoodCollection({
     amount = 1000000
 })
 
-Colony({type = 1, x = 200, y = 600, population = 500})
+Colony({type = 1, x = 200, y = 600, population = 1000})
 
 require("events")
 local control = Control({panspeed = 300})
@@ -24,7 +24,6 @@ function love.load()
 end
 
 function love.update(dt)
-    world:update(dt)
 
     for _, colony in ipairs(Colonies) do
         for _, ant in ipairs(colony.nest.ants) do
@@ -45,7 +44,7 @@ function love.update(dt)
             end
 
             if util.distanceBetween(ant.x, ant.y, colony.nest.x, colony.nest.y) <
-                10 then
+                40 then
                 ant.hasFood = false
                 colony.nest.collectedFood = colony.nest.collectedFood + 1
             end

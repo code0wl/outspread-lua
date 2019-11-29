@@ -12,8 +12,8 @@ end
 
 local function dragmoved(x, y, dx, dy)
 
-    if love.mouse.isDown(1) then cam:lockPosition(x + math.pi, y + math.pi) end
+    if love.mouse.isDown(1) then cam:lockPosition(x, y) end
 
 end
 
-function love.mousemoved(x, y, dx, dy, istouch) dragmoved(x, y, dx, dy) end
+function love.mousemoved(x, y, dx, dy, istouch) dragmoved(x, y) end
