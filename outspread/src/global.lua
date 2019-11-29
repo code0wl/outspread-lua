@@ -13,6 +13,10 @@ anim8 = require('libs/anim8')
 local camera = require('libs/hump/camera')
 cam = camera()
 
+-- create world
+local bump = require('libs/bump/bump')
+world = bump.newWorld(50)
+
 -- own util
 util = require("utils")
 

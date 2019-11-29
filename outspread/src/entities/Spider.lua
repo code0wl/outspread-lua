@@ -50,6 +50,8 @@ function Spider(antConfig)
 
     end
 
+    world:add(spider, spider.x, spider.y, spider.width, spider.height)
+
     return spider
 end
 

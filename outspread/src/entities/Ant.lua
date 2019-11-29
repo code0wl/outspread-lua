@@ -22,6 +22,7 @@ function Ant(antConfig)
     ant.height = 27
     ant.target = {}
     ant.alive = true
+
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.currentState:getWidth(),
                              ant.currentState:getHeight() + 1)
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3),
@@ -41,6 +42,8 @@ function Ant(antConfig)
             lg.circle("fill", ant.x, ant.y, 2, 10)
         end
     end
+
+    world:add(ant, ant.x, ant.y, ant.width, ant.height)
 
     return ant
 end
