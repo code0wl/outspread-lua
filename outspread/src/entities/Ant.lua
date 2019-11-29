@@ -15,7 +15,6 @@ function Ant(antConfig)
 
     ant.x = math.random() * 2 * antConfig.x
     ant.y = math.random() * 2 * antConfig.y
-    ant.isAnt = true
     ant.hasFood = nil
     ant.currentState = ant.images[ant.state]
     ant.speed = 60

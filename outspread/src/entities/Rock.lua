@@ -7,9 +7,6 @@ function Rock(rockConfig)
     rock.height = rockConfig.height
     rock.x = rockConfig.x
     rock.y = rockConfig.y
-
-    rock.isRock = true
-
     function rock.draw ()
         lg.setColor(255, 153, 153)
         lg.rectangle("fill", rock.x, rock.y, rock.width, rock.height)

@@ -2,6 +2,7 @@ require("global")
 Rock = require("entities/Rock")
 require("entities/Colony")
 local Control = require("entities/Control")
+local Spider = require("entities/Spider")
 local FoodCollection = require("entities/FoodCollection")
 
 local foodCollection = FoodCollection({
@@ -18,15 +19,20 @@ local control = Control({panspeed = 300})
 
 function love.load()
     background = love.graphics.newImage("images/background/background.png")
+
     background:setWrap("repeat", "repeat")
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(),
                          background:getWidth(), background:getHeight())
     cam:zoom(1)
 
     rock = Rock({x = 300, y = 500, width = 100, height = 100})
+    spider = Spider({type = 1, x = 600, y = 100, state = 1})
+
 end
 
 function love.update(dt)
+
+    spider.update(dt)
 
     for _, colony in ipairs(Colonies) do
         for _, ant in ipairs(colony.nest.ants) do
@@ -36,8 +42,7 @@ function love.update(dt)
             if ant.hasFood then
                 ant.target = colony.nest
             else
-                ant.target.x = ant.x + math.random(1, 3)
-                ant.target.y = ant.y + math.random(1, 3)
+                ant.target = foodCollection.food[1]
             end
 
             for i, f in ipairs(foodCollection.food) do
@@ -78,6 +83,8 @@ function love.draw()
         colony.nest.draw()
         for _, ant in ipairs(colony.nest.ants) do ant.draw() end
     end
+
+    spider.draw()
 
     cam:detach()
 
