@@ -1,12 +1,20 @@
 local Nest = require("entities/Nest")
 
-local Colony = class("Colony")
+Colonies = {}
 
-function Colony:init(colonyConfig)
-    self.type = colonyConfig.type
-    self.population = colonyConfig.population
-    self.nest = Nest({ type = self.type, x = colonyConfig.x, y = colonyConfig.y, population = colonyConfig.population })
-    table.insert(Colony, self)
+function Colony(colonyConfig)
+    local colony = {}
+    colony.type = colonyConfig.type
+    colony.population = colonyConfig.population
+    colony.nest = Nest({
+        type = colony.type,
+        x = colonyConfig.x,
+        y = colonyConfig.y,
+        population = colonyConfig.population
+    })
+    table.insert(Colonies, colony)
+
+    return colony
 end
 
 return Colony

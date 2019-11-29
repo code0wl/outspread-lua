@@ -1,9 +1,8 @@
 require("global")
 
-local Colony = require("entities/Colony")
+require("entities/Colony")
 local Control = require("entities/Control")
 local FoodCollection = require("entities/FoodCollection")
-
 local foodCollection = FoodCollection({
     type = 1,
     x = 400,
@@ -27,9 +26,10 @@ end
 function love.update(dt)
     world:update(dt)
 
-    for _, colony in ipairs(Colony) do
+    for _, colony in ipairs(Colonies) do
         for _, ant in ipairs(colony.nest.ants) do
             ant.update(dt)
+            local antSpeed = ant.speed * dt
 
             if ant.hasFood then
                 ant.target = colony.nest
@@ -52,12 +52,10 @@ function love.update(dt)
 
             ant.x = (ant.x -
                         math.cos(util.getAngle(ant.target.y, ant.x,
-                                               ant.target.x, ant.x)) * ant.speed *
-                        dt)
+                                               ant.target.x, ant.x)) * antSpeed)
             ant.y = (ant.y -
                         math.sin(util.getAngle(ant.target.y, ant.y,
-                                               ant.target.x, ant.y)) * ant.speed *
-                        dt)
+                                               ant.target.x, ant.x)) * antSpeed)
         end
     end
 
@@ -73,8 +71,8 @@ function love.draw()
     foodCollection:draw()
 
     -- draw ants
-    for _, colony in ipairs(Colony) do
-        colony.nest:draw()
+    for _, colony in ipairs(Colonies) do
+        colony.nest.draw()
         for _, ant in ipairs(colony.nest.ants) do ant.draw() end
     end
 
