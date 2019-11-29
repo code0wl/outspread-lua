@@ -16,9 +16,8 @@ function Nest(nestConfig)
                               terrainSprites.terrain:getDimensions())
 
     for i = 0, nest.population do
-        local ant = Ant({type = nest.type, x = nest.x, y = nest.y, state = 1})
-        world:add(ant, ant.x, ant.y, ant.width, ant.height)
-        table.insert(nest.ants, ant)
+        table.insert(nest.ants,
+                     Ant({type = nest.type, x = nest.x, y = nest.y, state = 1}))
     end
 
     function nest.draw()

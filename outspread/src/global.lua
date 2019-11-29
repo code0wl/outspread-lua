@@ -16,7 +16,7 @@ cam = camera()
 
 -- create world
 local bump = require("libs/bump/bump")
-world = bump.newWorld(10)
+world = bump.newWorld(50)
 
 -- own util
 util = require("utils")

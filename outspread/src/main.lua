@@ -1,8 +1,9 @@
 require("global")
-
+Rock = require("entities/Rock")
 require("entities/Colony")
 local Control = require("entities/Control")
 local FoodCollection = require("entities/FoodCollection")
+
 local foodCollection = FoodCollection({
     type = 1,
     x = 400,
@@ -10,7 +11,8 @@ local foodCollection = FoodCollection({
     amount = 1000000
 })
 
-Colony({type = 1, x = 200, y = 600, population = 1000})
+
+Colony({type = 1, x = 200, y = 600, population = 500})
 
 require("events")
 local control = Control({panspeed = 300})
@@ -21,6 +23,8 @@ function love.load()
     bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(),
                          background:getWidth(), background:getHeight())
     cam:zoom(1)
+
+    rock = Rock({x = 300, y = 500, width = 50, height = 50})
 end
 
 function love.update(dt)
@@ -66,7 +70,7 @@ end
 function love.draw()
     cam:attach()
     lg.draw(background, bg_quad, 0, 0)
-
+    rock.draw()
     foodCollection:draw()
 
     -- draw ants
