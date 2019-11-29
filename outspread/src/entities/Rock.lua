@@ -10,13 +10,10 @@ function Rock(rockConfig)
 
     rock.isRock = true
 
-
     function rock.draw ()
         lg.setColor(255, 153, 153)
         lg.rectangle("fill", rock.x, rock.y, rock.width, rock.height)
     end
-
-    world:add(rock, rock.x, rock.y, rock.width, rock.height)
 
     return rock
 

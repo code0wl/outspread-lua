@@ -1,17 +1,16 @@
 local Food = require("entities/Food")
 
-local FoodCollection = class("FoodCollection")
+function FoodCollection(food)
+    local collection = {}
+    collection.food = {}
 
-function FoodCollection:init(food)
-    util.logTable(food)
-    self.food = {}
-    table.insert(self.food, Food(food))
-end
+    table.insert(collection.food, Food(food))
 
-function FoodCollection:draw()
-    for i, f in ipairs(self.food) do
-        f:draw()
+    function collection.draw()
+        for i, f in ipairs(collection.food) do f:draw() end
     end
+
+    return collection
 end
 
 return FoodCollection

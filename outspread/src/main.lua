@@ -12,7 +12,7 @@ local foodCollection = FoodCollection({
 })
 
 
-Colony({type = 1, x = 200, y = 600, population = 500})
+Colony({type = 1, x = 200, y = 600, population = 10000})
 
 require("events")
 local control = Control({panspeed = 300})
@@ -24,7 +24,7 @@ function love.load()
                          background:getWidth(), background:getHeight())
     cam:zoom(1)
 
-    rock = Rock({x = 300, y = 500, width = 50, height = 50})
+    rock = Rock({x = 300, y = 500, width = 100, height = 100})
 end
 
 function love.update(dt)
@@ -64,14 +64,14 @@ function love.update(dt)
 
     if love.mouse.isDown(1) then end
 
-    control:update(dt)
+    control.update(dt)
 end
 
 function love.draw()
     cam:attach()
     lg.draw(background, bg_quad, 0, 0)
     rock.draw()
-    foodCollection:draw()
+    foodCollection.draw()
 
     -- draw ants
     for _, colony in ipairs(Colonies) do

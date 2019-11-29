@@ -28,11 +28,8 @@ function Ant(antConfig)
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3),
                                        0.04)
 
-    world:add(ant, ant.x, ant.y, ant.width * .5, ant.height * .5)
-
     function ant.update(dt)
         ant.animation:update(dt)
-        ant.collide(dt)
     end
 
     function ant.draw()
@@ -46,23 +43,6 @@ function Ant(antConfig)
             lg.setColor(255, 153, 153)
             lg.circle("fill", ant.x, ant.y, 2, 10)
         end
-    end
-
-    function ant.collisitionFilter(item, other)
-        if other.isAnt then
-            return nil
-        elseif other.isRock then
-            return 'bounce'
-        end
-    end
-
-    function ant.collide(dt)
-        local nextX, nextY, cols, len = world:move(ant, ant.x, ant.y,
-                                                   ant.collisitionFilter)
-
-        ant.x = nextX
-        ant.y = nextY
-
     end
 
     return ant

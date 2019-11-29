@@ -1,33 +1,39 @@
-local Food = class("Food")
+local Food = {}
 
-function Food:init(foodConfig)
+function Food(foodConfig)
+    local food = {}
     local graphicWidth, graphicY
-    self.x = foodConfig.x
-    self.y = foodConfig.y
-    self.amount = foodConfig.amount
-    self.type = foodConfig.type
-    self.width = 30
-    self.height = 50
-end
+    food.x = foodConfig.x
+    food.y = foodConfig.y
+    food.amount = foodConfig.amount
+    food.type = foodConfig.type
+    food.width = 30
+    food.height = 50
 
-function Food:draw()
+    function food.draw()
 
-    if self.amount < 10 then
-        graphicY = 342
-    else if self.amount < 40 then
-        graphicY = 390
-    else
-        graphicY = 420
+        if food.amount < 10 then
+            graphicY = 342
+        else
+            if food.amount < 40 then
+                graphicY = 390
+            else
+                graphicY = 420
+            end
+        end
+
+        food.graphic = lg.newQuad(770, graphicY, food.width, food.height,
+                                  foodSprites.food:getDimensions())
+
+        if food.amount > 0 then
+            lg.draw(foodSprites.food, food.graphic, food.x, food.y)
+        else
+            food = nil
+        end
     end
-    end
 
-    self.graphic = lg.newQuad(770, graphicY, self.width, self.height, foodSprites.food:getDimensions())
+    return food
 
-    if self.amount > 0 then
-        lg.draw(foodSprites.food, self.graphic, self.x, self.y)
-    else
-        self = nil
-    end
 end
 
 return Food
