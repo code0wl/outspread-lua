@@ -15,6 +15,7 @@ function Ant(antConfig)
 
     ant.x = antConfig.x
     ant.y = antConfig.y
+    ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
     ant.currentState = ant.images[ant.state]
     ant.speed = 40
@@ -54,18 +55,15 @@ function Ant(antConfig)
 
         timePassed = timePassed + 1 * dt
 
-        if ant.hasFood then
-            ant.target = target
-        elseif timePassed > 8 then
-
+        if ant.hasFood or ant.target == nil then
+            ant.target = ant.nest
+        elseif timePassed > updateInSeconds then
             timePassed = 0
 
             ant.target = {
                 x = math.random(lg.getWidth(), 0),
                 y = math.random(lg.getHeight(), 0)
             }
-        elseif ant.target == nil then
-            ant.target = ant
         end
 
         for i, f in ipairs(foodCollection.food) do
@@ -76,10 +74,12 @@ function Ant(antConfig)
             end
         end
 
-        if util.distanceBetween(ant.body:getX(), ant.body:getY(), target.x,
-                                target.y) < 60 then
-            ant.hasFood = false
-            target.collectedFood = target.collectedFood + 1
+        if ant.hasFood then
+            if util.distanceBetween(ant.body:getX(), ant.body:getY(), target.x,
+                                    target.y) < 45 then
+                ant.hasFood = false
+                target.collectedFood = target.collectedFood + 1
+            end
         end
 
         util.setDirectionToTarget(ant, dt)

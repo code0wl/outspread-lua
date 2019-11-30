@@ -38,7 +38,7 @@ function Spider(spiderConfig)
         local spiderSpeed = spider.speed * dt
         spider.animation:update(dt)
 
-        if timePassed > 8 then
+        if timePassed > updateInSeconds then
 
             timePassed = 0
 

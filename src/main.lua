@@ -9,9 +9,8 @@ local FoodCollection = require("entities/FoodCollection")
 
 foodCollection = FoodCollection({type = 1, x = 400, y = 300, amount = 1000000})
 
-Colony({type = 1, x = 200, y = 600, population = 500})
-
-Colony({type = 2, x = 600, y = 200, population = 500})
+Colony({type = 1, x = 200, y = 600, population = 100})
+Colony({type = 2, x = 1000, y = 200, population = 100})
 
 local control = Control({panspeed = 300})
 
@@ -33,6 +32,7 @@ function love.update(dt)
     spider.update(dt)
 
     for _, colony in ipairs(Colonies) do
+        colony.nest.update(dt)
         for _, ant in ipairs(colony.nest.ants) do
             ant.update(dt)
             ant.handleTarget(colony.nest, dt)
@@ -59,4 +59,12 @@ function love.draw()
     cam:detach()
 
     lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
+
+    lg.print(
+        "Current Red Pop : " .. tostring(table.getn(Colonies[1].nest.ants)), 10,
+        40)
+
+    lg.print("Current black Pop : " ..
+                 tostring(table.getn(Colonies[2].nest.ants)), 10, 70)
+
 end
