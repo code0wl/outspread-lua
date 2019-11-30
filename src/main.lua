@@ -1,5 +1,6 @@
 require("global")
 require("entities/Colony")
+require("events")
 
 local Rock = require("entities/Rock")
 local Control = require("entities/Control")
@@ -10,7 +11,8 @@ foodCollection = FoodCollection({type = 1, x = 400, y = 300, amount = 1000000})
 
 Colony({type = 1, x = 200, y = 600, population = 500})
 
-require("events")
+Colony({type = 2, x = 600, y = 200, population = 500})
+
 local control = Control({panspeed = 300})
 
 function love.load()

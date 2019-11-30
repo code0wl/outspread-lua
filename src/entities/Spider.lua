@@ -1,24 +1,24 @@
 local Spider = {}
 
-function Spider(antConfig)
+function Spider(spiderConfig)
     local spider = {}
-    spider.state = antConfig.state
-    spider.type = antConfig.type
+    spider.state = spiderConfig.state
+    spider.type = spiderConfig.type
 
     spider.images = {
         lg.newImage("images/spiders/spider" .. spider.type ..
                         "/spritesheets/sheet_spider_walk-small.png")
     }
 
-    spider.x = math.random() * 2 * antConfig.x
-    spider.y = math.random() * 2 * antConfig.y
+    spider.x = -100
+    spider.y = -100
     spider.hasFood = nil
     spider.currentState = spider.images[spider.state]
-    spider.speed = 40
+    spider.speed = 70
     spider.isSpider = true
     spider.width = 180
     spider.height = 150
-    spider.target = {x = 500, y = 500}
+    spider.target = nil
     spider.alive = true
 
     -- Physics
@@ -33,8 +33,22 @@ function Spider(antConfig)
     spider.animation = anim8.newAnimation(spider.grid('1-5', 1, '1-5', 2), 0.04)
 
     function spider.update(dt)
+        timePassed = timePassed + 1 * dt
+
         local spiderSpeed = spider.speed * dt
         spider.animation:update(dt)
+
+        if timePassed > 8 then
+
+            timePassed = 0
+
+            spider.target = {
+                x = math.random(lg.getWidth(), 0),
+                y = math.random(lg.getHeight(), 0)
+            }
+        elseif spider.target == nil then
+            spider.target = spider
+        end
 
         util.setDirectionToTarget(spider, dt)
 

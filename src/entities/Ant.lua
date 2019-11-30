@@ -17,10 +17,10 @@ function Ant(antConfig)
     ant.y = antConfig.y
     ant.hasFood = nil
     ant.currentState = ant.images[ant.state]
-    ant.speed = 60
+    ant.speed = 40
     ant.width = 16
     ant.height = 27
-    ant.target = {}
+    ant.target = nil
     ant.alive = true
 
     -- Physics
@@ -43,9 +43,9 @@ function Ant(antConfig)
                            util.getCenter(ant.height))
 
         if ant.hasFood then
-            ant.speed = 40
+            ant.speed = 20
             lg.setColor(255, 153, 153)
-            lg.circle("fill", ant.body:getX(), ant.body:getY(), 2, 10)
+            lg.circle("fill", ant.body:getX(), ant.body:getY() + 4, 2)
         end
 
     end
@@ -56,17 +56,15 @@ function Ant(antConfig)
 
         if ant.hasFood then
             ant.target = target
-        elseif timePassed > 5 then
+        elseif timePassed > 8 then
 
             timePassed = 0
-
-            print('alled')
 
             ant.target = {
                 x = math.random(lg.getWidth(), 0),
                 y = math.random(lg.getHeight(), 0)
             }
-        elseif ant.target.x == nil or ant.target.y == nil then
+        elseif ant.target == nil then
             ant.target = ant
         end
 
@@ -79,7 +77,7 @@ function Ant(antConfig)
         end
 
         if util.distanceBetween(ant.body:getX(), ant.body:getY(), target.x,
-                                target.y) < 45 then
+                                target.y) < 60 then
             ant.hasFood = false
             target.collectedFood = target.collectedFood + 1
         end
