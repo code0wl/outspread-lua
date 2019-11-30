@@ -13,6 +13,7 @@ cam = camera()
 -- create world
 world = love.physics.newWorld(0, 0, true)
 timePassed = 0
+timePassedSpider = 0
 
 -- own util
 util = require("utils")
@@ -22,6 +23,3 @@ terrainSprites = {terrain = lg.newImage("images/terrain/terrain.png")}
 
 -- food map
 foodSprites = {food = lg.newImage("images/food/food.png")}
-
--- world movement update 
-updateInSeconds = 4

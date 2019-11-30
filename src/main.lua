@@ -1,12 +1,13 @@
 require("global")
-require("entities/Colony")
 require("events")
 
 local Rock = require("entities/Rock")
+local Colony = require("entities/Colony")
 local Control = require("entities/Control")
 local Spider = require("entities/Spider")
 local FoodCollection = require("entities/FoodCollection")
 
+-- generate via tile object
 foodCollection = FoodCollection({type = 1, x = 400, y = 300, amount = 1000000})
 
 Colony({type = 1, x = 200, y = 600, population = 100})
@@ -35,6 +36,7 @@ function love.update(dt)
         colony.nest.update(dt)
         for _, ant in ipairs(colony.nest.ants) do
             ant.update(dt)
+            ant.checkCollision(spider)
             ant.handleTarget(colony.nest, dt)
         end
     end

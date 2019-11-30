@@ -21,7 +21,7 @@ function Nest(nestConfig)
     end
 
     function nest.update()
-        for i = 0, nest.collectedFood do
+        for i = 1, nest.collectedFood do
             nest.collectedFood = nest.collectedFood - 1
             table.insert(nest.ants, Ant({
                 type = nest.type,
@@ -30,6 +30,7 @@ function Nest(nestConfig)
                 state = 1
             }))
         end
+
     end
 
     function nest.draw()

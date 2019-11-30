@@ -33,14 +33,14 @@ function Spider(spiderConfig)
     spider.animation = anim8.newAnimation(spider.grid('1-5', 1, '1-5', 2), 0.04)
 
     function spider.update(dt)
-        timePassed = timePassed + 1 * dt
+        timePassedSpider = timePassedSpider + 1 * dt
 
         local spiderSpeed = spider.speed * dt
         spider.animation:update(dt)
 
-        if timePassed > updateInSeconds then
+        if timePassedSpider > 10 then
 
-            timePassed = 0
+            timePassedSpider = 0
 
             spider.target = {
                 x = math.random(lg.getWidth(), 0),
