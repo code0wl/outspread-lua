@@ -22,8 +22,8 @@ function Spider(antConfig)
     spider.alive = true
 
     -- Physics
-    spider.body = lp.newBody(world, spider.x, spider.y)
-    spider.shape = lp.newRectangleShape(spider.width, spider.height)
+    spider.body = lp.newBody(world, spider.x, spider.y, 'dynamic')
+    spider.shape = lp.newRectangleShape(70, 50)
     spider.fixture = lp.newFixture(spider.body, spider.shape)
 
     spider.grid = anim8.newGrid(spider.width, spider.height,

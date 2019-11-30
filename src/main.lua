@@ -6,12 +6,7 @@ local Control = require("entities/Control")
 local Spider = require("entities/Spider")
 local FoodCollection = require("entities/FoodCollection")
 
-foodCollection = FoodCollection({
-    type = 1,
-    x = 400,
-    y = 300,
-    amount = 1000000
-})
+foodCollection = FoodCollection({type = 1, x = 400, y = 300, amount = 1000000})
 
 Colony({type = 1, x = 200, y = 600, population = 500})
 

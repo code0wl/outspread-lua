@@ -24,8 +24,8 @@ function Ant(antConfig)
     ant.alive = true
 
     -- Physics
-    ant.body = lp.newBody(world, ant.x, ant.y)
-    ant.shape = lp.newRectangleShape(ant.width, ant.height)
+    ant.body = lp.newBody(world, ant.x, ant.y, "dynamic")
+    ant.shape = lp.newRectangleShape(4, 4)
     ant.fixture = lp.newFixture(ant.body, ant.shape)
 
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.currentState:getWidth(),
@@ -39,7 +39,7 @@ function Ant(antConfig)
         ant.animation:draw(ant.currentState, ant.body:getX(), ant.body:getY(),
                            util.getAngle(ant.target.y, ant.body:getY(),
                                          ant.target.x, ant.body:getX()) + 1.6 +
-                               math.pi, .5, .5, util.getCenter(ant.width),
+                               math.pi, .4, .4, util.getCenter(ant.width),
                            util.getCenter(ant.height))
 
         if ant.hasFood then
@@ -51,18 +51,37 @@ function Ant(antConfig)
     end
 
     function ant.handleTarget(target, dt)
+
+        timePassed = timePassed + 1 * dt
+
         if ant.hasFood then
             ant.target = target
-        else
-            ant.target = foodCollection.food[1]
+        elseif timePassed > 5 then
+
+            timePassed = 0
+
+            print('alled')
+
+            ant.target = {
+                x = math.random(lg.getWidth(), 0),
+                y = math.random(lg.getHeight(), 0)
+            }
+        elseif ant.target.x == nil or ant.target.y == nil then
+            ant.target = ant
         end
 
         for i, f in ipairs(foodCollection.food) do
             if util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
-                20 then
+                40 then
                 ant.hasFood = true
                 f.amount = f.amount - 1
             end
+        end
+
+        if util.distanceBetween(ant.body:getX(), ant.body:getY(), target.x,
+                                target.y) < 45 then
+            ant.hasFood = false
+            target.collectedFood = target.collectedFood + 1
         end
 
         util.setDirectionToTarget(ant, dt)

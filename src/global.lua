@@ -2,9 +2,6 @@
 lp = love.physics
 lg = love.graphics
 
--- set level size
-love.window.setMode(1280, 720)
-
 -- helper libs
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
@@ -15,6 +12,7 @@ cam = camera()
 
 -- create world
 world = love.physics.newWorld(0, 0, true)
+timePassed = 0
 
 -- own util
 util = require("utils")

@@ -11,7 +11,7 @@ function util.distanceBetween(x1, y1, x2, y2)
 end
 
 function util.generateRandomInteger(min, max)
-    return math.floor(Math.random() * (max - min + 1)) + min
+    return math.floor(math.random() * (max - min + 1)) + min
 end
 
 function util.isOutOfBounds(element)
