@@ -1,11 +1,12 @@
 require("global")
-Rock = require("entities/Rock")
 require("entities/Colony")
+
+local Rock = require("entities/Rock")
 local Control = require("entities/Control")
 local Spider = require("entities/Spider")
 local FoodCollection = require("entities/FoodCollection")
 
-local foodCollection = FoodCollection({
+foodCollection = FoodCollection({
     type = 1,
     x = 400,
     y = 300,
@@ -31,43 +32,15 @@ function love.load()
 end
 
 function love.update(dt)
-
+    world:update(dt)
     spider.update(dt)
 
     for _, colony in ipairs(Colonies) do
         for _, ant in ipairs(colony.nest.ants) do
             ant.update(dt)
-            local antSpeed = ant.speed * dt
-
-            if ant.hasFood then
-                ant.target = colony.nest
-            else
-                ant.target = foodCollection.food[1]
-            end
-
-            for i, f in ipairs(foodCollection.food) do
-                if util.distanceBetween(ant.x, ant.y, f.x, f.y) < 20 then
-                    ant.hasFood = true
-                    f.amount = f.amount - 1
-                end
-            end
-
-            if util.distanceBetween(ant.x, ant.y, colony.nest.x, colony.nest.y) <
-                40 then
-                ant.hasFood = false
-                colony.nest.collectedFood = colony.nest.collectedFood + 1
-            end
-
-            ant.x = (ant.x -
-                        math.cos(util.getAngle(ant.target.y, ant.x,
-                                               ant.target.x, ant.x)) * antSpeed)
-            ant.y = (ant.y -
-                        math.sin(util.getAngle(ant.target.y, ant.y,
-                                               ant.target.x, ant.x)) * antSpeed)
+            ant.handleTarget(colony.nest, dt)
         end
     end
-
-    if love.mouse.isDown(1) then end
 
     control.update(dt)
 end

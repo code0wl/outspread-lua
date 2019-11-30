@@ -15,10 +15,16 @@ function Spider(antConfig)
     spider.hasFood = nil
     spider.currentState = spider.images[spider.state]
     spider.speed = 40
+    spider.isSpider = true
     spider.width = 180
     spider.height = 150
     spider.target = {x = 500, y = 500}
     spider.alive = true
+
+    -- Physics
+    spider.body = lp.newBody(world, spider.x, spider.y)
+    spider.shape = lp.newRectangleShape(spider.width, spider.height)
+    spider.fixture = lp.newFixture(spider.body, spider.shape)
 
     spider.grid = anim8.newGrid(spider.width, spider.height,
                                 spider.currentState:getWidth(),
@@ -30,27 +36,20 @@ function Spider(antConfig)
         local spiderSpeed = spider.speed * dt
         spider.animation:update(dt)
 
-        spider.x = (spider.x -
-                       math.cos(util.getAngle(spider.target.y, spider.x,
-                                              spider.target.x, spider.x)) *
-                       spiderSpeed)
-        spider.y = (spider.y -
-                       math.sin(util.getAngle(spider.target.y, spider.y,
-                                              spider.target.x, spider.x)) *
-                       spiderSpeed)
+        util.setDirectionToTarget(spider, dt)
 
     end
 
     function spider.draw()
-        spider.animation:draw(spider.currentState, spider.x, spider.y,
-                              util.getAngle(spider.target.y, spider.y,
-                                            spider.target.x, spider.x) + math.pi,
-                              nil, nil, util.getCenter(spider.width),
+        spider.animation:draw(spider.currentState, spider.body:getX(),
+                              spider.body:getY(),
+                              util.getAngle(spider.target.y, spider.body:getY(),
+                                            spider.target.x, spider.body:getX()) +
+                                  math.pi, nil, nil,
+                              util.getCenter(spider.width),
                               util.getCenter(spider.height))
 
     end
-
-    world:add(spider, spider.x, spider.y, spider.width, spider.height)
 
     return spider
 end

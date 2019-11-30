@@ -13,8 +13,8 @@ function Ant(antConfig)
                         "/_ant_dead-small.png")
     }
 
-    ant.x = math.random() * 2 * antConfig.x
-    ant.y = math.random() * 2 * antConfig.y
+    ant.x = antConfig.x
+    ant.y = antConfig.y
     ant.hasFood = nil
     ant.currentState = ant.images[ant.state]
     ant.speed = 60
@@ -22,6 +22,11 @@ function Ant(antConfig)
     ant.height = 27
     ant.target = {}
     ant.alive = true
+
+    -- Physics
+    ant.body = lp.newBody(world, ant.x, ant.y)
+    ant.shape = lp.newRectangleShape(ant.width, ant.height)
+    ant.fixture = lp.newFixture(ant.body, ant.shape)
 
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.currentState:getWidth(),
                              ant.currentState:getHeight() + 1)
@@ -31,21 +36,41 @@ function Ant(antConfig)
     function ant.update(dt) ant.animation:update(dt) end
 
     function ant.draw()
-        ant.animation:draw(ant.currentState, ant.x, ant.y, util.getAngle(
-                               ant.target.y, ant.y, ant.target.x, ant.x) + 1.6 +
+        ant.animation:draw(ant.currentState, ant.body:getX(), ant.body:getY(),
+                           util.getAngle(ant.target.y, ant.body:getY(),
+                                         ant.target.x, ant.body:getX()) + 1.6 +
                                math.pi, .5, .5, util.getCenter(ant.width),
                            util.getCenter(ant.height))
 
         if ant.hasFood then
             ant.speed = 40
             lg.setColor(255, 153, 153)
-            lg.circle("fill", ant.x, ant.y, 2, 10)
+            lg.circle("fill", ant.body:getX(), ant.body:getY(), 2, 10)
         end
+
     end
 
-    world:add(ant, ant.x, ant.y, ant.width, ant.height)
+    function ant.handleTarget(target, dt)
+        if ant.hasFood then
+            ant.target = target
+        else
+            ant.target = foodCollection.food[1]
+        end
+
+        for i, f in ipairs(foodCollection.food) do
+            if util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
+                20 then
+                ant.hasFood = true
+                f.amount = f.amount - 1
+            end
+        end
+
+        util.setDirectionToTarget(ant, dt)
+
+    end
 
     return ant
+
 end
 
 return Ant

@@ -14,18 +14,13 @@ local camera = require('libs/hump/camera')
 cam = camera()
 
 -- create world
-local bump = require('libs/bump/bump')
-world = bump.newWorld(50)
+world = love.physics.newWorld(0, 0, true)
 
 -- own util
 util = require("utils")
 
 -- terain map
-terrainSprites = {
-    terrain = lg.newImage("images/terrain/terrain.png")
-}
+terrainSprites = {terrain = lg.newImage("images/terrain/terrain.png")}
 
 -- food map
-foodSprites = {
-    food = lg.newImage("images/food/food.png"),
-}
+foodSprites = {food = lg.newImage("images/food/food.png")}
