@@ -2,6 +2,7 @@ local Ant = require("entities/Ant")
 
 function Nest(nestConfig)
     local nest = {}
+
     nest.type = nestConfig.type
     nest.x = nestConfig.x
     nest.y = nestConfig.y

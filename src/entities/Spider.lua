@@ -38,7 +38,7 @@ function Spider(spiderConfig)
         local spiderSpeed = spider.speed * dt
         spider.animation:update(dt)
 
-        if timePassedSpider > 10 then
+        if timePassedSpider > 6 then
 
             timePassedSpider = 0
 
@@ -62,6 +62,10 @@ function Spider(spiderConfig)
                                   math.pi, nil, nil,
                               util.getCenter(spider.width),
                               util.getCenter(spider.height))
+
+        lg.setColor(255, 153, 153)
+        lg.rectangle("line", spider.body:getX(), spider.body:getY(),
+                     spider.width / 2, spider.height / 2)
 
     end
 

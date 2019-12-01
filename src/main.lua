@@ -1,17 +1,21 @@
 require("global")
 require("events")
 
+local Director = require("entities/Director")
 local Rock = require("entities/Rock")
 local Colony = require("entities/Colony")
 local Control = require("entities/Control")
 local Spider = require("entities/Spider")
 local FoodCollection = require("entities/FoodCollection")
 
+-- To destroy
+destroy = {}
+
 -- generate via tile object
 foodCollection = FoodCollection({type = 1, x = 400, y = 300, amount = 1000000})
 
-Colony({type = 1, x = 200, y = 600, population = 100})
-Colony({type = 2, x = 1000, y = 200, population = 100})
+Colony({type = 1, x = 200, y = 600, population = 350})
+Colony({type = 2, x = 1000, y = 200, population = 350})
 
 local control = Control({panspeed = 300})
 
@@ -23,7 +27,6 @@ function love.load()
                          background:getWidth(), background:getHeight())
     cam:zoom(1)
 
-    rock = Rock({x = 300, y = 500, width = 100, height = 100})
     spider = Spider({type = 1, x = 600, y = 100, state = 1})
 
 end
@@ -34,10 +37,15 @@ function love.update(dt)
 
     for _, colony in ipairs(Colonies) do
         colony.nest.update(dt)
-        for _, ant in ipairs(colony.nest.ants) do
+        for i, ant in ipairs(colony.nest.ants) do
             ant.update(dt)
-            ant.checkCollision(spider)
             ant.handleTarget(colony.nest, dt)
+
+            if Director.checkPreyCollision(ant, spider) then
+                ant.isAlive = false
+                table.remove(colony.nest.ants, i)
+            end
+
         end
     end
 
@@ -47,7 +55,6 @@ end
 function love.draw()
     cam:attach()
     lg.draw(background, bg_quad, 0, 0)
-    rock.draw()
     foodCollection.draw()
 
     -- draw ants
@@ -62,11 +69,14 @@ function love.draw()
 
     lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
-    lg.print(
-        "Current Red Pop : " .. tostring(table.getn(Colonies[1].nest.ants)), 10,
-        40)
-
     lg.print("Current black Pop : " ..
-                 tostring(table.getn(Colonies[2].nest.ants)), 10, 70)
+                 tostring(table.getn(Colonies[1].nest.ants)), 10, 40)
+
+    lg.print(
+        "Current red Pop : " .. tostring(table.getn(Colonies[2].nest.ants)), 10,
+        70)
+
+    love.graphics.print('Memory actually used (in kB): ' ..
+                            collectgarbage('count'), 10, 100)
 
 end
