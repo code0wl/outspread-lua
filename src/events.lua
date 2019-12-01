@@ -5,17 +5,13 @@ local scrollThreshold = 50
 local scrollSpeed = 10
 
 function love.wheelmoved(x, y)
-    local mouseX, mouseY = lm:getPosition()
-
     if y > 0 and cam.scale < maxZoom then
-        currentScale = currentScale + .2
+        currentScale = currentScale + .05
         cam:setScale(currentScale)
     elseif y < 0 and cam.scale > maxOut then
-        currentScale = currentScale - .2
+        currentScale = currentScale - .05
         cam:setScale(currentScale)
     end
-
-    cam:setPosition(mouseX, mouseY)
 end
 
 function love.mousemoved(x, y, dx, dy, istouch) dragCamera(x, y, dx, dy) end
