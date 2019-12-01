@@ -8,14 +8,11 @@ local Control = require("entities/Control")
 local Spider = require("entities/Spider")
 local FoodCollection = require("entities/FoodCollection")
 
--- To destroy
-destroy = {}
-
 -- generate via tile object
 foodCollection = FoodCollection({type = 1, x = 400, y = 300, amount = 1000000})
 
-Colony({type = 1, x = 200, y = 600, population = 350})
-Colony({type = 2, x = 1000, y = 200, population = 350})
+Colony({type = 1, x = 200, y = 600, population = 400})
+Colony({type = 2, x = 1000, y = 200, population = 400})
 
 local control = Control({panspeed = 300})
 
@@ -23,10 +20,8 @@ function love.load()
     background = love.graphics.newImage("images/background/background.png")
 
     background:setWrap("repeat", "repeat")
-    bg_quad = lg.newQuad(0, 0, lg.getWidth(), lg.getHeight(),
-                         background:getWidth(), background:getHeight())
-    cam:zoom(1)
-
+    bg_quad = lg.newQuad(0, 0, globalWidth, globalHeight, background:getWidth(),
+                         background:getHeight())
     spider = Spider({type = 1, x = 600, y = 100, state = 1})
 
 end
@@ -53,19 +48,32 @@ function love.update(dt)
 end
 
 function love.draw()
-    cam:attach()
-    lg.draw(background, bg_quad, 0, 0)
-    foodCollection.draw()
 
-    -- draw ants
-    for _, colony in ipairs(Colonies) do
-        colony.nest.draw()
-        for _, ant in ipairs(colony.nest.ants) do ant.draw() end
-    end
+    local mouseX, mouseY = lm.getPosition()
+    local currentX, currentY = cam:getPosition()
 
-    spider.draw()
+    cam:draw(function(l, t, w, h)
 
-    cam:detach()
+        lg.draw(background, bg_quad, 0, 0)
+        foodCollection.draw()
+
+        -- draw ants
+        for _, colony in ipairs(Colonies) do
+            colony.nest.draw()
+            for _, ant in ipairs(colony.nest.ants) do ant.draw() end
+        end
+
+        spider.draw()
+
+        updateCameraLocation(mouseX, mouseY, currentX, currentY)
+
+        if lm.isDown(2) then
+            --  TODO drop phermones
+        end
+
+        if lm.isDown(1) or lm.isDown(3) then dragCamera(mouseX, mouseY, currentX, currentY) end
+
+    end)
 
     lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 

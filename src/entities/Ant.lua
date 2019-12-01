@@ -44,8 +44,6 @@ function Ant(antConfig)
             lg.circle("fill", ant.body:getX(), ant.body:getY() + 4, 2)
         end
 
-        if ant.isAlive == false then Ant = nil end
-
     end
 
     function ant.handleTarget(target, dt)
@@ -57,8 +55,8 @@ function Ant(antConfig)
         elseif timePassed > 3 then
             timePassed = 0
             ant.target = {
-                x = math.random(lg.getWidth(), 0),
-                y = math.random(lg.getHeight(), 0)
+                x = math.random(globalWidth, 0),
+                y = math.random(globalHeight, 0)
             }
         end
 

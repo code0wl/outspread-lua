@@ -1,216 +1,204 @@
---[[
-Copyright (c) 2010-2015 Matthias Richter
+-- gamera.lua v1.0.1
+-- Copyright (c) 2012 Enrique García Cota
+-- Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+-- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-- Based on YaciCode, from Julien Patte and LuaObject, from Sebastien Rocca-Serra
+local gamera = {}
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+-- Private attributes and methods
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+local gameraMt = {__index = gamera}
+local abs, min, max = math.abs, math.min, math.max
 
-Except as contained in this notice, the name(s) of the above copyright holders
-shall not be used in advertising or otherwise to promote the sale, use or
-other dealings in this Software without prior written authorization.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-]]--
-
-local _PATH = (...):match('^(.*[%./])[^%.%/]+$') or ''
-local cos, sin = math.cos, math.sin
-
-local camera = {}
-camera.__index = camera
-
--- Movement interpolators (for camera locking/windowing)
-camera.smooth = {}
-
-function camera.smooth.none()
-	return function(dx,dy) return dx,dy end
+local function clamp(x, minX, maxX)
+    return x < minX and minX or (x > maxX and maxX or x)
 end
 
-function camera.smooth.linear(speed)
-	assert(type(speed) == "number", "Invalid parameter: speed = "..tostring(speed))
-	return function(dx,dy, s)
-		-- normalize direction
-		local d = math.sqrt(dx*dx+dy*dy)
-		local dts = math.min((s or speed) * love.timer.getDelta(), d) -- prevent overshooting the goal
-		if d > 0 then
-			dx,dy = dx/d, dy/d
-		end
-
-		return dx*dts, dy*dts
-	end
+local function checkNumber(value, name)
+    if type(value) ~= 'number' then
+        error(name .. " must be a number (was: " .. tostring(value) .. ")")
+    end
 end
 
-function camera.smooth.damped(stiffness)
-	assert(type(stiffness) == "number", "Invalid parameter: stiffness = "..tostring(stiffness))
-	return function(dx,dy, s)
-		local dts = love.timer.getDelta() * (s or stiffness)
-		return dx*dts, dy*dts
-	end
+local function checkPositiveNumber(value, name)
+    if type(value) ~= 'number' or value <= 0 then
+        error(name .. " must be a positive number (was: " .. tostring(value) ..
+                  ")")
+    end
 end
 
-
-local function new(x,y, zoom, rot, smoother)
-	x,y  = x or love.graphics.getWidth()/2, y or love.graphics.getHeight()/2
-	zoom = zoom or 1
-	rot  = rot or 0
-	smoother = smoother or camera.smooth.none() -- for locking, see below
-	return setmetatable({x = x, y = y, scale = zoom, rot = rot, smoother = smoother}, camera)
+local function checkAABB(l, t, w, h)
+    checkNumber(l, "l")
+    checkNumber(t, "t")
+    checkPositiveNumber(w, "w")
+    checkPositiveNumber(h, "h")
 end
 
-function camera:lookAt(x,y)
-	self.x, self.y = x, y
-	return self
+local function getVisibleArea(self, scale)
+    scale = scale or self.scale
+    local sin, cos = abs(self.sin), abs(self.cos)
+    local w, h = self.w / scale, self.h / scale
+    w, h = cos * w + sin * h, sin * w + cos * h
+    return min(w, self.ww), min(h, self.wh)
 end
 
-function camera:move(dx,dy)
-	self.x, self.y = self.x + dx, self.y + dy
-	return self
+local function cornerTransform(self, x, y)
+    local scale, sin, cos = self.scale, self.sin, self.cos
+    x, y = x - self.x, y - self.y
+    x, y = -cos * x + sin * y, -sin * x - cos * y
+    return self.x - (x / scale + self.l), self.y - (y / scale + self.t)
 end
 
-function camera:position()
-	return self.x, self.y
+local function adjustPosition(self)
+    local wl, wt, ww, wh = self.wl, self.wt, self.ww, self.wh
+    local w, h = getVisibleArea(self)
+    local w2, h2 = w * 0.5, h * 0.5
+
+    local left, right = wl + w2, wl + ww - w2
+    local top, bottom = wt + h2, wt + wh - h2
+
+    self.x, self.y = clamp(self.x, left, right), clamp(self.y, top, bottom)
 end
 
-function camera:rotate(phi)
-	self.rot = self.rot + phi
-	return self
+local function adjustScale(self)
+    local w, h, ww, wh = self.w, self.h, self.ww, self.wh
+    local rw, rh = getVisibleArea(self, 1) -- rotated frame: area around the window, rotated without scaling
+    local sx, sy = rw / ww, rh / wh -- vert/horiz scale: minimun scales that the window needs to occupy the world
+    local rscale = max(sx, sy)
+
+    self.scale = max(self.scale, rscale)
 end
 
-function camera:rotateTo(phi)
-	self.rot = phi
-	return self
+-- Public interface
+
+function gamera.new(l, t, w, h)
+
+    local sw, sh = love.graphics.getWidth(), love.graphics.getHeight()
+
+    local cam = setmetatable({
+        x = 0,
+        y = 0,
+        scale = 1,
+        angle = 0,
+        sin = math.sin(0),
+        cos = math.cos(0),
+        l = 0,
+        t = 0,
+        w = sw,
+        h = sh,
+        w2 = sw * 0.5,
+        h2 = sh * 0.5
+    }, gameraMt)
+
+    cam:setWorld(l, t, w, h)
+
+    return cam
 end
 
-function camera:zoom(mul)
-	self.scale = self.scale * mul
-	return self
+function gamera:setWorld(l, t, w, h)
+    checkAABB(l, t, w, h)
+
+    self.wl, self.wt, self.ww, self.wh = l, t, w, h
+
+    adjustPosition(self)
 end
 
-function camera:zoomTo(zoom)
-	self.scale = zoom
-	return self
+function gamera:setWindow(l, t, w, h)
+    checkAABB(l, t, w, h)
+
+    self.l, self.t, self.w, self.h, self.w2, self.h2 = l, t, w, h, w * 0.5,
+                                                       h * 0.5
+
+    adjustPosition(self)
 end
 
-function camera:attach(x,y,w,h, noclip)
-	x,y = x or 0, y or 0
-	w,h = w or love.graphics.getWidth(), h or love.graphics.getHeight()
+function gamera:setPosition(x, y)
+    checkNumber(x, "x")
+    checkNumber(y, "y")
 
-	self._sx,self._sy,self._sw,self._sh = love.graphics.getScissor()
-	if not noclip then
-		love.graphics.setScissor(x,y,w,h)
-	end
+    self.x, self.y = x, y
 
-	local cx,cy = x+w/2, y+h/2
-	love.graphics.push()
-	love.graphics.translate(cx, cy)
-	love.graphics.scale(self.scale)
-	love.graphics.rotate(self.rot)
-	love.graphics.translate(-self.x, -self.y)
+    adjustPosition(self)
 end
 
-function camera:detach()
-	love.graphics.pop()
-	love.graphics.setScissor(self._sx,self._sy,self._sw,self._sh)
+function gamera:setScale(scale)
+    checkNumber(scale, "scale")
+
+    self.scale = scale
+
+    adjustScale(self)
+    adjustPosition(self)
 end
 
-function camera:draw(...)
-	local x,y,w,h,noclip,func
-	local nargs = select("#", ...)
-	if nargs == 1 then
-		func = ...
-	elseif nargs == 5 then
-		x,y,w,h,func = ...
-	elseif nargs == 6 then
-		x,y,w,h,noclip,func = ...
-	else
-		error("Invalid arguments to camera:draw()")
-	end
+function gamera:setAngle(angle)
+    checkNumber(angle, "angle")
 
-	self:attach(x,y,w,h,noclip)
-	func()
-	self:detach()
+    self.angle = angle
+    self.cos, self.sin = math.cos(angle), math.sin(angle)
+
+    adjustScale(self)
+    adjustPosition(self)
 end
 
--- world coordinates to camera coordinates
-function camera:cameraCoords(x,y, ox,oy,w,h)
-	ox, oy = ox or 0, oy or 0
-	w,h = w or love.graphics.getWidth(), h or love.graphics.getHeight()
+function gamera:getWorld() return self.wl, self.wt, self.ww, self.wh end
 
-	-- x,y = ((x,y) - (self.x, self.y)):rotated(self.rot) * self.scale + center
-	local c,s = cos(self.rot), sin(self.rot)
-	x,y = x - self.x, y - self.y
-	x,y = c*x - s*y, s*x + c*y
-	return x*self.scale + w/2 + ox, y*self.scale + h/2 + oy
+function gamera:getWindow() return self.l, self.t, self.w, self.h end
+
+function gamera:getPosition() return self.x, self.y end
+
+function gamera:getScale() return self.scale end
+
+function gamera:getAngle() return self.angle end
+
+function gamera:getVisible()
+    local w, h = getVisibleArea(self)
+    return self.x - w * 0.5, self.y - h * 0.5, w, h
 end
 
--- camera coordinates to world coordinates
-function camera:worldCoords(x,y, ox,oy,w,h)
-	ox, oy = ox or 0, oy or 0
-	w,h = w or love.graphics.getWidth(), h or love.graphics.getHeight()
+function gamera:getVisibleCorners()
+    local x, y, w2, h2 = self.x, self.y, self.w2, self.h2
 
-	-- x,y = (((x,y) - center) / self.scale):rotated(-self.rot) + (self.x,self.y)
-	local c,s = cos(-self.rot), sin(-self.rot)
-	x,y = (x - w/2 - ox) / self.scale, (y - h/2 - oy) / self.scale
-	x,y = c*x - s*y, s*x + c*y
-	return x+self.x, y+self.y
+    local x1, y1 = cornerTransform(self, x - w2, y - h2)
+    local x2, y2 = cornerTransform(self, x + w2, y - h2)
+    local x3, y3 = cornerTransform(self, x + w2, y + h2)
+    local x4, y4 = cornerTransform(self, x - w2, y + h2)
+
+    return x1, y1, x2, y2, x3, y3, x4, y4
 end
 
-function camera:mousePosition(ox,oy,w,h)
-	local mx,my = love.mouse.getPosition()
-	return self:worldCoords(mx,my, ox,oy,w,h)
+function gamera:draw(f)
+    love.graphics.setScissor(self:getWindow())
+
+    love.graphics.push()
+    local scale = self.scale
+    love.graphics.scale(scale)
+
+    love.graphics.translate((self.w2 + self.l) / scale,
+                            (self.h2 + self.t) / scale)
+    love.graphics.rotate(-self.angle)
+    love.graphics.translate(-self.x, -self.y)
+
+    f(self:getVisible())
+
+    love.graphics.pop()
+
+    love.graphics.setScissor()
 end
 
--- camera scrolling utilities
-function camera:lockX(x, smoother, ...)
-	local dx, dy = (smoother or self.smoother)(x - self.x, self.y, ...)
-	self.x = self.x + dx
-	return self
+function gamera:toWorld(x, y)
+    local scale, sin, cos = self.scale, self.sin, self.cos
+    x, y = (x - self.w2 - self.l) / scale, (y - self.h2 - self.t) / scale
+    x, y = cos * x - sin * y, sin * x + cos * y
+    return x + self.x, y + self.y
 end
 
-function camera:lockY(y, smoother, ...)
-	local dx, dy = (smoother or self.smoother)(self.x, y - self.y, ...)
-	self.y = self.y + dy
-	return self
+function gamera:toScreen(x, y)
+    local scale, sin, cos = self.scale, self.sin, self.cos
+    x, y = x - self.x, y - self.y
+    x, y = cos * x + sin * y, -sin * x + cos * y
+    return scale * x + self.w2 + self.l, scale * y + self.h2 + self.t
 end
 
-function camera:lockPosition(x,y, smoother, ...)
-	return self:move((smoother or self.smoother)(x - self.x, y - self.y, ...))
-end
+return gamera
 
-function camera:lockWindow(x, y, x_min, x_max, y_min, y_max, smoother, ...)
-	-- figure out displacement in camera coordinates
-	x,y = self:cameraCoords(x,y)
-	local dx, dy = 0,0
-	if x < x_min then
-		dx = x - x_min
-	elseif x > x_max then
-		dx = x - x_max
-	end
-	if y < y_min then
-		dy = y - y_min
-	elseif y > y_max then
-		dy = y - y_max
-	end
-
-	-- transform displacement to movement in world coordinates
-	local c,s = cos(-self.rot), sin(-self.rot)
-	dx,dy = (c*dx - s*dy) / self.scale, (s*dx + c*dy) / self.scale
-
-	-- move
-	self:move((smoother or self.smoother)(dx,dy,...))
-end
-
--- the module
-return setmetatable({new = new, smooth = camera.smooth},
-	{__call = function(_, ...) return new(...) end})

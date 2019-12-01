@@ -1,14 +1,19 @@
 -- shortcut to love graphics
 lp = love.physics
 lg = love.graphics
+lw = love.window
+lm = love.mouse
 
 -- helper libs
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
 
 -- create instance for camera
-local camera = require('libs/hump/camera')
-cam = camera()
+globalWidth = 5000
+globalHeight = 5000
+local gamera = require('libs/hump/camera')
+cam = gamera.new(0, 0, globalWidth, globalHeight)
+cam:setWindow(0, 0, lg.getWidth(), lg.getHeight())
 
 -- create world
 world = love.physics.newWorld(0, 0, true)

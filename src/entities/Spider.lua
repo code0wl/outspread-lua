@@ -43,8 +43,8 @@ function Spider(spiderConfig)
             timePassedSpider = 0
 
             spider.target = {
-                x = math.random(lg.getWidth(), 0),
-                y = math.random(lg.getHeight(), 0)
+                x = math.random(globalWidth, 0),
+                y = math.random(globalHeight, 0)
             }
         elseif spider.target == nil then
             spider.target = spider
