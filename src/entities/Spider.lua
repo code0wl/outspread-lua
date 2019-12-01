@@ -5,15 +5,12 @@ function Spider(spiderConfig)
     spider.state = spiderConfig.state
     spider.type = spiderConfig.type
 
-    spider.images = {
-        lg.newImage("images/spiders/spider" .. spider.type ..
-                        "/spritesheets/sheet_spider_walk-small.png")
-    }
+    spider.image = lg.newImage("images/spiders/spider" .. spider.type ..
+                                    "/spritesheets/sheet_spider_walk-small.png")
 
     spider.x = -100
     spider.y = -100
     spider.hasFood = nil
-    spider.currentState = spider.images[spider.state]
     spider.speed = 70
     spider.isSpider = true
     spider.width = 180
@@ -27,8 +24,8 @@ function Spider(spiderConfig)
     spider.fixture = lp.newFixture(spider.body, spider.shape)
 
     spider.grid = anim8.newGrid(spider.width, spider.height,
-                                spider.currentState:getWidth(),
-                                spider.currentState:getHeight() + 1)
+                                spider.image:getWidth(),
+                                spider.image:getHeight() + 1)
 
     spider.animation = anim8.newAnimation(spider.grid('1-5', 1, '1-5', 2), 0.04)
 
@@ -55,7 +52,7 @@ function Spider(spiderConfig)
     end
 
     function spider.draw()
-        spider.animation:draw(spider.currentState, spider.body:getX(),
+        spider.animation:draw(spider.image, spider.body:getX(),
                               spider.body:getY(),
                               util.getAngle(spider.target.y, spider.body:getY(),
                                             spider.target.x, spider.body:getX()) +

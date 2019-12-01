@@ -12,7 +12,7 @@ function Ant(antConfig)
     ant.y = antConfig.y
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
-    ant.speed = 80
+    ant.speed = 90
     ant.width = 16
     ant.height = 27
     ant.target = nil
@@ -39,9 +39,9 @@ function Ant(antConfig)
                            util.getCenter(ant.height))
 
         if ant.hasFood then
-            ant.speed = 80
+            ant.speed = 60
             lg.setColor(255, 153, 153)
-            lg.circle("fill", ant.body:getX(), ant.body:getY() + 4, 2)
+            lg.circle("fill", ant.body:getX(), ant.body:getY(), 2)
         end
 
     end
@@ -60,11 +60,13 @@ function Ant(antConfig)
             }
         end
 
-        for i, f in ipairs(foodCollection.food) do
-            if util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
-                40 then
-                ant.hasFood = true
-                f.amount = f.amount - 1
+        for i, f in ipairs(foodCollection) do
+            if f.amount > 0 then
+                if util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x,
+                                        f.y) < 40 then
+                    ant.hasFood = true
+                    f.amount = f.amount - 1
+                end
             end
         end
 

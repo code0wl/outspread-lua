@@ -1,15 +1,15 @@
 local maxZoom = 3
 local maxOut = 0
 local currentScale = 1
-local scrollThreshold = 40
+local scrollThreshold = 50
 local scrollSpeed = 10
 
 function love.wheelmoved(x, y)
     if y > 0 and cam.scale < maxZoom then
-        currentScale = currentScale + 1
+        currentScale = currentScale + .2
         cam:setScale(currentScale)
     elseif y < 0 and cam.scale > maxOut then
-        currentScale = currentScale - 1
+        currentScale = currentScale - .2
         cam:setScale(currentScale)
     end
     lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)

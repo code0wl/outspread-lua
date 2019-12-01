@@ -6,10 +6,12 @@ local Rock = require("entities/Rock")
 local Colony = require("entities/Colony")
 local Control = require("entities/Control")
 local Spider = require("entities/Spider")
-local FoodCollection = require("entities/FoodCollection")
+
+-- needs refactor to spawn food
+local Food = require("entities/Food")
+foodCollection = {}
 
 -- generate via tile object
-foodCollection = FoodCollection({type = 1, x = 400, y = 300, amount = 1000000})
 
 Colony({type = 1, x = 200, y = 600, population = 400})
 Colony({type = 2, x = 1000, y = 200, population = 400})
@@ -23,6 +25,10 @@ function love.load()
     bg_quad = lg.newQuad(0, 0, globalWidth, globalHeight, background:getWidth(),
                          background:getHeight())
     spider = Spider({type = 1, x = 600, y = 100, state = 1})
+
+    level1 = sti("levels/level-1.lua")
+
+    for i, obj in pairs(level1.layers["food"].objects) do Food(obj) end
 
 end
 
@@ -52,16 +58,18 @@ function love.draw()
     local mouseX, mouseY = lm.getPosition()
     local currentX, currentY = cam:getPosition()
 
+    -- Camera
     cam:draw(function(l, t, w, h)
 
         lg.draw(background, bg_quad, 0, 0)
-        foodCollection.draw()
 
         -- draw ants
         for _, colony in ipairs(Colonies) do
             colony.nest.draw()
             for _, ant in ipairs(colony.nest.ants) do ant.draw() end
         end
+
+        for _, food in ipairs(foodCollection) do food.draw() end
 
         spider.draw()
 
