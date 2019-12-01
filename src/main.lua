@@ -13,6 +13,7 @@ foodCollection = {}
 local control = Control({panspeed = 300})
 
 function love.load()
+
     background = love.graphics.newImage("images/background/background.png")
 
     background:setWrap("repeat", "repeat")
@@ -42,6 +43,9 @@ function love.update(dt)
     world:update(dt)
     spider.update(dt)
 
+    -- add daylight 
+    local Lib = require("libs/light/light")
+
     for _, colony in ipairs(Colonies) do
         colony.nest.update(dt)
         for i, ant in ipairs(colony.nest.ants) do
@@ -60,9 +64,10 @@ function love.update(dt)
 end
 
 function love.draw()
-
     local mouseX, mouseY = lm.getPosition()
     local currentX, currentY = cam:getPosition()
+
+    light_world:begin()
 
     -- Camera
     cam:draw(function(l, t, w, h)

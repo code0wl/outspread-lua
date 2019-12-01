@@ -11,7 +11,7 @@ anim8 = require('libs/anim8')
 -- create instance for camera
 globalWidth = 5000
 globalHeight = 5000
-local gamera = require('libs/hump/camera')
+local gamera = require('libs/gamera/gamera')
 cam = gamera.new(0, 0, globalWidth, globalHeight)
 cam:setWindow(0, 0, lg.getWidth(), lg.getHeight())
 
