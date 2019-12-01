@@ -6,15 +6,9 @@ local Rock = require("entities/Rock")
 local Colony = require("entities/Colony")
 local Control = require("entities/Control")
 local Spider = require("entities/Spider")
-
--- needs refactor to spawn food
 local Food = require("entities/Food")
+
 foodCollection = {}
-
--- generate via tile object
-
-Colony({type = 1, x = 200, y = 600, population = 400})
-Colony({type = 2, x = 1000, y = 200, population = 400})
 
 local control = Control({panspeed = 300})
 
@@ -26,9 +20,21 @@ function love.load()
                          background:getHeight())
     spider = Spider({type = 1, x = 600, y = 100, state = 1})
 
+    cam:setScale(1)
+
     level1 = sti("levels/level-1.lua")
 
     for i, obj in pairs(level1.layers["food"].objects) do Food(obj) end
+    for i, obj in pairs(level1.layers["nest"].objects) do
+        Colony({
+            type = i,
+            x = obj.x,
+            y = obj.y,
+            population = 100,
+            width = obj.width,
+            height = obj.height
+        })
+    end
 
 end
 
