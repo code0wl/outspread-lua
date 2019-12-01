@@ -1,7 +1,7 @@
 local maxZoom = 3
 local maxOut = 0
 local currentScale = 1
-local scrollThreshold = 70
+local scrollThreshold = 40
 local scrollSpeed = 10
 
 function love.wheelmoved(x, y)
@@ -14,6 +14,8 @@ function love.wheelmoved(x, y)
     end
     lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 end
+
+function love.mousemoved(x, y, dx, dy, istouch) dragCamera(x, y, dx, dy) end
 
 function updateCameraLocation(mouseX, mouseY, currentX, currentY)
     if isScrollingLeft(mouseX) then
@@ -59,5 +61,9 @@ function isScrollingDown(mouseY)
     return mouseY > (lg.getHeight() - scrollThreshold)
 end
 
-function dragCamera(mouseX, mouseY, currentX, currentY) end
-
+function dragCamera(x, y, dx, dy)
+    if lm.isDown(1) then
+        local currentX, currentY = cam:getPosition()
+        cam:setPosition(currentX - dx, currentY - dy)
+    end
+end

@@ -67,12 +67,6 @@ function love.draw()
 
         updateCameraLocation(mouseX, mouseY, currentX, currentY)
 
-        if lm.isDown(2) then
-            --  TODO drop phermones
-        end
-
-        if lm.isDown(1) or lm.isDown(3) then dragCamera(mouseX, mouseY, currentX, currentY) end
-
     end)
 
     lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
