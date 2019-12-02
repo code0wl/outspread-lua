@@ -6,10 +6,10 @@ local scrollSpeed = 10
 
 function love.wheelmoved(x, y)
     if y > 0 and cam.scale < maxZoom then
-        currentScale = currentScale + .05
+        currentScale = currentScale + .2
         cam:setScale(currentScale)
     elseif y < 0 and cam.scale > maxOut then
-        currentScale = currentScale - .05
+        currentScale = currentScale - .2
         cam:setScale(currentScale)
     end
 end

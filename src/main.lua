@@ -31,7 +31,7 @@ function love.load()
             type = i,
             x = obj.x,
             y = obj.y,
-            population = 100,
+            population = 400,
             width = obj.width,
             height = obj.height
         })
@@ -51,9 +51,9 @@ function love.update(dt)
 
             if Director.checkPreyCollision(ant, spider) then
                 ant.isAlive = false
-                table.remove(colony.nest.ants, i)
             end
-
+            
+            if not ant.isAlive then table.remove(colony.nest.ants, i) end
         end
     end
 
@@ -75,7 +75,10 @@ function love.draw()
             for _, ant in ipairs(colony.nest.ants) do ant.draw() end
         end
 
-        for _, food in ipairs(foodCollection) do food.draw() end
+        for i, food in ipairs(foodCollection) do
+            if (food.amount < 1) then table.remove(foodCollection, i) end
+            food.draw()
+        end
 
         spider.draw()
 

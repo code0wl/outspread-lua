@@ -12,11 +12,12 @@ function Ant(antConfig)
     ant.y = antConfig.y
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
-    ant.speed = 90
+    ant.speed = 190
     ant.width = 16
     ant.height = 27
     ant.target = nil
     ant.isAlive = true
+    ant.scentLocation = nil
 
     -- Physics
     ant.body = lp.newBody(world, ant.x, ant.y, "dynamic")
@@ -39,7 +40,7 @@ function Ant(antConfig)
                            util.getCenter(ant.height))
 
         if ant.hasFood then
-            ant.speed = 60
+            ant.speed = 180
             lg.setColor(255, 153, 153)
             lg.circle("fill", ant.body:getX(), ant.body:getY(), 2)
         end
@@ -50,9 +51,11 @@ function Ant(antConfig)
 
         timePassed = timePassed + 1 * dt
 
-        if ant.hasFood or ant.target == nil then
-            ant.target = ant.nest
-        elseif timePassed > 3 then
+        -- Walk to base
+        if ant.hasFood or ant.target == nil then ant.target = ant.nest end
+
+        -- Walk randomnly
+        if timePassed > 2 then
             timePassed = 0
             ant.target = {
                 x = math.random(globalWidth, 0),
@@ -60,26 +63,33 @@ function Ant(antConfig)
             }
         end
 
+        -- Follow scent
+        if not ant.hasFood and ant.scentLocation then
+            ant.target = ant.scentLocation
+        end
+
         for i, f in ipairs(foodCollection) do
-            if f.amount > 0 then
-                if util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x,
-                                        f.y) < 40 then
-                    ant.hasFood = true
-                    f.amount = f.amount - 1
-                end
+            if not ant.hasFood and
+                util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
+                f.amount then
+                ant.hasFood = true
+                ant.scentLocation = f
+                f.amount = f.amount - 1
+            elseif ant.scentLocation and ant.scentLocation.amount < 1 then
+                ant.scentLocation = nil
             end
         end
 
+        -- deliver food to nest
         if ant.hasFood then
-            if util.distanceBetween(ant.body:getX(), ant.body:getY(), target.x,
-                                    target.y) < 45 then
+            if util.distanceBetween(ant.body:getX(), ant.body:getY(),
+                                    ant.nest.x, ant.nest.y) < 45 then
                 ant.hasFood = false
-                target.collectedFood = target.collectedFood + 1
+                ant.nest.collectedFood = target.collectedFood + 1
             end
         end
 
         util.setDirectionToTarget(ant, dt)
-
     end
 
     return ant
