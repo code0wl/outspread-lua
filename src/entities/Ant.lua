@@ -30,6 +30,7 @@ function Ant(antConfig)
 
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.image:getWidth(),
                              ant.image:getHeight() + 1)
+
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3),
                                        0.04)
 
@@ -48,58 +49,71 @@ function Ant(antConfig)
             lg.circle("fill", ant.body:getX(), ant.body:getY(), 2)
         end
 
+        if ant.signal.active then
+            lg.circle('line', ant.body:getX(), ant.body:getY(),
+                      ant.signal.radius)
+        end
+
     end
 
-    function ant.handleTarget(target, dt)
-
-        timePassed = timePassed + 1 * dt
-
-        -- Walk to base
-        if ant.hasFood then ant.target = ant.nest end
-
-        -- Walk randomnly
-        if timePassed > 2 or ant.target == nil then
-            timePassed = 0
-            ant.target = {
-                x = math.random(globalWidth, 0),
-                y = math.random(globalHeight, 0)
-            }
-        end
-
-        -- Follow scent
-        if not ant.hasFood and ant.scentLocation then
-            ant.target = ant.scentLocation
-        end
-
-        -- Refactor me
-        for i, f in ipairs(foodCollection) do
-            if not ant.hasFood and
-                util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
-                f.amount then
-                ant.hasFood = true
-                ant.scentLocation = f
-                ant.signal.active = true
-                f.amount = f.amount - 1
-            elseif ant.scentLocation and ant.scentLocation.amount < 1 then
-                ant.scentLocation = nil
-                ant.signal.active = false
-            end
-        end
-
-        -- deliver food to nest
-        if ant.hasFood then
-            if util.distanceBetween(ant.body:getX(), ant.body:getY(),
-                                    ant.nest.x, ant.nest.y) < 45 then
-                ant.hasFood = false
-                target.collectedFood = target.collectedFood + 1
-            end
-        end
-
-        util.setDirectionToTarget(ant, dt)
-    end
+    function ant.handleTarget(target, dt) setTargetForAnt(ant, target, dt) end
 
     return ant
 
+end
+
+function handleFood(ant)
+    for i, f in ipairs(foodCollection) do
+        if not ant.hasFood and
+            util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
+            f.amount then
+            ant.hasFood = true
+            ant.scentLocation = f
+            ant.signal.active = true
+            f.amount = f.amount - 1
+        elseif ant.scentLocation and ant.scentLocation.amount < 1 then
+            ant.scentLocation = nil
+            ant.signal.active = false
+        end
+    end
+end
+
+function returnFoodToNest(ant, target)
+    if ant.hasFood then
+        if util.distanceBetween(ant.body:getX(), ant.body:getY(), ant.nest.x,
+                                ant.nest.y) < 45 then
+            ant.hasFood = false
+            target.collectedFood = target.collectedFood + 1
+        end
+    end
+end
+
+function setTargetForAnt(ant, target, dt)
+    timePassed = timePassed + 1 * dt
+
+    if ant.hasFood then ant.target = ant.nest end
+
+    -- Walk randomnly
+    if timePassed > 2 or ant.target == nil then
+        timePassed = 0
+        ant.target = {
+            x = math.random(globalWidth, 0),
+            y = math.random(globalHeight, 0)
+        }
+    end
+
+    -- Follow scent
+    if not ant.hasFood and ant.scentLocation then
+        ant.target = ant.scentLocation
+    end
+
+    -- Refactor me
+    handleFood(ant)
+
+    -- deliver food to nest
+    returnFoodToNest(ant, target)
+
+    util.setDirectionToTarget(ant, dt)
 end
 
 return Ant

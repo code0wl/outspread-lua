@@ -9,12 +9,10 @@ function Spider(spiderConfig)
                                    "/spritesheets/sheet_spider_walk-small.png")
 
     spider.position = Component.position(-100, 100)
-    spider.hasFood = nil
     spider.speed = 70
-    spider.isSpider = true
     spider.width = 180
     spider.height = 150
-    spider.target = nil
+    spider.target = spider.position
     spider.alive = true
 
     -- Physics
@@ -41,8 +39,6 @@ function Spider(spiderConfig)
 
             spider.target = Component.position(math.random(globalWidth, 0),
                                                math.random(globalHeight, 0))
-        elseif spider.target == nil then
-            spider.target = spider.position
         end
 
         util.setDirectionToTarget(spider, dt)

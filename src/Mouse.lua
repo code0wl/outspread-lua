@@ -14,7 +14,7 @@ function love.wheelmoved(x, y)
     end
 end
 
-function love.mousemoved(x, y, dx, dy, istouch) dragCamera(x, y, dx, dy) end
+function love.mousemoved(x, y, dx, dy, istouch) dragMouse(x, y, dx, dy) end
 
 function updateCameraLocation(mouseX, mouseY, currentX, currentY)
     if isScrollingLeft(mouseX) then
@@ -60,9 +60,14 @@ function isScrollingDown(mouseY)
     return mouseY > (lg.getHeight() - scrollThreshold)
 end
 
-function dragCamera(x, y, dx, dy)
-    if lm.isDown(1) then
+function dragMouse(x, y, dx, dy)
+    if lm.isDown(2) then
         local currentX, currentY = cam:getPosition()
         cam:setPosition(currentX - dx, currentY - dy)
+    end
+
+    if lm.isDown(1) then
+        local phermone = {x = x, y = y}
+        table.insert(userPhermones, phermone)
     end
 end
