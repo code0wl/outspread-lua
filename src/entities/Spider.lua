@@ -6,10 +6,9 @@ function Spider(spiderConfig)
     spider.type = spiderConfig.type
 
     spider.image = lg.newImage("images/spiders/spider" .. spider.type ..
-                                    "/spritesheets/sheet_spider_walk-small.png")
+                                   "/spritesheets/sheet_spider_walk-small.png")
 
-    spider.x = -100
-    spider.y = -100
+    spider.position = Component.position(-100, 100)
     spider.hasFood = nil
     spider.speed = 70
     spider.isSpider = true
@@ -19,7 +18,8 @@ function Spider(spiderConfig)
     spider.alive = true
 
     -- Physics
-    spider.body = lp.newBody(world, spider.x, spider.y, 'dynamic')
+    spider.body = lp.newBody(world, spider.position.x, spider.position.y,
+                             'dynamic')
     spider.shape = lp.newRectangleShape(70, 50)
     spider.fixture = lp.newFixture(spider.body, spider.shape)
 
@@ -39,12 +39,10 @@ function Spider(spiderConfig)
 
             timePassedSpider = 0
 
-            spider.target = {
-                x = math.random(globalWidth, 0),
-                y = math.random(globalHeight, 0)
-            }
+            spider.target = Component.position(math.random(globalWidth, 0),
+                                               math.random(globalHeight, 0))
         elseif spider.target == nil then
-            spider.target = spider
+            spider.target = spider.position
         end
 
         util.setDirectionToTarget(spider, dt)

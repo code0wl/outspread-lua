@@ -12,10 +12,9 @@ end
 
 -- CheckCollision with physics body
 function util.CheckCollisionWithPhysics(body1, body2)
-    return util.CheckCollision(body1.body:getX(), body1.body:getY(), body1.width,
-                               body1.height, body2.body:getX(),
-                               body2.body:getY(), body2.width,
-                               body2.height)
+    return util.CheckCollision(body1.body:getX(), body1.body:getY(),
+                               body1.width, body1.height, body2.body:getX(),
+                               body2.body:getY(), body2.width, body2.height)
 
 end
 
@@ -111,6 +110,8 @@ function util.logTable(node)
     -- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
     table.insert(output, output_str)
     output_str = table.concat(output)
+
+    return output_str
 
 end
 

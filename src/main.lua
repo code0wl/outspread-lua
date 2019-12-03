@@ -1,6 +1,6 @@
 require("global")
 require("events")
-require("component/main")
+Component = require("component/main")
 require("system/main")
 
 local Rock = require("entities/Rock")
