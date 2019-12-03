@@ -8,8 +8,8 @@ function Ant(antConfig)
     ant.image = lg.newImage("images/ants/spritesheets/ant" .. ant.type ..
                                 "/_ant_dead-small.png")
 
-    ant.x = antConfig.x
-    ant.y = antConfig.y
+    ant.position.x = antConfig.x
+    ant.position.y = antConfig.y
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
     ant.currentState = ant.images[ant.state]
@@ -20,7 +20,7 @@ function Ant(antConfig)
     ant.isAlive = true
 
     -- Physics
-    ant.body = lp.newBody(world, ant.x, ant.y, "dynamic")
+    ant.body = lp.newBody(world, ant.position.x, ant.position.y, "dynamic")
     ant.shape = lp.newRectangleShape(4, 4)
     ant.fixture = lp.newFixture(ant.body, ant.shape, .5)
     ant.body:setSleepingAllowed(true)

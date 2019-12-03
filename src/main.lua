@@ -1,5 +1,7 @@
 require("global")
 require("events")
+require("component/main")
+require("system/main")
 
 local Rock = require("entities/Rock")
 local Colony = require("entities/Colony")
@@ -12,6 +14,9 @@ foodCollection = {}
 local control = Control({panspeed = 300})
 
 function love.load()
+
+    gameWorld = initializeECSWorld()
+
     red = 26 / 255
     green = 154 / 255
     blue = 105 / 255
@@ -39,6 +44,8 @@ function love.load()
 end
 
 function love.update(dt)
+
+    gameWorld:update(dt)
     world:update(dt)
     spider.update(dt)
 
@@ -111,3 +118,6 @@ function love.draw()
                             collectgarbage('count'), 10, 100)
 
 end
+
+-- Initialize the ECS world
+function initializeECSWorld() return tiny.world(System.movement) end
