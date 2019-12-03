@@ -4,9 +4,6 @@ lg = love.graphics
 lw = love.window
 lm = love.mouse
 
--- ECS
-tiny = require("libs/tiny/tiny")
-
 -- helper libs
 sti = require("libs/sti")
 anim8 = require('libs/anim8')

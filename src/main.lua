@@ -1,21 +1,16 @@
 require("global")
-require("events")
 Component = require("component/main")
-require("system/main")
 
 local Rock = require("entities/Rock")
 local Colony = require("entities/Colony")
-local Control = require("entities/Control")
+local Control = require("Control")
+require("Mouse")
 local Spider = require("entities/Spider")
 local Food = require("entities/Food")
 
 foodCollection = {}
 
-local control = Control({panspeed = 300})
-
 function love.load()
-
-    gameWorld = initializeECSWorld()
 
     red = 26 / 255
     green = 154 / 255
@@ -45,9 +40,9 @@ end
 
 function love.update(dt)
 
-    gameWorld:update(dt)
     world:update(dt)
     spider.update(dt)
+    Control.update(dt)
 
     for _, colony in ipairs(Colonies) do
         colony.nest.update(dt)
@@ -78,7 +73,6 @@ function love.update(dt)
 
     end
 
-    control.update(dt)
 end
 
 function love.draw()
