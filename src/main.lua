@@ -1,7 +1,6 @@
 require("global")
 require("events")
 
-local Director = require("entities/Director")
 local Rock = require("entities/Rock")
 local Colony = require("entities/Colony")
 local Control = require("entities/Control")
@@ -13,12 +12,12 @@ foodCollection = {}
 local control = Control({panspeed = 300})
 
 function love.load()
+    red = 26 / 255
+    green = 154 / 255
+    blue = 105 / 255
 
-    background = love.graphics.newImage("images/background/background.png")
+    love.graphics.setBackgroundColor(red, green, blue)
 
-    background:setWrap("repeat", "repeat")
-    bg_quad = lg.newQuad(0, 0, globalWidth, globalHeight, background:getWidth(),
-                         background:getHeight())
     spider = Spider({type = 1, x = 600, y = 100, state = 1})
 
     cam:setScale(1)
@@ -31,7 +30,7 @@ function love.load()
             type = i,
             x = obj.x,
             y = obj.y,
-            population = 400,
+            population = 10,
             width = obj.width,
             height = obj.height
         })
@@ -45,16 +44,37 @@ function love.update(dt)
 
     for _, colony in ipairs(Colonies) do
         colony.nest.update(dt)
+
+        -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
             ant.update(dt)
             ant.handleTarget(colony.nest, dt)
 
-            if Director.checkPreyCollision(ant, spider) then
-                ant.isAlive = false
+            if util.CheckCollisionWithPhysics(ant, spider) then
+                -- ant.isAlive = false
             end
-            
+
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
+
+            -- ant signals
+            for j, a in ipairs(colony.nest.ants) do
+
+                if a.signal.active and not ant.scentLocation then
+
+                    if util.distanceBetween(a.body:getX(), a.body:getY(),
+                                            ant.body:getX(), ant.body:getY()) <
+                        a.signal.radius then
+
+                        ant.scentLocation = a.scentLocation
+
+                    end
+
+                end
+
+            end
+
         end
+
     end
 
     control.update(dt)
@@ -66,8 +86,6 @@ function love.draw()
 
     -- Camera
     cam:draw(function(l, t, w, h)
-
-        lg.draw(background, bg_quad, 0, 0)
 
         -- draw ants
         for _, colony in ipairs(Colonies) do

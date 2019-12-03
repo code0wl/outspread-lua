@@ -12,7 +12,7 @@ function Ant(antConfig)
     ant.y = antConfig.y
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
-    ant.speed = 190
+    ant.speed = 90
     ant.width = 16
     ant.height = 27
     ant.target = nil
@@ -24,6 +24,9 @@ function Ant(antConfig)
     ant.shape = lp.newRectangleShape(4, 4)
     ant.fixture = lp.newFixture(ant.body, ant.shape, .5)
     ant.body:setSleepingAllowed(true)
+
+    -- Signal first draft
+    ant.signal = {radius = 100, active = false}
 
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.image:getWidth(),
                              ant.image:getHeight() + 1)
@@ -40,7 +43,7 @@ function Ant(antConfig)
                            util.getCenter(ant.height))
 
         if ant.hasFood then
-            ant.speed = 180
+            ant.speed = 60
             lg.setColor(255, 153, 153)
             lg.circle("fill", ant.body:getX(), ant.body:getY(), 2)
         end
@@ -52,10 +55,10 @@ function Ant(antConfig)
         timePassed = timePassed + 1 * dt
 
         -- Walk to base
-        if ant.hasFood or ant.target == nil then ant.target = ant.nest end
+        if ant.hasFood then ant.target = ant.nest end
 
         -- Walk randomnly
-        if timePassed > 2 then
+        if timePassed > 2 or ant.target == nil then
             timePassed = 0
             ant.target = {
                 x = math.random(globalWidth, 0),
@@ -68,15 +71,18 @@ function Ant(antConfig)
             ant.target = ant.scentLocation
         end
 
+        -- Refactor me
         for i, f in ipairs(foodCollection) do
             if not ant.hasFood and
                 util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
                 f.amount then
                 ant.hasFood = true
                 ant.scentLocation = f
+                ant.signal.active = true
                 f.amount = f.amount - 1
             elseif ant.scentLocation and ant.scentLocation.amount < 1 then
                 ant.scentLocation = nil
+                ant.signal.active = false
             end
         end
 
@@ -85,7 +91,7 @@ function Ant(antConfig)
             if util.distanceBetween(ant.body:getX(), ant.body:getY(),
                                     ant.nest.x, ant.nest.y) < 45 then
                 ant.hasFood = false
-                ant.nest.collectedFood = target.collectedFood + 1
+                target.collectedFood = target.collectedFood + 1
             end
         end
 
