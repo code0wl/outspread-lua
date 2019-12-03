@@ -58,19 +58,13 @@ function love.update(dt)
 
             -- ant signals
             for j, a in ipairs(colony.nest.ants) do
-
                 if a.signal.active and not ant.scentLocation then
-
                     if util.distanceBetween(a.body:getX(), a.body:getY(),
                                             ant.body:getX(), ant.body:getY()) <
                         a.signal.radius then
-
                         ant.scentLocation = a.scentLocation
-
                     end
-
                 end
-
             end
 
         end
