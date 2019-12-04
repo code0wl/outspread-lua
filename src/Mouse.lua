@@ -61,13 +61,14 @@ function isScrollingDown(mouseY)
 end
 
 function dragMouse(x, y, dx, dy)
-    if lm.isDown(2) then
-        local currentX, currentY = cam:getPosition()
+    local currentX, currentY = cam:getPosition()
+
+    if lm.isDown(2) or lm.isDown(3) then
         cam:setPosition(currentX - dx, currentY - dy)
     end
 
     if lm.isDown(1) then
-        local phermone = {x = x, y = y}
-        table.insert(userPhermones, phermone)
+        local phermone = {x = x, y = y, dx = dx, dy = dy}
+        table.insert(Player.phermones, phermone)
     end
 end

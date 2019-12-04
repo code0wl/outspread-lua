@@ -7,6 +7,7 @@ lm = love.mouse
 -- helper libs
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
+inspect = require("libs/inspect/inspect")
 
 -- create instance for camera
 globalWidth = 5000

@@ -1,18 +1,19 @@
 require("global")
+require("Mouse")
+require("Debug")
+
 Component = require("component/main")
 
 local Rock = require("entities/Rock")
 local Colony = require("entities/Colony")
 local Control = require("Control")
-require("Mouse")
 local Spider = require("entities/Spider")
 local Food = require("entities/Food")
+Player = require("entities/Player")
 
-userPhermones = {}
 foodCollection = {}
 
 function love.load()
-
     red = 26 / 255
     green = 154 / 255
     blue = 105 / 255
@@ -36,7 +37,6 @@ function love.load()
             height = obj.height
         })
     end
-
 end
 
 function love.update(dt)
@@ -44,6 +44,7 @@ function love.update(dt)
     world:update(dt)
     spider.update(dt)
     Control.update(dt)
+    Player:update()
 
     for _, colony in ipairs(Colonies) do
         colony.nest.update(dt)
@@ -80,11 +81,11 @@ end
 function love.draw()
     local mouseX, mouseY = lm.getPosition()
     local currentX, currentY = cam:getPosition()
-
+    
     -- Camera
     cam:draw(function(l, t, w, h)
 
-        for i, phermone in ipairs(userPhermones) do
+        for i, phermone in ipairs(Player.phermones) do
             lg.setColor(255, 153, 153)
             lg.circle('line', phermone.x, phermone.y, 5)
         end
@@ -110,16 +111,3 @@ function love.draw()
 
 end
 
-function printDetailsToScreen()
-    lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
-
-    lg.print("Current black Pop : " ..
-                 tostring(table.getn(Colonies[1].nest.ants)), 10, 40)
-
-    lg.print(
-        "Current red Pop : " .. tostring(table.getn(Colonies[2].nest.ants)), 10,
-        70)
-
-    love.graphics.print('Memory actually used (in kB): ' ..
-                            collectgarbage('count'), 10, 100)
-end
