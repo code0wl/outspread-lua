@@ -26,7 +26,9 @@ function love.load()
 
     level1 = sti("levels/level-1.lua")
 
-    for i, obj in pairs(level1.layers["food"].objects) do Food(obj) end
+    for i, obj in pairs(level1.layers["food"].objects) do
+        table.insert(foodCollection, Food:new(obj))
+    end
     for i, obj in pairs(level1.layers["nest"].objects) do
         Colony({
             type = i,
@@ -81,7 +83,7 @@ end
 function love.draw()
     local mouseX, mouseY = lm.getPosition()
     local currentX, currentY = cam:getPosition()
-    
+
     -- Camera
     cam:draw(function(l, t, w, h)
 
@@ -96,12 +98,12 @@ function love.draw()
             for _, ant in ipairs(colony.nest.ants) do ant.draw() end
         end
 
+        spider.draw()
+
         for i, food in ipairs(foodCollection) do
             if (food.amount < 1) then table.remove(foodCollection, i) end
-            food.draw()
+            food:draw()
         end
-
-        spider.draw()
 
         updateCameraLocation(mouseX, mouseY, currentX, currentY)
 
