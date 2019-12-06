@@ -1,18 +1,18 @@
 local Nest = require("entities/Nest")
 
-Colonies = {}
+local Colony = {}
 
-function Colony(colonyConfig)
-    local colony = {}
+function Colony:new(colonyConfig)
+    local colony = setmetatable({}, {__index = Colony})
+
     colony.type = colonyConfig.type
     colony.population = colonyConfig.population
-    colony.nest = Nest({
+    colony.nest = Nest:new({
         type = colony.type,
         x = colonyConfig.x,
         y = colonyConfig.y,
         population = colonyConfig.population
     })
-    table.insert(Colonies, colony)
 
     return colony
 end

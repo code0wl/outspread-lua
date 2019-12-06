@@ -1,8 +1,9 @@
 local Ant = require("entities/Ant")
 
-function Nest(nestConfig)
-    local nest = {}
+local Nest = {}
 
+function Nest:new(nestConfig)
+    local nest = setmetatable({}, {__index = Nest})
     nest.type = nestConfig.type
     nest.x = nestConfig.x
     nest.y = nestConfig.y
@@ -21,25 +22,19 @@ function Nest(nestConfig)
                      Ant({type = nest.type, x = nest.x, y = nest.y, state = 1}))
     end
 
-    function nest.update()
-        for i = 1, nest.collectedFood do
-            nest.collectedFood = nest.collectedFood - 1
-            table.insert(nest.ants, Ant({
-                type = nest.type,
-                x = nest.x,
-                y = nest.y,
-                state = 1
-            }))
-        end
-
-    end
-
-    function nest.draw()
-        lg.draw(terrainSprites.terrain, nest.graphic, nest.x, nest.y, nil, .4,
-                .4)
-    end
-
     return nest
+end
+
+function Nest:update()
+    for i = 1, self.collectedFood do
+        self.collectedFood = self.collectedFood - 1
+        table.insert(self.ants,
+                     Ant({type = self.type, x = self.x, y = self.y, state = 1}))
+    end
+end
+
+function Nest:draw()
+    lg.draw(terrainSprites.terrain, self.graphic, self.x, self.y, nil, .4, .4)
 end
 
 return Nest

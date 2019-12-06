@@ -11,6 +11,7 @@ local Spider = require("entities/Spider")
 local Food = require("entities/Food")
 Player = require("entities/Player")
 
+local Colonies = {}
 foodCollection = {}
 
 function love.load()
@@ -30,14 +31,16 @@ function love.load()
         table.insert(foodCollection, Food:new(obj))
     end
     for i, obj in pairs(level1.layers["nest"].objects) do
-        Colony({
-            type = i,
-            x = obj.x,
-            y = obj.y,
-            population = 10,
-            width = obj.width,
-            height = obj.height
-        })
+        table.insert(Colonies, Colony:new(
+                         {
+                type = i,
+                x = obj.x,
+                y = obj.y,
+                population = 200,
+                width = obj.width,
+                height = obj.height
+            }))
+
     end
 end
 
@@ -49,7 +52,7 @@ function love.update(dt)
     Player:update()
 
     for _, colony in ipairs(Colonies) do
-        colony.nest.update(dt)
+        colony.nest:update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
@@ -58,7 +61,6 @@ function love.update(dt)
 
             if util.CheckCollisionWithPhysics(ant, spider) then
                 -- fight with spider
-
             end
 
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
@@ -94,7 +96,7 @@ function love.draw()
 
         -- draw ants
         for _, colony in ipairs(Colonies) do
-            colony.nest.draw()
+            colony.nest:draw()
             for _, ant in ipairs(colony.nest.ants) do ant.draw() end
         end
 
@@ -109,7 +111,7 @@ function love.draw()
 
     end)
 
-    printDetailsToScreen()
+    printDetailsToScreen(Colonies)
 
 end
 

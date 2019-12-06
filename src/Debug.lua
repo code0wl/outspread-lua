@@ -1,4 +1,4 @@
-function printDetailsToScreen()
+function printDetailsToScreen(Colonies)
     lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
     lg.print("Current black Pop : " ..
