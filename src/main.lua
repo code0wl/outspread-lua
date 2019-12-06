@@ -21,7 +21,7 @@ function love.load()
 
     lg.setBackgroundColor(red, green, blue)
 
-    spider = Spider({type = 1, x = 600, y = 100, state = 1})
+    spider = Spider:new({type = 1, x = 600, y = 100, state = 1})
 
     cam:setScale(1)
 
@@ -36,7 +36,7 @@ function love.load()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 200,
+                population = 500,
                 width = obj.width,
                 height = obj.height
             }))
@@ -47,7 +47,7 @@ end
 function love.update(dt)
 
     world:update(dt)
-    spider.update(dt)
+    spider:update(dt)
     Control.update(dt)
     Player:update()
 
@@ -57,7 +57,7 @@ function love.update(dt)
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
             ant:update(foodCollection, colony.nest, dt, spider)
-            
+
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
 
             -- ant signals (move to director)
@@ -93,7 +93,7 @@ function love.draw()
             for _, ant in ipairs(colony.nest.ants) do ant:draw() end
         end
 
-        spider.draw()
+        spider:draw()
 
         for i, food in ipairs(foodCollection) do
             if (food.amount < 1) then table.remove(foodCollection, i) end

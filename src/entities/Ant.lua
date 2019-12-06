@@ -25,7 +25,7 @@ function Ant:new(antConfig)
     ant.body:setSleepingAllowed(true)
 
     -- Signal first draft
-    ant.signal = {radius = 100, active = false}
+    ant.signal = Component.signal(100, false, 150, false)
 
     ant.grid = anim8.newGrid(ant.width, ant.height, ant.image:getWidth(),
                              ant.image:getHeight() + 1)
@@ -66,13 +66,22 @@ function Ant:draw()
         lg.circle("fill", self.body:getX(), self.body:getY(), 2)
     end
 
-    if self.signal.active then
-        lg.circle('line', self.body:getX(), self.body:getY(), self.signal.radius)
+    if self.signal.foodSignalActive then
+        lg.setColor(255, 7, 153)
+        lg.circle('line', self.body:getX(), self.body:getY(),
+                  self.signal.foodSignalSize)
+    end
+
+    if self.signal.aggressionSignalActive then
+        lg.setColor(1, 0, 0)
+        lg.circle('line', self.body:getX(), self.body:getY(),
+                  self.signal.aggressionSignalSize)
     end
 
 end
 
 function Ant:setTarget(target, spider, dt)
+
     timePassed = timePassed + 1 * dt
 
     if self.hasFood then self.target = self.nest end
@@ -92,12 +101,17 @@ function Ant:setTarget(target, spider, dt)
     end
 
     -- if scent is spider
+    -- to avoid repeated lookups
     local spiderX = spider.body:getX()
     local spiderY = spider.body:getY()
     if not self.hasFood and
         util.distanceBetween(self.body:getX(), self.body:getY(), spiderX,
-                             spiderY) < self.signal.radius then
+                             spiderY) < self.signal.aggressionSignalSize then
         self.target = {x = spiderX, y = spiderY}
+        self.signal.aggressionSignalActive = true
+
+    else
+        self.signal.aggressionSignalActive = false
     end
 
     -- deliver food to nest
@@ -113,14 +127,13 @@ function Ant:handleFood(food)
             f.amount then
             self.hasFood = true
             self.scentLocation = f
-            self.signal.active = true
+            self.signal.foodSignalActive = true
             f.amount = f.amount - 1
         elseif self.scentLocation and self.scentLocation.amount < 1 then
             self.scentLocation = nil
-            self.signal.active = false
+            self.signal.foodSignalActive = false
         end
     end
 end
 
 return Ant
-
