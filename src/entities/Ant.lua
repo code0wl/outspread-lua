@@ -8,8 +8,7 @@ function Ant:new(antConfig)
     ant.image = lg.newImage("images/ants/spritesheets/ant" .. ant.type ..
                                 "/_ant_walk-small.png")
 
-    ant.x = antConfig.x
-    ant.y = antConfig.y
+    ant.x, ant.y = Component.position(antConfig.x, antConfig.y)
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
     ant.speed = 90
