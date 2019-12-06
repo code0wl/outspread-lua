@@ -37,10 +37,11 @@ function Ant:new(antConfig)
 
 end
 
-function Ant:update(foodCollection, target, dt)
+function Ant:update(foodCollection, target, dt, spider)
     self.animation:update(dt)
     self:setTarget(target, dt)
     self:handleFood(foodCollection)
+    self:handleEnemy(spider)
 end
 
 function Ant:returnFoodToNest(target)
@@ -95,6 +96,11 @@ function Ant:setTarget(target, dt)
     self:returnFoodToNest(target)
 
     util.setDirectionToTarget(self, dt)
+end
+
+function Ant:handleEnemy(enemy)
+    if util.distanceBetween(self.body:getX(), self.body:getY(), enemy.x, enemy.y) <
+        self.signal.radius then self.target = enemy end
 end
 
 function Ant:handleFood(food)

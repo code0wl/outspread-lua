@@ -31,7 +31,7 @@ end
 
 function Nest:update()
     for i = 1, self.collectedFood do
-        self.collectedFood = self.collectedFood - 1
+        self.collectedFood = self.collectedFood - 2
         table.insert(self.ants, Ant:new({
             type = self.type,
             x = self.x,

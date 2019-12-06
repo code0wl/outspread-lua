@@ -56,12 +56,8 @@ function love.update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
-            ant:update(foodCollection, colony.nest, dt)
-
-            if util.CheckCollisionWithPhysics(ant, spider) then
-                -- fight with spider
-            end
-
+            ant:update(foodCollection, colony.nest, dt, spider)
+            
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
 
             -- ant signals (move to director)
@@ -76,9 +72,7 @@ function love.update(dt)
             end
 
         end
-
     end
-
 end
 
 function love.draw()
