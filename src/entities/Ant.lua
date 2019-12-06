@@ -38,9 +38,10 @@ function Ant:new(antConfig)
 
 end
 
-function Ant:update(target, dt)
+function Ant:update(foodCollection, target, dt)
     self.animation:update(dt)
     self:setTarget(target, dt)
+    self:handleFood(foodCollection)
 end
 
 function Ant:returnFoodToNest(target)
@@ -91,17 +92,14 @@ function Ant:setTarget(target, dt)
         self.target = self.scentLocation
     end
 
-    -- Refactor me
-    self:handleFood()
-
     -- deliver food to nest
     self:returnFoodToNest(target)
 
     util.setDirectionToTarget(self, dt)
 end
 
-function Ant:handleFood()
-    for i, f in ipairs(foodCollection) do
+function Ant:handleFood(food)
+    for i, f in ipairs(food) do
         if not self.hasFood and
             util.distanceBetween(self.body:getX(), self.body:getY(), f.x, f.y) <
             f.amount then

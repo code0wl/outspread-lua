@@ -12,7 +12,7 @@ local Food = require("entities/Food")
 Player = require("entities/Player")
 
 local Colonies = {}
-foodCollection = {}
+local foodCollection = {}
 
 function love.load()
     red = 26 / 255
@@ -56,7 +56,7 @@ function love.update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
-            ant:update(colony.nest, dt)
+            ant:update(foodCollection, colony.nest, dt)
 
             if util.CheckCollisionWithPhysics(ant, spider) then
                 -- fight with spider
