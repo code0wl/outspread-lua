@@ -12,7 +12,7 @@ inspect = require("libs/inspect/inspect")
 -- create instance for camera
 globalWidth = 5000
 globalHeight = 5000
-local gamera = require('libs/gamera/gamera')
+local gamera = require('libs/gamera')
 cam = gamera.new(0, 0, globalWidth, globalHeight)
 cam:setWindow(0, 0, lg.getWidth(), lg.getHeight())
 
