@@ -72,3 +72,9 @@ function dragMouse(x, y, dx, dy)
         table.insert(Player.phermones, phermone)
     end
 end
+
+function love.mousepressed(x, y, button, istouch)
+    if button == 1 then 
+        Player.phermones = {}
+    end
+ end
