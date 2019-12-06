@@ -56,8 +56,7 @@ function love.update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
-            ant.update(dt)
-            ant.handleTarget(colony.nest, dt)
+            ant:update(colony.nest, dt)
 
             if util.CheckCollisionWithPhysics(ant, spider) then
                 -- fight with spider
@@ -97,7 +96,7 @@ function love.draw()
         -- draw ants
         for _, colony in ipairs(Colonies) do
             colony.nest:draw()
-            for _, ant in ipairs(colony.nest.ants) do ant.draw() end
+            for _, ant in ipairs(colony.nest.ants) do ant:draw() end
         end
 
         spider.draw()

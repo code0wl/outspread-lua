@@ -18,8 +18,12 @@ function Nest:new(nestConfig)
                               terrainSprites.terrain:getDimensions())
 
     for i = 0, nest.startingPopulation do
-        table.insert(nest.ants,
-                     Ant({type = nest.type, x = nest.x, y = nest.y, state = 1}))
+        table.insert(nest.ants, Ant:new({
+            type = nest.type,
+            x = nest.x,
+            y = nest.y,
+            state = 1
+        }))
     end
 
     return nest
@@ -28,8 +32,12 @@ end
 function Nest:update()
     for i = 1, self.collectedFood do
         self.collectedFood = self.collectedFood - 1
-        table.insert(self.ants,
-                     Ant({type = self.type, x = self.x, y = self.y, state = 1}))
+        table.insert(self.ants, Ant:new({
+            type = self.type,
+            x = self.x,
+            y = self.y,
+            state = 1
+        }))
     end
 end
 

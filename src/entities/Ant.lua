@@ -1,7 +1,7 @@
 local Ant = {}
 
-function Ant(antConfig)
-    local ant = {}
+function Ant:new(antConfig)
+    local ant = setmetatable({}, {__index = Ant})
 
     ant.type = antConfig.type
 
@@ -34,86 +34,86 @@ function Ant(antConfig)
     ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3),
                                        0.04)
 
-    function ant.update(dt) ant.animation:update(dt) end
-
-    function ant.draw()
-        ant.animation:draw(ant.image, ant.body:getX(), ant.body:getY(),
-                           util.getAngle(ant.target.y, ant.body:getY(),
-                                         ant.target.x, ant.body:getX()) + 1.6 +
-                               math.pi, .4, .4, util.getCenter(ant.width),
-                           util.getCenter(ant.height))
-
-        if ant.hasFood then
-            ant.speed = 60
-            lg.setColor(255, 153, 153)
-            lg.circle("fill", ant.body:getX(), ant.body:getY(), 2)
-        end
-
-        if ant.signal.active then
-            lg.circle('line', ant.body:getX(), ant.body:getY(),
-                      ant.signal.radius)
-        end
-
-    end
-
-    function ant.handleTarget(target, dt) setTargetForAnt(ant, target, dt) end
-
     return ant
 
 end
 
-function handleFood(ant)
-    for i, f in ipairs(foodCollection) do
-        if not ant.hasFood and
-            util.distanceBetween(ant.body:getX(), ant.body:getY(), f.x, f.y) <
-            f.amount then
-            ant.hasFood = true
-            ant.scentLocation = f
-            ant.signal.active = true
-            f.amount = f.amount - 1
-        elseif ant.scentLocation and ant.scentLocation.amount < 1 then
-            ant.scentLocation = nil
-            ant.signal.active = false
-        end
-    end
+function Ant:update(target, dt)
+    self.animation:update(dt)
+    self:setTarget(target, dt)
 end
 
-function returnFoodToNest(ant, target)
-    if ant.hasFood then
-        if util.distanceBetween(ant.body:getX(), ant.body:getY(), ant.nest.x,
-                                ant.nest.y) < 45 then
-            ant.hasFood = false
+function Ant:returnFoodToNest(target)
+    if self.hasFood then
+        if util.distanceBetween(self.body:getX(), self.body:getY(), target.x,
+                                target.y) < 45 then
+            self.hasFood = false
             target.collectedFood = target.collectedFood + 1
         end
     end
 end
 
-function setTargetForAnt(ant, target, dt)
+function Ant:draw()
+    self.animation:draw(self.image, self.body:getX(), self.body:getY(),
+                        util.getAngle(self.target.y, self.body:getY(),
+                                      self.target.x, self.body:getX()) + 1.6 +
+                            math.pi, .4, .4, util.getCenter(self.width),
+                        util.getCenter(self.height))
+
+    if self.hasFood then
+        self.speed = 60
+        lg.setColor(255, 153, 153)
+        lg.circle("fill", self.body:getX(), self.body:getY(), 2)
+    end
+
+    if self.signal.active then
+        lg.circle('line', self.body:getX(), self.body:getY(), self.signal.radius)
+    end
+
+end
+
+function Ant:setTarget(target, dt)
     timePassed = timePassed + 1 * dt
 
-    if ant.hasFood then ant.target = ant.nest end
+    if self.hasFood then self.target = self.nest end
 
     -- Walk randomnly
-    if timePassed > 2 or ant.target == nil then
+    if timePassed > 2 or self.target == nil then
         timePassed = 0
-        ant.target = {
+        self.target = {
             x = math.random(globalWidth, 0),
             y = math.random(globalHeight, 0)
         }
     end
 
     -- Follow scent
-    if not ant.hasFood and ant.scentLocation then
-        ant.target = ant.scentLocation
+    if not self.hasFood and self.scentLocation then
+        self.target = self.scentLocation
     end
 
     -- Refactor me
-    handleFood(ant)
+    self:handleFood()
 
     -- deliver food to nest
-    returnFoodToNest(ant, target)
+    self:returnFoodToNest(target)
 
-    util.setDirectionToTarget(ant, dt)
+    util.setDirectionToTarget(self, dt)
+end
+
+function Ant:handleFood()
+    for i, f in ipairs(foodCollection) do
+        if not self.hasFood and
+            util.distanceBetween(self.body:getX(), self.body:getY(), f.x, f.y) <
+            f.amount then
+            self.hasFood = true
+            self.scentLocation = f
+            self.signal.active = true
+            f.amount = f.amount - 1
+        elseif self.scentLocation and self.scentLocation.amount < 1 then
+            self.scentLocation = nil
+            self.signal.active = false
+        end
+    end
 end
 
 return Ant
