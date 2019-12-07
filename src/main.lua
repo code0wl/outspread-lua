@@ -52,47 +52,59 @@ function love.update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
-            ant:update(FoodCollection, colony.nest, dt)
 
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
 
-            -- handle life ant interaction
-            for _, life in ipairs(WildLife) do
+            ant:update(FoodCollection, colony.nest, dt)
 
-                -- if scent is life
-                -- to avoid repeated lookups
-                local lifeX = life.x
-                local lifeY = life.y
+            -- handle otherCreature with ant interaction
+            for _, nest in ipairs(colony) do print(inspect(nest)) end
+
+            for otherCreatureIndex, otherCreature in ipairs(WildLife) do
+
+                -- if scent is otherCreature
+                local otherCreatureX, otherCreatureY = otherCreature.x,
+                                                       otherCreature.y
+                local antX, antY = ant.x, ant.y
                 if not ant.hasFood and
-                    util.distanceBetween(ant.x, ant.y, lifeX, lifeY) <
+                    util.distanceBetween(antX, antY, otherCreatureX,
+                                         otherCreatureY) <
                     ant.signal.aggressionSignalSize then
-                    ant.target = {x = lifeX, y = lifeY}
+                    ant.target = {x = otherCreatureX, y = otherCreatureY}
                     ant.signal.aggressionSignalActive = true
                 else
                     ant.signal.aggressionSignalActive = false
                 end
 
-                if life.signal and not life.signal.aggressionSignalActive and
-                    util.distanceBetween(ant.x, ant.y, lifeX, lifeY) <
-                    life.signal.aggressionSignalSize then
-                    life.signal.aggressionSignalActive = true
-                    life:hunt(ant)
+                -- animal attack and hunt ant
+                if otherCreature.signal and
+                    not otherCreature.signal.aggressionSignalActive and
+                    util.distanceBetween(antX, antY, otherCreatureX,
+                                         otherCreatureY) <
+                    otherCreature.signal.aggressionSignalSize then
+                    otherCreature.signal.aggressionSignalActive = true
+                    otherCreature:hunt(ant)
                 end
 
+                -- ant attack other animals
                 if ant.signal.aggressionSignalActive and
-                    util.distanceBetween(ant.x, ant.y, lifeX, lifeY) <
-                    life.width then
-                    ant:attack(life)
-                    if not life.isAlive then
+                    util.distanceBetween(antX, antY, otherCreatureX,
+                                         otherCreatureY) < otherCreature.width then
+                    ant:attack(otherCreature)
+                    if not otherCreature.isAlive then
                         table.insert(FoodCollection, Food:new(
-                                         {x = lifeX, y = lifeY, amount = 100}))
-                        table.remove(WildLife, _)
+                                         {
+                                x = otherCreatureX,
+                                y = otherCreatureY,
+                                amount = 100
+                            }))
+                        table.remove(WildLife, otherCreatureIndex)
                     end
                 end
+
             end
 
             for j, a in ipairs(colony.nest.ants) do
-
                 -- Relay information about food to other ants in the same colony
                 if a.signal.foodSignalActive and not ant.scentLocation and
                     util.distanceBetween(a.x, a.y, ant.x, ant.y) <
@@ -100,8 +112,11 @@ function love.update(dt)
                     ant.scentLocation = a.scentLocation
                 end
             end
+
         end
+
     end
+
 end
 
 function love.draw()
