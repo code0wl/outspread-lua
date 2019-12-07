@@ -11,13 +11,13 @@ function Spider:new(spiderConfig)
 
     spider.x, spider.y = Component.position(-100, 100)
     spider.speed = 80
-    spider.maxEnergy = 100
+    spider.maxEnergy = 1000
     spider.energy = 10
-    spider.health = Component.health(30)
+    spider.health = Component.health(10000)
     spider.width = 180
     spider.height = 150
     spider.target = {x = -100, y = 100}
-    spider.alive = true
+    spider.isAlive = true
 
     -- Signal first draft
     spider.signal = Component.signal(400, false, 500, false)
@@ -51,28 +51,40 @@ function Spider:eat(animal)
     if util.distanceBetween(animal.x, animal.y, self.x, self.y) < animal.width then
         self.energy = self.energy + 20
         self.speed = 80
+
+        -- kill any animal that has been eaten
         animal.isAlive = false
+
+        if self.health < 100 then self.health = self.health + 5 end
+
     end
 end
 
 function Spider:update(dt)
-    self.signal.aggressionSignalActive = false
-    TimePassedAntSpider = TimePassedAntSpider + 1 * dt
 
-    self.animation:update(dt)
+    if self.isAlive then
+        if self.health < 1 then self.isAlive = false end
 
-    if not self.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
-        self.energy = self.energy - .5
-        TimePassedAntSpider = 0
-        self.target.x, self.target.y = Component.position(
-                                           math.random(GlobalWidth, 0),
-                                           math.random(GlobalHeight, 0))
+        self.signal.aggressionSignalActive = false
+        TimePassedAntSpider = TimePassedAntSpider + 1 * dt
+
+        self.animation:update(dt)
+
+        if not self.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
+            self.energy = self.energy - .5
+            TimePassedAntSpider = 0
+            self.target.x, self.target.y =
+                Component.position(math.random(GlobalWidth, 0),
+                                   math.random(GlobalHeight, 0))
+        end
+
+        if self.energy >= self.maxEnergy then
+            self.target = {x = -100, y = -100}
+        end
+
+        self.x, self.y = util.setDirectionToTarget(self, dt)
+
     end
-
-    if self.energy >= self.maxEnergy then self.target = {x = -100, y = -100} end
-
-    self.x, self.y = util.setDirectionToTarget(self, dt)
-
 end
 
 return Spider

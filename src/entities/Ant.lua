@@ -9,11 +9,11 @@ function Ant:new(antConfig)
                                 "/_ant_walk-small.png")
 
     ant.x, ant.y = Component.position(antConfig.x, antConfig.y)
-    ant.health = Component.health(2)
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
     ant.speed = 90
     ant.width = 16
+    ant.damage = 1
     ant.height = 27
     ant.target = nil
     ant.isAlive = true
@@ -60,6 +60,8 @@ function Ant:draw()
     end
 
 end
+
+function Ant:attack(animal) animal.health = animal.health - self.damage end
 
 function Ant:setTarget(target, spider, dt)
 

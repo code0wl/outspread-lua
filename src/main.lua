@@ -8,9 +8,10 @@ local Colony = require("entities.Colony")
 local Control = require("Control")
 local Spider = require("entities.Spider")
 local Food = require("entities.Food")
+local Enemy = require("entities.Enemy")
 Player = require("entities.Player")
 
-local spider = Spider:new({type = 1, x = 600, y = 100, state = 1})
+local droppedFood = false
 
 function love.load()
     local red = 26 / 255
@@ -26,50 +27,76 @@ function love.load()
     for _, obj in pairs(level1.layers["food"].objects) do
         table.insert(FoodCollection, Food:new(obj))
     end
+
     for i, obj in pairs(level1.layers["nest"].objects) do
         table.insert(Colonies, Colony:new(
                          {
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 10,
+                population = 600,
                 width = obj.width,
                 height = obj.height
             }))
-
     end
+
+    -- insert other WildLife
+    table.insert(WildLife, Spider:new({type = 1, x = 600, y = 100, state = 1}))
+
 end
 
 function love.update(dt)
 
-    spider:update(dt)
     Player:update()
+
     Control.update(dt)
+
+    for lifeIndex, life in ipairs(WildLife) do
+        life:update(dt)
+        -- if not life.isAlive then  end
+    end
 
     for _, colony in ipairs(Colonies) do
         colony.nest:update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
-            ant:update(FoodCollection, colony.nest, dt, spider)
+            for _, life in ipairs(WildLife) do
+                ant:update(FoodCollection, colony.nest, dt, life)
 
-            if not ant.isAlive then table.remove(colony.nest.ants, i) end
-
-            -- handle spider ant interaction
-            if not spider.signal.aggressionSignalActive and
-                util.distanceBetween(ant.x, ant.y, spider.x, spider.y) <
-                spider.signal.aggressionSignalSize then
-                spider.signal.aggressionSignalActive = true
-                spider:hunt(ant)
-            end
-
-            -- Relay information about food to other ants in the same colony
-            for j, a in ipairs(colony.nest.ants) do
-                if a.signal.active and not ant.scentLocation and
-                    util.distanceBetween(a.x, a.y, ant.x, ant.y) <
-                    a.signal.radius then
-                    ant.scentLocation = a.scentLocation
+                if not ant.isAlive then
+                    table.remove(colony.nest.ants, i)
                 end
+
+                -- handle life ant interaction
+                if life.signal and not life.signal.aggressionSignalActive and
+                    util.distanceBetween(ant.x, ant.y, life.x, life.y) <
+                    life.signal.aggressionSignalSize then
+                    life.signal.aggressionSignalActive = true
+                    life:hunt(ant)
+                end
+
+                if ant.signal.aggressionSignalActive and
+                    util.distanceBetween(ant.x, ant.y, life.x, life.y) <
+                    life.width then
+                    ant:attack(life)
+                    if not life.isAlive and not droppedFood then
+                        droppedFood = true
+                        table.insert(FoodCollection, Food:new(
+                                         {x = life.y, y = life.y, amount = 100}))
+                        -- table.remove(WildLife, _)
+                    end
+                end
+
+                -- Relay information about food to other ants in the same colony
+                for j, a in ipairs(colony.nest.ants) do
+                    if a.signal.active and not ant.scentLocation and
+                        util.distanceBetween(a.x, a.y, ant.x, ant.y) <
+                        a.signal.radius then
+                        ant.scentLocation = a.scentLocation
+                    end
+                end
+
             end
 
         end
@@ -83,9 +110,9 @@ function love.draw()
     -- Camera
     Cam:draw(function(l, t, w, h)
 
-        for _, phermone in ipairs(Player.phermones) do
-            Lg.setColor(255, 153, 153)
-            Lg.circle('line', phermone.x, phermone.y, 5)
+        for i, food in ipairs(FoodCollection) do
+            if (food.amount < 1) then table.remove(FoodCollection, i) end
+            food:draw()
         end
 
         -- draw ants
@@ -94,11 +121,12 @@ function love.draw()
             for _, ant in ipairs(colony.nest.ants) do ant:draw() end
         end
 
-        spider:draw()
+        -- draw other animals
+        for _, life in ipairs(WildLife) do life:draw() end
 
-        for i, food in ipairs(FoodCollection) do
-            if (food.amount < 1) then table.remove(FoodCollection, i) end
-            food:draw()
+        for _, phermone in ipairs(Player.phermones) do
+            Lg.setColor(255, 153, 153)
+            Lg.circle('line', phermone.x, phermone.y, 5)
         end
 
         updateCameraLocation(mouseX, mouseY, currentX, currentY)
