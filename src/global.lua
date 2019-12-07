@@ -2,6 +2,7 @@
 Lp = love.physics
 Lg = love.graphics
 Lm = love.mouse
+Lk = love.keyboard
 
 -- helper libs
 sti = require("libs/sti")
