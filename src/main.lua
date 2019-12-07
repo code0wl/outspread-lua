@@ -98,15 +98,16 @@ function love.update(dt)
                 end
             end
 
-            -- Relay information about food to other ants in the same colony
             for j, a in ipairs(colony.nest.ants) do
-                if a.signal.active and not ant.scentLocation and
+
+                -- Relay information about food to other ants in the same colony
+                if a.signal.foodSignalActive and not ant.scentLocation and
                     util.distanceBetween(a.x, a.y, ant.x, ant.y) <
-                    a.signal.radius then
+                    a.signal.foodSignalSize then
                     ant.scentLocation = a.scentLocation
                 end
-            end
 
+            end
         end
     end
 end
