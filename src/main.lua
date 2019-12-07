@@ -2,13 +2,10 @@ require("Global")
 require("Mouse")
 require("Debug")
 
-Component = require("component.main")
-
 local Colony = require("entities.Colony")
 local Control = require("Control")
 local Spider = require("entities.Spider")
 local Food = require("entities.Food")
-Player = require("entities.Player")
 
 function love.load()
     local red = 26 / 255
@@ -31,14 +28,13 @@ function love.load()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 1000,
+                population = 300,
                 width = obj.width,
                 height = obj.height
             }))
     end
 
     -- insert other WildLife
-    table.insert(WildLife, Spider:new({type = 1, x = 600, y = 100, state = 1}))
     table.insert(WildLife, Spider:new({type = 1, x = 600, y = 100, state = 1}))
 
 end
@@ -49,10 +45,7 @@ function love.update(dt)
 
     Control.update(dt)
 
-    for lifeIndex, life in ipairs(WildLife) do
-        life:update(dt)
-        -- if not life.isAlive then  end
-    end
+    for _, life in ipairs(WildLife) do life:update(dt) end
 
     for _, colony in ipairs(Colonies) do
         colony.nest:update(dt)
@@ -106,7 +99,6 @@ function love.update(dt)
                     a.signal.foodSignalSize then
                     ant.scentLocation = a.scentLocation
                 end
-
             end
         end
     end

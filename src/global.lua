@@ -33,3 +33,10 @@ FoodSprites = {food = Lg.newImage("images/food/food.png")}
 Colonies = {}
 FoodCollection = {}
 WildLife = {}
+
+-- components
+Component = require("component.index")
+
+-- Player class
+Player = require("entities.Player")
+
