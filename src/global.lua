@@ -10,8 +10,8 @@ anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
 
 -- create instance for Camera
-GlobalWidth = 10000
-GlobalHeight = 10000
+GlobalWidth = 5000
+GlobalHeight = 5000
 local gamera = require('libs/gamera')
 Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())

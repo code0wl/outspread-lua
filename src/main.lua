@@ -32,7 +32,7 @@ function love.load()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 900,
+                population = 10,
                 width = obj.width,
                 height = obj.height
             }))
@@ -60,15 +60,15 @@ function love.update(dt)
                 util.distanceBetween(ant.x, ant.y, spider.x, spider.y) <
                 spider.signal.aggressionSignalSize then
                 spider.signal.aggressionSignalActive = true
+                spider:hunt(ant)
             end
 
-            -- ant signals (move to director)
+            -- Relay information about food to other ants in the same colony
             for j, a in ipairs(colony.nest.ants) do
-                if a.signal.active and not ant.scentLocation then
-                    if util.distanceBetween(a.x, a.y, ant.x, ant.y) <
-                        a.signal.radius then
-                        ant.scentLocation = a.scentLocation
-                    end
+                if a.signal.active and not ant.scentLocation and
+                    util.distanceBetween(a.x, a.y, ant.x, ant.y) <
+                    a.signal.radius then
+                    ant.scentLocation = a.scentLocation
                 end
             end
 

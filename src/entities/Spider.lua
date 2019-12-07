@@ -10,7 +10,9 @@ function Spider:new(spiderConfig)
                                    "/spritesheets/sheet_spider_walk-small.png")
 
     spider.x, spider.y = Component.position(-100, 100)
-    spider.speed = 70
+    spider.speed = 80
+    spider.maxEnergy = 100
+    spider.energy = 10
     spider.health = Component.health(30)
     spider.width = 180
     spider.height = 150
@@ -35,9 +37,21 @@ function Spider:draw()
                                       self.x) + math.pi, nil, nil,
                         util.getCenter(self.width), util.getCenter(self.height))
 
-    if self.signal.aggressionSignalActive then
-        Lg.setColor(1, 0, 0)
-        Lg.circle('line', self.x, self.y, self.signal.aggressionSignalSize)
+end
+
+function Spider:hunt(animal)
+    if self.energy < self.maxEnergy then
+        self.speed = 500
+        self.target = animal
+        self:eat(animal)
+    end
+end
+
+function Spider:eat(animal)
+    if util.distanceBetween(animal.x, animal.y, self.x, self.y) < animal.width then
+        self.energy = self.energy + 20
+        self.speed = 80
+        animal.isAlive = false
     end
 end
 
@@ -47,12 +61,15 @@ function Spider:update(dt)
 
     self.animation:update(dt)
 
-    if TimePassedAntSpider > 6 then
+    if not self.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
+        self.energy = self.energy - .5
         TimePassedAntSpider = 0
         self.target.x, self.target.y = Component.position(
                                            math.random(GlobalWidth, 0),
                                            math.random(GlobalHeight, 0))
     end
+
+    if self.energy >= self.maxEnergy then self.target = {x = -100, y = -100} end
 
     self.x, self.y = util.setDirectionToTarget(self, dt)
 
