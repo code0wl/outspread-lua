@@ -8,10 +8,7 @@ local Colony = require("entities.Colony")
 local Control = require("Control")
 local Spider = require("entities.Spider")
 local Food = require("entities.Food")
-local Enemy = require("entities.Enemy")
 Player = require("entities.Player")
-
-local droppedFood = false
 
 function love.load()
     local red = 26 / 255
@@ -34,13 +31,14 @@ function love.load()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 600,
+                population = 1000,
                 width = obj.width,
                 height = obj.height
             }))
     end
 
     -- insert other WildLife
+    table.insert(WildLife, Spider:new({type = 1, x = 600, y = 100, state = 1}))
     table.insert(WildLife, Spider:new({type = 1, x = 600, y = 100, state = 1}))
 
 end
@@ -61,42 +59,52 @@ function love.update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
-            for _, life in ipairs(WildLife) do
-                ant:update(FoodCollection, colony.nest, dt, life)
+            ant:update(FoodCollection, colony.nest, dt)
 
-                if not ant.isAlive then
-                    table.remove(colony.nest.ants, i)
+            if not ant.isAlive then table.remove(colony.nest.ants, i) end
+
+            -- handle life ant interaction
+            for _, life in ipairs(WildLife) do
+
+                -- if scent is life
+                -- to avoid repeated lookups
+                local lifeX = life.x
+                local lifeY = life.y
+                if not ant.hasFood and
+                    util.distanceBetween(ant.x, ant.y, lifeX, lifeY) <
+                    ant.signal.aggressionSignalSize then
+                    ant.target = {x = lifeX, y = lifeY}
+                    ant.signal.aggressionSignalActive = true
+                else
+                    ant.signal.aggressionSignalActive = false
                 end
 
-                -- handle life ant interaction
                 if life.signal and not life.signal.aggressionSignalActive and
-                    util.distanceBetween(ant.x, ant.y, life.x, life.y) <
+                    util.distanceBetween(ant.x, ant.y, lifeX, lifeY) <
                     life.signal.aggressionSignalSize then
                     life.signal.aggressionSignalActive = true
                     life:hunt(ant)
                 end
 
                 if ant.signal.aggressionSignalActive and
-                    util.distanceBetween(ant.x, ant.y, life.x, life.y) <
+                    util.distanceBetween(ant.x, ant.y, lifeX, lifeY) <
                     life.width then
                     ant:attack(life)
-                    if not life.isAlive and not droppedFood then
-                        droppedFood = true
+                    if not life.isAlive then
                         table.insert(FoodCollection, Food:new(
-                                         {x = life.y, y = life.y, amount = 100}))
-                        -- table.remove(WildLife, _)
+                                         {x = lifeX, y = lifeY, amount = 100}))
+                        table.remove(WildLife, _)
                     end
                 end
+            end
 
-                -- Relay information about food to other ants in the same colony
-                for j, a in ipairs(colony.nest.ants) do
-                    if a.signal.active and not ant.scentLocation and
-                        util.distanceBetween(a.x, a.y, ant.x, ant.y) <
-                        a.signal.radius then
-                        ant.scentLocation = a.scentLocation
-                    end
+            -- Relay information about food to other ants in the same colony
+            for j, a in ipairs(colony.nest.ants) do
+                if a.signal.active and not ant.scentLocation and
+                    util.distanceBetween(a.x, a.y, ant.x, ant.y) <
+                    a.signal.radius then
+                    ant.scentLocation = a.scentLocation
                 end
-
             end
 
         end

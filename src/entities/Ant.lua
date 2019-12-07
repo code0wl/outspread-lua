@@ -63,7 +63,7 @@ end
 
 function Ant:attack(animal) animal.health = animal.health - self.damage end
 
-function Ant:setTarget(target, spider, dt)
+function Ant:setTarget(target, life, dt)
 
     TimePassedAnt = TimePassedAnt + 1 * dt
 
@@ -81,19 +81,6 @@ function Ant:setTarget(target, spider, dt)
     -- Follow scent
     if not self.hasFood and self.scentLocation then
         self.target = self.scentLocation
-    end
-
-    -- if scent is spider
-    -- to avoid repeated lookups
-    local spiderX = spider.x
-    local spiderY = spider.y
-    if not self.hasFood and
-        util.distanceBetween(self.x, self.y, spiderX, spiderY) <
-        self.signal.aggressionSignalSize then
-        self.target = {x = spiderX, y = spiderY}
-        self.signal.aggressionSignalActive = true
-    else
-        self.signal.aggressionSignalActive = false
     end
 
     -- deliver food to nest
