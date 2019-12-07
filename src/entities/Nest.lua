@@ -14,7 +14,7 @@ function Nest:new(nestConfig)
     nest.width = 16
     nest.height = 27
 
-    nest.graphic = lg.newQuad(300, 70, 80, 80,
+    nest.graphic = Lg.newQuad(300, 70, 80, 80,
                               terrainSprites.terrain:getDimensions())
 
     for i = 0, nest.startingPopulation do
@@ -42,7 +42,7 @@ function Nest:update()
 end
 
 function Nest:draw()
-    lg.draw(terrainSprites.terrain, self.graphic, self.x, self.y, nil, .4, .4)
+    Lg.draw(terrainSprites.terrain, self.graphic, self.x, self.y, nil, .4, .4)
 end
 
 return Nest

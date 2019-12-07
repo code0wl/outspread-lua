@@ -1,34 +1,30 @@
-require("global")
+require("Global")
 require("Mouse")
 require("Debug")
 
-Component = require("component/main")
+Component = require("component.main")
 
-local Rock = require("entities/Rock")
-local Colony = require("entities/Colony")
+local Colony = require("entities.Colony")
 local Control = require("Control")
-local Spider = require("entities/Spider")
-local Food = require("entities/Food")
-Player = require("entities/Player")
+local Spider = require("entities.Spider")
+local Food = require("entities.Food")
+Player = require("entities.Player")
 
-local Colonies = {}
-local foodCollection = {}
+local spider = Spider:new({type = 1, x = 600, y = 100, state = 1})
 
 function love.load()
-    red = 26 / 255
-    green = 154 / 255
-    blue = 105 / 255
+    local red = 26 / 255
+    local green = 154 / 255
+    local blue = 105 / 255
 
-    lg.setBackgroundColor(red, green, blue)
-
-    spider = Spider:new({type = 1, x = 600, y = 100, state = 1})
+    Lg.setBackgroundColor(red, green, blue)
 
     cam:setScale(1)
 
-    level1 = sti("levels/level-1.lua")
+    local level1 = sti("levels/level-1.lua")
 
-    for i, obj in pairs(level1.layers["food"].objects) do
-        table.insert(foodCollection, Food:new(obj))
+    for _, obj in pairs(level1.layers["food"].objects) do
+        table.insert(FoodCollection, Food:new(obj))
     end
     for i, obj in pairs(level1.layers["nest"].objects) do
         table.insert(Colonies, Colony:new(
@@ -56,9 +52,19 @@ function love.update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
-            ant:update(foodCollection, colony.nest, dt, spider)
+            ant:update(FoodCollection, colony.nest, dt, spider)
 
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
+
+            -- handle spider ant interaction
+            if not spider.signal.aggressionSignalActive and
+                util.distanceBetween(ant.body:getX(), ant.body:getY(),
+                                     spider.body:getX(), spider.body:getY()) <
+                spider.signal.aggressionSignalSize then
+                spider.signal.aggressionSignalActive = true
+            else
+                spider.signal.aggressionSignalActive = false
+            end
 
             -- ant signals (move to director)
             for j, a in ipairs(colony.nest.ants) do
@@ -82,9 +88,9 @@ function love.draw()
     -- Camera
     cam:draw(function(l, t, w, h)
 
-        for i, phermone in ipairs(Player.phermones) do
-            lg.setColor(255, 153, 153)
-            lg.circle('line', phermone.x, phermone.y, 5)
+        for _, phermone in ipairs(Player.phermones) do
+            Lg.setColor(255, 153, 153)
+            Lg.circle('line', phermone.x, phermone.y, 5)
         end
 
         -- draw ants
@@ -95,8 +101,8 @@ function love.draw()
 
         spider:draw()
 
-        for i, food in ipairs(foodCollection) do
-            if (food.amount < 1) then table.remove(foodCollection, i) end
+        for i, food in ipairs(FoodCollection) do
+            if (food.amount < 1) then table.remove(FoodCollection, i) end
             food:draw()
         end
 

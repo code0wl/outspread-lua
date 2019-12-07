@@ -3,128 +3,128 @@ local graphics = { isCreated = lg and true or false }
 
 function graphics.newSpriteBatch(...)
 	if graphics.isCreated then
-		return lg.newSpriteBatch(...)
+		return Lg.newSpriteBatch(...)
 	end
 end
 
 function graphics.newCanvas(...)
 	if graphics.isCreated then
-		return lg.newCanvas(...)
+		return Lg.newCanvas(...)
 	end
 end
 
 function graphics.newImage(...)
 	if graphics.isCreated then
-		return lg.newImage(...)
+		return Lg.newImage(...)
 	end
 end
 
 function graphics.newQuad(...)
 	if graphics.isCreated then
-		return lg.newQuad(...)
+		return Lg.newQuad(...)
 	end
 end
 
 function graphics.getCanvas(...)
 	if graphics.isCreated then
-		return lg.getCanvas(...)
+		return Lg.getCanvas(...)
 	end
 end
 
 function graphics.setCanvas(...)
 	if graphics.isCreated then
-		return lg.setCanvas(...)
+		return Lg.setCanvas(...)
 	end
 end
 
 function graphics.clear(...)
 	if graphics.isCreated then
-		return lg.clear(...)
+		return Lg.clear(...)
 	end
 end
 
 function graphics.push(...)
 	if graphics.isCreated then
-		return lg.push(...)
+		return Lg.push(...)
 	end
 end
 
 function graphics.origin(...)
 	if graphics.isCreated then
-		return lg.origin(...)
+		return Lg.origin(...)
 	end
 end
 
 function graphics.scale(...)
 	if graphics.isCreated then
-		return lg.scale(...)
+		return Lg.scale(...)
 	end
 end
 
 function graphics.translate(...)
 	if graphics.isCreated then
-		return lg.translate(...)
+		return Lg.translate(...)
 	end
 end
 
 function graphics.pop(...)
 	if graphics.isCreated then
-		return lg.pop(...)
+		return Lg.pop(...)
 	end
 end
 
 function graphics.draw(...)
 	if graphics.isCreated then
-		return lg.draw(...)
+		return Lg.draw(...)
 	end
 end
 
 function graphics.rectangle(...)
 	if graphics.isCreated then
-		return lg.rectangle(...)
+		return Lg.rectangle(...)
 	end
 end
 
 function graphics.getColor(...)
 	if graphics.isCreated then
-		return lg.getColor(...)
+		return Lg.getColor(...)
 	end
 end
 
 function graphics.setColor(...)
 	if graphics.isCreated then
-		return lg.setColor(...)
+		return Lg.setColor(...)
 	end
 end
 
 function graphics.line(...)
 	if graphics.isCreated then
-		return lg.line(...)
+		return Lg.line(...)
 	end
 end
 
 function graphics.polygon(...)
 	if graphics.isCreated then
-		return lg.polygon(...)
+		return Lg.polygon(...)
 	end
 end
 
 function graphics.points(...)
 	if graphics.isCreated then
-		return lg.points(...)
+		return Lg.points(...)
 	end
 end
 
 function graphics.getWidth()
 	if graphics.isCreated then
-		return lg.getWidth()
+		return Lg.getWidth()
 	end
 	return 0
 end
 
 function graphics.getHeight()
 	if graphics.isCreated then
-		return lg.getHeight()
+		return Lg.getHeight()
 	end
 	return 0
 end

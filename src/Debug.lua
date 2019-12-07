@@ -1,10 +1,10 @@
 function printDetailsToScreen(Colonies)
-    lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
+    Lg.print("Current FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 
-    lg.print("Current black Pop : " ..
+    Lg.print("Current black Pop : " ..
                  tostring(table.getn(Colonies[1].nest.ants)), 10, 40)
 
-    lg.print(
+    Lg.print(
         "Current red Pop : " .. tostring(table.getn(Colonies[2].nest.ants)), 10,
         70)
 

@@ -10,8 +10,8 @@ function Rock:new(rockConfig)
 end
 
 function Rock:draw()
-    lg.setColor(255, 153, 153)
-    lg.rectangle("fill", self.x, self.y, self.width, self.height)
+    Lg.setColor(255, 153, 153)
+    Lg.rectangle("fill", self.x, self.y, self.width, self.height)
 end
 
 return Rock

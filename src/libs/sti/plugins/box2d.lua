@@ -284,9 +284,9 @@ return {
 	box2d_draw = function(map, tx, ty, sx, sy)
 		local collision = map.box2d_collision
 
-		lg.push()
-		lg.scale(sx or 1, sy or sx or 1)
-		lg.translate(math.floor(tx or 0), math.floor(ty or 0))
+		Lg.push()
+		Lg.scale(sx or 1, sy or sx or 1)
+		Lg.translate(math.floor(tx or 0), math.floor(ty or 0))
 
 		for _, obj in ipairs(collision) do
 			local points = {obj.body:getWorldPoints(obj.shape:getPoints())}
@@ -301,7 +301,7 @@ return {
 			end
 		end
 
-		lg.pop()
+		Lg.pop()
 	end
 }
 

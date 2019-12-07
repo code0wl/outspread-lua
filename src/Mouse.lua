@@ -53,11 +53,11 @@ end
 
 function isScrollingLeft(mouseX) return mouseX < scrollThreshold end
 function isScrollingRight(mouseX)
-    return mouseX > (lg.getWidth() - scrollThreshold)
+    return mouseX > (Lg.getWidth() - scrollThreshold)
 end
 function isScrollingTop(mouseY) return mouseY < scrollThreshold end
 function isScrollingDown(mouseY)
-    return mouseY > (lg.getHeight() - scrollThreshold)
+    return mouseY > (Lg.getHeight() - scrollThreshold)
 end
 
 function dragMouse(x, y, dx, dy)

@@ -10,8 +10,8 @@ end
 
 function Food:draw()
     if self.amount > 0 then
-        lg.setColor(255, 153, 153)
-        lg.circle("fill", self.x, self.y, self.amount)
+        Lg.setColor(255, 153, 153)
+        Lg.circle("fill", self.x, self.y, self.amount)
     end
 end
 

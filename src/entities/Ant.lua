@@ -5,7 +5,7 @@ function Ant:new(antConfig)
 
     ant.type = antConfig.type
 
-    ant.image = lg.newImage("images/ants/spritesheets/ant" .. ant.type ..
+    ant.image = Lg.newImage("images/ants/spritesheets/ant" .. ant.type ..
                                 "/_ant_walk-small.png")
 
     ant.x, ant.y = Component.position(antConfig.x, antConfig.y)
@@ -19,9 +19,9 @@ function Ant:new(antConfig)
     ant.scentLocation = nil
 
     -- Physics
-    ant.body = lp.newBody(world, ant.x, ant.y, "dynamic")
-    ant.shape = lp.newRectangleShape(4, 4)
-    ant.fixture = lp.newFixture(ant.body, ant.shape, .5)
+    ant.body = Lp.newBody(world, ant.x, ant.y, "dynamic")
+    ant.shape = Lp.newRectangleShape(4, 4)
+    ant.fixture = Lp.newFixture(ant.body, ant.shape, .5)
     ant.body:setSleepingAllowed(true)
 
     -- Signal first draft
@@ -60,21 +60,22 @@ function Ant:draw()
                             math.pi, .4, .4, util.getCenter(self.width),
                         util.getCenter(self.height))
 
+    -- Attach food particle to ant once has food
     if self.hasFood then
         self.speed = 60
-        lg.setColor(255, 153, 153)
-        lg.circle("fill", self.body:getX(), self.body:getY(), 2)
+        Lg.setColor(255, 153, 153)
+        Lg.circle("fill", self.body:getX(), self.body:getY(), 2)
     end
 
     if self.signal.foodSignalActive then
-        lg.setColor(255, 7, 153)
-        lg.circle('line', self.body:getX(), self.body:getY(),
+        Lg.setColor(255, 7, 153)
+        Lg.circle('line', self.body:getX(), self.body:getY(),
                   self.signal.foodSignalSize)
     end
 
     if self.signal.aggressionSignalActive then
-        lg.setColor(1, 0, 0)
-        lg.circle('line', self.body:getX(), self.body:getY(),
+        Lg.setColor(1, 0, 0)
+        Lg.circle('line', self.body:getX(), self.body:getY(),
                   self.signal.aggressionSignalSize)
     end
 
@@ -82,13 +83,13 @@ end
 
 function Ant:setTarget(target, spider, dt)
 
-    timePassed = timePassed + 1 * dt
+    TimePassedAnt = TimePassedAnt + 1 * dt
 
     if self.hasFood then self.target = self.nest end
 
     -- Walk randomnly
-    if timePassed > 2 or self.target == nil then
-        timePassed = 0
+    if TimePassedAnt > 2 or self.target == nil then
+        TimePassedAnt = 0
         self.target = {
             x = math.random(globalWidth, 0),
             y = math.random(globalHeight, 0)

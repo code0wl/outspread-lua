@@ -6,7 +6,7 @@ function Spider:new(spiderConfig)
     spider.state = spiderConfig.state
     spider.type = spiderConfig.type
 
-    spider.image = lg.newImage("images/spiders/spider" .. spider.type ..
+    spider.image = Lg.newImage("images/spiders/spider" .. spider.type ..
                                    "/spritesheets/sheet_spider_walk-small.png")
 
     spider.x, spider.y = Component.position(-100, 100)
@@ -17,17 +17,13 @@ function Spider:new(spiderConfig)
     spider.alive = true
 
     -- Signal first draft
-    spider.signal = {
-        foodRadius = 400,
-        foodSignalActive = false,
-        aggressionRadius = 500,
-        aggressionSignalActive = false
-    }
+    spider.signal = Component.signal(400, false, 500, false)
 
     -- Physics
-    spider.body = lp.newBody(world, spider.x, spider.y, 'dynamic')
-    spider.shape = lp.newRectangleShape(100, 80)
-    spider.fixture = lp.newFixture(spider.body, spider.shape)
+    spider.body = Lp.newBody(world, spider.x, spider.y, 'dynamic')
+    spider.shape = Lp.newRectangleShape(80, 80)
+    spider.fixture = Lp.newFixture(spider.body, spider.shape)
+    spider.body:setSleepingAllowed(true)
 
     spider.grid = anim8.newGrid(spider.width, spider.height,
                                 spider.image:getWidth(),
@@ -45,29 +41,31 @@ function Spider:draw()
                         nil, nil, util.getCenter(self.width),
                         util.getCenter(self.height))
 
-    lg.setColor(255, 153, 153)
-    lg.rectangle("line", self.body:getX(), self.body:getY(), self.width / 2,
+    Lg.setColor(255, 153, 153)
+    Lg.rectangle("line", self.body:getX(), self.body:getY(), self.width / 2,
                  self.height / 2)
+
+    if self.signal.aggressionSignalActive then
+        Lg.setColor(1, 0, 0)
+        Lg.circle('line', self.body:getX(), self.body:getY(),
+                  self.signal.aggressionSignalSize)
+    end
 
 end
 
 function Spider:update(dt)
-    timePassedSpider = timePassedSpider + 1 * dt
-
-    local spiderSpeed = self.speed * dt
+    TimePassedAntSpider = TimePassedAntSpider + 1 * dt
 
     self.animation:update(dt)
 
-    if timePassedSpider > 6 then
-
-        timePassedSpider = 0
-
+    if TimePassedAntSpider > 6 then
+        TimePassedAntSpider = 0
         self.target.x, self.target.y = Component.position(
                                            math.random(globalWidth, 0),
                                            math.random(globalHeight, 0))
     end
 
-    util.setDirectionToTarget(spider, dt)
+    util.setDirectionToTarget(self, dt)
 
 end
 

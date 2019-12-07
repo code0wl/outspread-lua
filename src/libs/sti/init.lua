@@ -99,7 +99,7 @@ function Map:init(path, plugins, ox, oy)
 		assert(tileset.image, "STI does not support Tile Collections.\nYou need to create a Texture Atlas.")
 
 		-- Cache images
-		if lg.isCreated then
+		if Lg.isCreated then
 			local formatted_path = utils.format_path(path .. tileset.image)
 
 			if not STI.cache[formatted_path] then
@@ -172,7 +172,7 @@ end
 -- @param gid First Global ID in Tileset
 -- @return number Next Tileset's first Global ID
 function Map:setTiles(index, tileset, gid)
-	local quad    = lg.newQuad
+	local quad    = Lg.newQuad
 	local imageW  = tileset.imagewidth
 	local imageH  = tileset.imageheight
 	local tileW   = tileset.tilewidth
@@ -467,7 +467,7 @@ function Map:addNewLayerTile(layer, chunk, tile, x, y)
 		size    = layer.width * layer.height
 	end
 
-	batches[tileset] = batches[tileset] or lg.newSpriteBatch(image, size)
+	batches[tileset] = batches[tileset] or Lg.newSpriteBatch(image, size)
 
 	local batch = batches[tileset]
 	local tileX, tileY = self:getLayerTilePosition(layer, tile, x, y)
@@ -607,7 +607,7 @@ end
 --- Batch Tiles in Object Layer for improved draw speed
 -- @param layer The Object Layer
 function Map:setObjectSpriteBatches(layer)
-	local newBatch = lg.newSpriteBatch
+	local newBatch = Lg.newSpriteBatch
 	local batches  = {}
 
 	if layer.draworder == "topdown" then
@@ -814,15 +814,15 @@ end
 -- @param sx Scale on X
 -- @param sy Scale on Y
 function Map:draw(tx, ty, sx, sy)
-	local current_canvas = lg.getCanvas()
-	lg.setCanvas(self.canvas)
-	lg.clear()
+	local current_canvas = Lg.getCanvas()
+	Lg.setCanvas(self.canvas)
+	Lg.clear()
 
 	-- Scale map to 1.0 to draw onto canvas, this fixes tearing issues
 	-- Map is translated to correct position so the right section is drawn
-	lg.push()
-	lg.origin()
-	lg.translate(math.floor(tx or 0), math.floor(ty or 0))
+	Lg.push()
+	Lg.origin()
+	Lg.translate(math.floor(tx or 0), math.floor(ty or 0))
 
 	for _, layer in ipairs(self.layers) do
 		if layer.visible and layer.opacity > 0 then
@@ -830,27 +830,27 @@ function Map:draw(tx, ty, sx, sy)
 		end
 	end
 
-	lg.pop()
+	Lg.pop()
 
 	-- Draw canvas at 0,0; this fixes scissoring issues
 	-- Map is scaled to correct scale so the right section is shown
-	lg.push()
-	lg.origin()
-	lg.scale(sx or 1, sy or sx or 1)
+	Lg.push()
+	Lg.origin()
+	Lg.scale(sx or 1, sy or sx or 1)
 
-	lg.setCanvas(current_canvas)
-	lg.draw(self.canvas)
+	Lg.setCanvas(current_canvas)
+	Lg.draw(self.canvas)
 
-	lg.pop()
+	Lg.pop()
 end
 
 --- Draw an individual Layer
 -- @param layer The Layer to draw
 function Map.drawLayer(_, layer)
-	local r,g,b,a = lg.getColor()
-	lg.setColor(r, g, b, a * layer.opacity)
+	local r,g,b,a = Lg.getColor()
+	Lg.setColor(r, g, b, a * layer.opacity)
 	layer:draw()
-	lg.setColor(r,g,b,a)
+	Lg.setColor(r,g,b,a)
 end
 
 --- Default draw function for Tile Layers
@@ -866,7 +866,7 @@ function Map:drawTileLayer(layer)
 	if layer.chunks then
 		for _, chunk in ipairs(layer.chunks) do
 			for _, batch in pairs(chunk.batches) do
-				lg.draw(batch, floor(chunk.x * self.tilewidth), floor(chunk.y * self.tileheight))
+				Lg.draw(batch, floor(chunk.x * self.tilewidth), floor(chunk.y * self.tileheight))
 			end
 		end
 
@@ -874,7 +874,7 @@ function Map:drawTileLayer(layer)
 	end
 
 	for _, batch in pairs(layer.batches) do
-		lg.draw(batch, floor(layer.x), floor(layer.y))
+		Lg.draw(batch, floor(layer.x), floor(layer.y))
 	end
 end
 
@@ -889,7 +889,7 @@ function Map:drawObjectLayer(layer)
 
 	local line  = { 160, 160, 160, 255 * layer.opacity       }
 	local fill  = { 160, 160, 160, 255 * layer.opacity * 0.5 }
-	local r,g,b,a = lg.getColor()
+	local r,g,b,a = Lg.getColor()
 	local reset = {   r,   g,   b,   a * layer.opacity       }
 
 	local function sortVertices(obj)
@@ -907,26 +907,26 @@ function Map:drawObjectLayer(layer)
 		local vertex = sortVertices(obj)
 
 		if shape == "polyline" then
-			lg.setColor(line)
-			lg.line(vertex)
+			Lg.setColor(line)
+			Lg.line(vertex)
 			return
 		elseif shape == "polygon" then
-			lg.setColor(fill)
+			Lg.setColor(fill)
 			if not love.math.isConvex(vertex) then
 				local triangles = love.math.triangulate(vertex)
 				for _, triangle in ipairs(triangles) do
-					lg.polygon("fill", triangle)
+					Lg.polygon("fill", triangle)
 				end
 			else
-				lg.polygon("fill", vertex)
+				Lg.polygon("fill", vertex)
 			end
 		else
-			lg.setColor(fill)
-			lg.polygon("fill", vertex)
+			Lg.setColor(fill)
+			Lg.polygon("fill", vertex)
 		end
 
-		lg.setColor(line)
-		lg.polygon("line", vertex)
+		Lg.setColor(line)
+		Lg.polygon("line", vertex)
 	end
 
 	for _, object in ipairs(layer.objects) do
@@ -939,15 +939,15 @@ function Map:drawObjectLayer(layer)
 		elseif object.shape == "polyline" then
 			drawShape(object.polyline, "polyline")
 		elseif object.shape == "point" then
-			lg.points(object.x, object.y)
+			Lg.points(object.x, object.y)
 		end
 	end
 
-	lg.setColor(reset)
+	Lg.setColor(reset)
 	for _, batch in pairs(layer.batches) do
-		lg.draw(batch, 0, 0)
+		Lg.draw(batch, 0, 0)
 	end
-	lg.setColor(r,g,b,a)
+	Lg.setColor(r,g,b,a)
 end
 
 --- Default draw function for Image Layers
@@ -960,7 +960,7 @@ function Map:drawImageLayer(layer)
 	assert(layer.type == "imagelayer", "Invalid layer type: " .. layer.type .. ". Layer must be of type: imagelayer")
 
 	if layer.image ~= "" then
-		lg.draw(layer.image, layer.x, layer.y)
+		Lg.draw(layer.image, layer.x, layer.y)
 	end
 end
 
@@ -968,11 +968,11 @@ end
 -- @param w The new width of the drawable area (in pixels)
 -- @param h The new Height of the drawable area (in pixels)
 function Map:resize(w, h)
-	if lg.isCreated then
-		w = w or lg.getWidth()
-		h = h or lg.getHeight()
+	if Lg.isCreated then
+		w = w or Lg.getWidth()
+		h = h or Lg.getHeight()
 
-		self.canvas = lg.newCanvas(w, h)
+		self.canvas = Lg.newCanvas(w, h)
 		self.canvas:setFilter("nearest", "nearest")
 	end
 end
@@ -1538,7 +1538,7 @@ end
 --	-- Add data to Custom Layer
 --	spriteLayer.sprites = {
 --		player = {
---			image = lg.newImage("assets/sprites/player.png"),
+--			image = Lg.newImage("assets/sprites/player.png"),
 --			x = 64,
 --			y = 64,
 --			r = 0,
@@ -1558,7 +1558,7 @@ end
 --			local x = math.floor(sprite.x)
 --			local y = math.floor(sprite.y)
 --			local r = sprite.r
---			lg.draw(sprite.image, x, y, r)
+--			Lg.draw(sprite.image, x, y, r)
 --		end
 --	end
 

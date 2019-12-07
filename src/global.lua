@@ -1,6 +1,6 @@
 -- shortcut to love graphics
-lp = love.physics
-lg = love.graphics
+Lp = love.physics
+Lg = love.graphics
 lw = love.window
 lm = love.mouse
 
@@ -14,18 +14,22 @@ globalWidth = 5000
 globalHeight = 5000
 local gamera = require('libs/gamera')
 cam = gamera.new(0, 0, globalWidth, globalHeight)
-cam:setWindow(0, 0, lg.getWidth(), lg.getHeight())
+cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
 
 -- create world
 world = love.physics.newWorld(0, 0, true)
-timePassed = 0
-timePassedSpider = 0
+TimePassedAnt = 0
+TimePassedAntSpider = 0
 
 -- own util
 util = require("utils")
 
 -- terain map
-terrainSprites = {terrain = lg.newImage("images/terrain/terrain.png")}
+terrainSprites = {terrain = Lg.newImage("images/terrain/terrain.png")}
 
 -- food map
-foodSprites = {food = lg.newImage("images/food/food.png")}
+foodSprites = {food = Lg.newImage("images/food/food.png")}
+
+-- game states
+Colonies = {}
+FoodCollection = {}

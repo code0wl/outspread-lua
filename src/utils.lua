@@ -23,8 +23,8 @@ function util.generateRandomInteger(min, max)
 end
 
 function util.isOutOfBounds(element)
-    return element.x < 0 or element.y < 0 or element.x > lg.getWidth() or
-               element.y > lg.getHeight()
+    return element.x < 0 or element.y < 0 or element.x > Lg.getWidth() or
+               element.y > Lg.getHeight()
 end
 
 function util.CheckCollision(x1, y1, w1, h1, x2, y2, w2, h2)
