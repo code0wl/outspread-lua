@@ -19,7 +19,7 @@ function love.load()
 
     Lg.setBackgroundColor(red, green, blue)
 
-    cam:setScale(1)
+    Cam:setScale(1)
 
     local level1 = sti("levels/level-1.lua")
 
@@ -32,7 +32,7 @@ function love.load()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 500,
+                population = 900,
                 width = obj.width,
                 height = obj.height
             }))
@@ -42,10 +42,9 @@ end
 
 function love.update(dt)
 
-    world:update(dt)
     spider:update(dt)
-    Control.update(dt)
     Player:update()
+    Control.update(dt)
 
     for _, colony in ipairs(Colonies) do
         colony.nest:update(dt)
@@ -58,19 +57,15 @@ function love.update(dt)
 
             -- handle spider ant interaction
             if not spider.signal.aggressionSignalActive and
-                util.distanceBetween(ant.body:getX(), ant.body:getY(),
-                                     spider.body:getX(), spider.body:getY()) <
+                util.distanceBetween(ant.x, ant.y, spider.x, spider.y) <
                 spider.signal.aggressionSignalSize then
                 spider.signal.aggressionSignalActive = true
-            else
-                spider.signal.aggressionSignalActive = false
             end
 
             -- ant signals (move to director)
             for j, a in ipairs(colony.nest.ants) do
                 if a.signal.active and not ant.scentLocation then
-                    if util.distanceBetween(a.body:getX(), a.body:getY(),
-                                            ant.body:getX(), ant.body:getY()) <
+                    if util.distanceBetween(a.x, a.y, ant.x, ant.y) <
                         a.signal.radius then
                         ant.scentLocation = a.scentLocation
                     end
@@ -82,11 +77,11 @@ function love.update(dt)
 end
 
 function love.draw()
-    local mouseX, mouseY = lm.getPosition()
-    local currentX, currentY = cam:getPosition()
+    local mouseX, mouseY = Lm.getPosition()
+    local currentX, currentY = Cam:getPosition()
 
     -- Camera
-    cam:draw(function(l, t, w, h)
+    Cam:draw(function(l, t, w, h)
 
         for _, phermone in ipairs(Player.phermones) do
             Lg.setColor(255, 153, 153)

@@ -15,7 +15,7 @@ function Nest:new(nestConfig)
     nest.height = 27
 
     nest.graphic = Lg.newQuad(300, 70, 80, 80,
-                              terrainSprites.terrain:getDimensions())
+                              TerrainSprites.terrain:getDimensions())
 
     for i = 0, nest.startingPopulation do
         table.insert(nest.ants, Ant:new({
@@ -42,7 +42,7 @@ function Nest:update()
 end
 
 function Nest:draw()
-    Lg.draw(terrainSprites.terrain, self.graphic, self.x, self.y, nil, .4, .4)
+    Lg.draw(TerrainSprites.terrain, self.graphic, self.x, self.y, nil, .4, .4)
 end
 
 return Nest

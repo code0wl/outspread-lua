@@ -1,6 +1,10 @@
 {
     "Lua.diagnostics.globals": [
         "love",
-        "beginContact"
+        "beginContact",
+        "anim8",
+        "sti",
+        "inspect",
+        "util"
     ]
 }

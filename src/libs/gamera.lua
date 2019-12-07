@@ -77,16 +77,16 @@ function gamera.new(l,t,w,h)
 
   local sw,sh = love.graphics.getWidth(), love.graphics.getHeight()
 
-  local cam = setmetatable({
+  local Cam = setmetatable({
     x=0, y=0,
     scale=1,
     angle=0, sin=math.sin(0), cos=math.cos(0),
     l=0, t=0, w=sw, h=sh, w2=sw*0.5, h2=sh*0.5
   }, gameraMt)
 
-  cam:setWorld(l,t,w,h)
+  Cam:setWorld(l,t,w,h)
 
-  return cam
+  return Cam
 end
 
 function gamera:setWorld(l,t,w,h)

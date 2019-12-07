@@ -33,16 +33,12 @@ end
 
 function util.setDirectionToTarget(actor, dt)
     local speed = actor.speed * dt
-    actor.body:setX((actor.body:getX() -
-                        math.cos(util.getAngle(actor.target.y,
-                                               actor.body:getX(),
-                                               actor.target.x, actor.body:getX())) *
-                        speed))
-    actor.body:setY((actor.body:getY() -
-                        math.sin(util.getAngle(actor.target.y,
-                                               actor.body:getY(),
-                                               actor.target.x, actor.body:getX())) *
-                        speed))
+    return (actor.x -
+               math.cos(util.getAngle(actor.target.y, actor.x, actor.target.x,
+                                      actor.x)) * speed), (actor.y -
+               math.sin(util.getAngle(actor.target.y, actor.y, actor.target.x,
+                                      actor.x)) * speed)
+
 end
 
 return util

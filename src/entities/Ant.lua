@@ -9,6 +9,7 @@ function Ant:new(antConfig)
                                 "/_ant_walk-small.png")
 
     ant.x, ant.y = Component.position(antConfig.x, antConfig.y)
+    ant.health = Component.health(2)
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
     ant.speed = 90
@@ -17,12 +18,6 @@ function Ant:new(antConfig)
     ant.target = nil
     ant.isAlive = true
     ant.scentLocation = nil
-
-    -- Physics
-    ant.body = Lp.newBody(world, ant.x, ant.y, "dynamic")
-    ant.shape = Lp.newRectangleShape(4, 4)
-    ant.fixture = Lp.newFixture(ant.body, ant.shape, .5)
-    ant.body:setSleepingAllowed(true)
 
     -- Signal first draft
     ant.signal = Component.signal(100, false, 150, false)
@@ -45,8 +40,7 @@ end
 
 function Ant:returnFoodToNest(target)
     if self.hasFood then
-        if util.distanceBetween(self.body:getX(), self.body:getY(), target.x,
-                                target.y) < 45 then
+        if util.distanceBetween(self.x, self.y, target.x, target.y) < 45 then
             self.hasFood = false
             target.collectedFood = target.collectedFood + 1
         end
@@ -54,29 +48,15 @@ function Ant:returnFoodToNest(target)
 end
 
 function Ant:draw()
-    self.animation:draw(self.image, self.body:getX(), self.body:getY(),
-                        util.getAngle(self.target.y, self.body:getY(),
-                                      self.target.x, self.body:getX()) + 1.6 +
-                            math.pi, .4, .4, util.getCenter(self.width),
-                        util.getCenter(self.height))
+    self.animation:draw(self.image, self.x, self.y,
+                        util.getAngle(self.target.y, self.y, self.target.x,
+                                      self.x) + 1.6 + math.pi, .4, .4,
+                        util.getCenter(self.width), util.getCenter(self.height))
 
     -- Attach food particle to ant once has food
     if self.hasFood then
-        self.speed = 60
         Lg.setColor(255, 153, 153)
-        Lg.circle("fill", self.body:getX(), self.body:getY(), 2)
-    end
-
-    if self.signal.foodSignalActive then
-        Lg.setColor(255, 7, 153)
-        Lg.circle('line', self.body:getX(), self.body:getY(),
-                  self.signal.foodSignalSize)
-    end
-
-    if self.signal.aggressionSignalActive then
-        Lg.setColor(1, 0, 0)
-        Lg.circle('line', self.body:getX(), self.body:getY(),
-                  self.signal.aggressionSignalSize)
+        Lg.circle("fill", self.x, self.y, 2)
     end
 
 end
@@ -91,8 +71,8 @@ function Ant:setTarget(target, spider, dt)
     if TimePassedAnt > 2 or self.target == nil then
         TimePassedAnt = 0
         self.target = {
-            x = math.random(globalWidth, 0),
-            y = math.random(globalHeight, 0)
+            x = math.random(GlobalWidth, 0),
+            y = math.random(GlobalHeight, 0)
         }
     end
 
@@ -103,14 +83,13 @@ function Ant:setTarget(target, spider, dt)
 
     -- if scent is spider
     -- to avoid repeated lookups
-    local spiderX = spider.body:getX()
-    local spiderY = spider.body:getY()
+    local spiderX = spider.x
+    local spiderY = spider.y
     if not self.hasFood and
-        util.distanceBetween(self.body:getX(), self.body:getY(), spiderX,
-                             spiderY) < self.signal.aggressionSignalSize then
+        util.distanceBetween(self.x, self.y, spiderX, spiderY) <
+        self.signal.aggressionSignalSize then
         self.target = {x = spiderX, y = spiderY}
         self.signal.aggressionSignalActive = true
-
     else
         self.signal.aggressionSignalActive = false
     end
@@ -118,13 +97,12 @@ function Ant:setTarget(target, spider, dt)
     -- deliver food to nest
     self:returnFoodToNest(target)
 
-    util.setDirectionToTarget(self, dt)
+    self.x, self.y = util.setDirectionToTarget(self, dt)
 end
 
 function Ant:handleFood(food)
     for i, f in ipairs(food) do
-        if not self.hasFood and
-            util.distanceBetween(self.body:getX(), self.body:getY(), f.x, f.y) <
+        if not self.hasFood and util.distanceBetween(self.x, self.y, f.x, f.y) <
             f.amount then
             self.hasFood = true
             self.scentLocation = f

@@ -5,12 +5,12 @@ local scrollThreshold = 50
 local scrollSpeed = 10
 
 function love.wheelmoved(x, y)
-    if y > 0 and cam.scale < maxZoom then
+    if y > 0 and Cam.scale < maxZoom then
         currentScale = currentScale + .2
-        cam:setScale(currentScale)
-    elseif y < 0 and cam.scale > maxOut then
+        Cam:setScale(currentScale)
+    elseif y < 0 and Cam.scale > maxOut then
         currentScale = currentScale - .2
-        cam:setScale(currentScale)
+        Cam:setScale(currentScale)
     end
 end
 
@@ -18,35 +18,35 @@ function love.mousemoved(x, y, dx, dy, istouch) dragMouse(x, y, dx, dy) end
 
 function updateCameraLocation(mouseX, mouseY, currentX, currentY)
     if isScrollingLeft(mouseX) then
-        cam:setPosition(currentX - scrollSpeed, currentY)
+        Cam:setPosition(currentX - scrollSpeed, currentY)
     end
 
     if isScrollingTop(mouseY) then
-        cam:setPosition(currentX, currentY - scrollSpeed)
+        Cam:setPosition(currentX, currentY - scrollSpeed)
     end
 
     if isScrollingLeft(mouseX) and isScrollingTop(mouseY) then
-        cam:setPosition(currentX - scrollSpeed, currentY - scrollSpeed)
+        Cam:setPosition(currentX - scrollSpeed, currentY - scrollSpeed)
     end
 
     if isScrollingRight(mouseX) then
-        cam:setPosition(currentX + scrollSpeed, currentY)
+        Cam:setPosition(currentX + scrollSpeed, currentY)
     end
 
     if isScrollingRight(mouseX) and isScrollingTop(mouseY) then
-        cam:setPosition(currentX + scrollSpeed, currentY - scrollSpeed)
+        Cam:setPosition(currentX + scrollSpeed, currentY - scrollSpeed)
     end
 
     if isScrollingDown(mouseY) then
-        cam:setPosition(currentX, currentY + scrollSpeed)
+        Cam:setPosition(currentX, currentY + scrollSpeed)
     end
 
     if isScrollingDown(mouseY) and isScrollingRight(mouseX) then
-        cam:setPosition(currentX + scrollSpeed, currentY + scrollSpeed)
+        Cam:setPosition(currentX + scrollSpeed, currentY + scrollSpeed)
     end
 
     if isScrollingDown(mouseY) and isScrollingLeft(mouseX) then
-        cam:setPosition(currentX - scrollSpeed, currentY + scrollSpeed)
+        Cam:setPosition(currentX - scrollSpeed, currentY + scrollSpeed)
     end
 
 end
@@ -61,13 +61,13 @@ function isScrollingDown(mouseY)
 end
 
 function dragMouse(x, y, dx, dy)
-    local currentX, currentY = cam:getPosition()
+    local currentX, currentY = Cam:getPosition()
 
-    if lm.isDown(2) or lm.isDown(3) then
-        cam:setPosition(currentX - dx, currentY - dy)
+    if Lm.isDown(2) or Lm.isDown(3) then
+        Cam:setPosition(currentX - dx, currentY - dy)
     end
 
-    if lm.isDown(1) then
+    if Lm.isDown(1) then
         local phermone = {x = x, y = y, dx = dx, dy = dy}
         table.insert(Player.phermones, phermone)
     end
