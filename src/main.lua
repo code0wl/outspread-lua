@@ -61,6 +61,31 @@ function love.update(dt)
 
             ant:update(FoodCollection, colony.nest, dt)
 
+            -- refactor me. 
+            -- I check wether ants should keep the peace or not
+            local col = function()
+                if ant.type == 1 then
+                    return antLocations[2]
+                else
+                    return antLocations[1]
+                end
+            end
+
+            for _, otherAnt in ipairs(col()) do
+                if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
+                    ant.signal.aggressionSignalSize then
+
+                    ant.target = {x = otherAnt.x, y = otherAnt.y}
+                    otherAnt.target = {x = ant.x, y = ant.y}
+                end
+
+                if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
+                    30 then
+                    ant:attack(otherAnt)
+                    otherAnt:attack(ant)
+                end
+            end
+
             -- handle otherCreature with ant interaction
             for otherCreatureIndex, otherCreature in ipairs(WildLife) do
 
@@ -119,25 +144,6 @@ function love.update(dt)
 
     end
 
-    -- detect if rival ants are fighting
-    -- refactor
-    for _, blackAnt in ipairs(antLocations[1]) do
-        for _, redAnt in ipairs(antLocations[2]) do
-            if util.distanceBetween(blackAnt.x, blackAnt.y, redAnt.x, redAnt.y) <
-                blackAnt.signal.aggressionSignalSize then
-
-                blackAnt.target = {x = redAnt.x, y = redAnt.y}
-                redAnt.target = {x = blackAnt.x, y = blackAnt.y}
-            end
-
-            if util.distanceBetween(blackAnt.x, blackAnt.y, redAnt.x, redAnt.y) <
-                30 then
-                blackAnt:attack(redAnt)
-                redAnt:attack(blackAnt)
-            end
-        end
-    end
-
 end
 
 function love.draw()
@@ -166,7 +172,7 @@ function love.draw()
             Lg.circle('line', phermone.x, phermone.y, 5)
         end
 
-        updateCameraLocation(mouseX, mouseY, currentX, currentY)
+        UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
 
     end)
 
