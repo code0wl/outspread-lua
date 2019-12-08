@@ -90,43 +90,27 @@ function love.update(dt)
             for otherCreatureIndex, otherCreature in ipairs(WildLife) do
 
                 -- if scent is otherCreature
-                local otherCreatureX, otherCreatureY = otherCreature.x,
-                                                       otherCreature.y
-                local antX, antY = ant.x, ant.y
-                if not ant.hasFood and
-                    util.distanceBetween(antX, antY, otherCreatureX,
-                                         otherCreatureY) <
-                    ant.signal.aggressionSignalSize then
-                    ant.target = {x = otherCreatureX, y = otherCreatureY}
-                    ant.signal.aggressionSignalActive = true
-                else
-                    ant.signal.aggressionSignalActive = false
-                end
+                ant:handleAggression(otherCreature)
+                ant:attackAggressor(otherCreature)
 
                 -- animal attack and hunt ant
                 if otherCreature.signal and
                     not otherCreature.signal.aggressionSignalActive and
-                    util.distanceBetween(antX, antY, otherCreatureX,
-                                         otherCreatureY) <
+                    util.distanceBetween(ant.x, ant.y, otherCreature.x,
+                                         otherCreature.y) <
                     otherCreature.signal.aggressionSignalSize then
                     otherCreature.signal.aggressionSignalActive = true
                     otherCreature:hunt(ant)
                 end
 
-                -- ant attack other animals
-                if ant.signal.aggressionSignalActive and
-                    util.distanceBetween(antX, antY, otherCreatureX,
-                                         otherCreatureY) < otherCreature.width then
-                    ant:attack(otherCreature)
-                    if not otherCreature.isAlive then
-                        table.insert(FoodCollection, Food:new(
-                                         {
-                                x = otherCreatureX,
-                                y = otherCreatureY,
-                                amount = 100
-                            }))
-                        table.remove(WildLife, otherCreatureIndex)
-                    end
+                if not otherCreature.isAlive then
+                    table.insert(FoodCollection, Food:new(
+                                     {
+                            x = otherCreature.x,
+                            y = otherCreature.y,
+                            amount = otherCreature.height
+                        }))
+                    table.remove(WildLife, otherCreatureIndex)
                 end
 
             end
