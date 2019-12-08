@@ -5,6 +5,7 @@
         "anim8",
         "sti",
         "inspect",
-        "util"
+        "util",
+        "beholder"
     ]
 }

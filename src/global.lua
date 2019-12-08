@@ -8,15 +8,16 @@ Lk = love.keyboard
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
+beholder = require("libs/beholder/beholder")
 
 -- create instance for Camera
 GlobalWidth = 5000
 GlobalHeight = 5000
-local gamera = require('libs/gamera')
+local gamera = require('libs.gamera')
 Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
 
--- create world
+-- Walk timers -- please remove
 TimePassedAnt = 0
 TimePassedAntSpider = 0
 
@@ -35,8 +36,7 @@ FoodCollection = {}
 WildLife = {}
 
 -- components
-Component = require("component.index")
+Component = require("component/index")
 
 -- Player class
-Player = require("entities.Player")
-
+Player = require("entities/Player")

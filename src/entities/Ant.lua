@@ -32,9 +32,9 @@ function Ant:new(antConfig)
 
 end
 
-function Ant:update(foodCollection, target, dt, spider)
+function Ant:update(foodCollection, target, dt)
     self.animation:update(dt)
-    self:setTarget(target, spider, dt)
+    self:setTarget(target, dt)
     self:handleFood(foodCollection)
 end
 
@@ -63,7 +63,7 @@ end
 
 function Ant:attack(animal) animal.health = animal.health - self.damage end
 
-function Ant:setTarget(target, life, dt)
+function Ant:setTarget(target, dt)
 
     TimePassedAnt = TimePassedAnt + 1 * dt
 
