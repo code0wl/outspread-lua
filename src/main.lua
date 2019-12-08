@@ -57,9 +57,7 @@ function love.update(dt)
 
             table.insert(antLocations[colonyIndex], ant)
 
-            if not ant.isAlive then
-                table.remove(colony.nest.ants, i)
-            end
+            if not ant.isAlive then table.remove(colony.nest.ants, i) end
 
             ant:update(FoodCollection, colony.nest, dt)
 
@@ -122,12 +120,14 @@ function love.update(dt)
     end
 
     -- detect if rival ants are fighting
+    -- refactor
     for _, blackAnt in ipairs(antLocations[1]) do
         for _, redAnt in ipairs(antLocations[2]) do
             if util.distanceBetween(blackAnt.x, blackAnt.y, redAnt.x, redAnt.y) <
                 blackAnt.signal.aggressionSignalSize then
-                blackAnt.target = redAnt
-                redAnt.target = blackAnt
+
+                blackAnt.target = {x = redAnt.x, y = redAnt.y}
+                redAnt.target = {x = blackAnt.x, y = blackAnt.y}
             end
 
             if util.distanceBetween(blackAnt.x, blackAnt.y, redAnt.x, redAnt.y) <

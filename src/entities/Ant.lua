@@ -16,7 +16,7 @@ function Ant:new(antConfig)
     ant.width = 16
     ant.damage = 1
     ant.height = 27
-    ant.target = nil
+    ant.target = {x = antConfig.x, y = antConfig.y}
     ant.isAlive = true
     ant.scentLocation = nil
 
@@ -73,7 +73,7 @@ function Ant:setTarget(target, dt)
     if self.hasFood then self.target = self.nest end
 
     -- Walk randomnly
-    if TimePassedAnt > 2 or self.target == nil then
+    if TimePassedAnt > 2 then
         TimePassedAnt = 0
         self.target = {
             x = math.random(GlobalWidth, 0),
