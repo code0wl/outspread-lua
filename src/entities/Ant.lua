@@ -12,6 +12,7 @@ function Ant:new(antConfig)
     ant.nest = {x = antConfig.x, y = antConfig.y}
     ant.hasFood = nil
     ant.speed = 90
+    ant.health = 10
     ant.width = 16
     ant.damage = 1
     ant.height = 27
@@ -33,10 +34,15 @@ function Ant:new(antConfig)
 end
 
 function Ant:update(foodCollection, target, dt)
-    self.animation:update(dt)
-    self:setTarget(target, dt)
-    self:handleFood(foodCollection)
+    if self.isAlive then
+        self:checkHealth()
+        self.animation:update(dt)
+        self:setTarget(target, dt)
+        self:handleFood(foodCollection)
+    end
 end
+
+function Ant:checkHealth() if self.health < 1 then self.isAlive = false end end
 
 function Ant:returnFoodToNest(nest)
     if self.hasFood and util.distanceBetween(self.x, self.y, nest.x, nest.y) <

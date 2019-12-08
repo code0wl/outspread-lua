@@ -28,7 +28,7 @@ function love.load()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 300,
+                population = 900,
                 width = obj.width,
                 height = obj.height
             }))
@@ -41,25 +41,27 @@ end
 
 function love.update(dt)
 
+    local antLocations = {{}, {}}
+
     Player:update()
 
     Control.update(dt)
 
     for _, life in ipairs(WildLife) do life:update(dt) end
 
-    for _, colony in ipairs(Colonies) do
+    for colonyIndex, colony in ipairs(Colonies) do
         colony.nest:update(dt)
 
         -- ant locations 
         for i, ant in ipairs(colony.nest.ants) do
+
+            table.insert(antLocations[colonyIndex], ant)
 
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
 
             ant:update(FoodCollection, colony.nest, dt)
 
             -- handle otherCreature with ant interaction
-            for _, nest in ipairs(colony) do print(inspect(nest)) end
-
             for otherCreatureIndex, otherCreature in ipairs(WildLife) do
 
                 -- if scent is otherCreature
@@ -115,6 +117,31 @@ function love.update(dt)
 
         end
 
+    end
+
+    -- detect if rival ants are fighting
+    for _, blackAnt in ipairs(antLocations[1]) do
+        for _, redAnt in ipairs(antLocations[2]) do
+            if not blackAnt.hasFood and not redAnt.hasFood and
+                util.distanceBetween(blackAnt.x, blackAnt.y, redAnt.x, redAnt.y) <
+                blackAnt.signal.aggressionSignalSize then
+                blackAnt.target = redAnt
+                redAnt.target = blackAnt
+
+                blackAnt.signal.aggressionSignalActive = true
+                redAnt.signal.aggressionSignalActive = true
+            else
+                blackAnt.signal.aggressionSignalActive = false
+                redAnt.signal.aggressionSignalActive = false
+            end
+
+            if blackAnt.aggressionSignalActive or redAnt.aggressionSignalActive and
+                util.distanceBetween(blackAnt.x, blackAnt.y, redAnt.x, redAnt.y) <
+                20 then
+                blackAnt:attack(redAnt)
+                redAnt:attack(blackAnt)
+            end
+        end
     end
 
 end
