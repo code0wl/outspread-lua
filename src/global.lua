@@ -8,7 +8,6 @@ Lk = love.keyboard
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
-beholder = require("libs/beholder/beholder")
 
 -- create instance for Camera
 GlobalWidth = 5000
