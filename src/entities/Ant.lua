@@ -35,14 +35,12 @@ end
 
 function Ant:update(foodCollection, target, dt)
     if self.isAlive then
-        self:checkHealth()
+        if self.health < 1 then self.isAlive = false end
         self.animation:update(dt)
         self:setTarget(target, dt)
         self:handleFood(foodCollection)
     end
 end
-
-function Ant:checkHealth() if self.health < 1 then self.isAlive = false end end
 
 function Ant:returnFoodToNest(nest)
     if self.hasFood and util.distanceBetween(self.x, self.y, nest.x, nest.y) <
