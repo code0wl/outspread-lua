@@ -1,7 +1,7 @@
 local Food = {}
 
 function Food:new(foodConfig)
-    local food = setmetatable({},{__index = Food})
+    local food = setmetatable({}, {__index = Food})
     food.x = foodConfig.x
     food.y = foodConfig.y
     food.amount = 100
@@ -14,6 +14,8 @@ function Food:draw()
         Lg.circle("fill", self.x, self.y, self.amount)
     end
 end
+
+function Food:removeOneFood() self.amount = self.amount - 1 end
 
 return Food
 

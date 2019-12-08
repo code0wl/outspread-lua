@@ -45,4 +45,6 @@ function Nest:draw()
     Lg.draw(TerrainSprites.terrain, self.graphic, self.x, self.y, nil, .4, .4)
 end
 
+function Nest:addFood() self.collectedFood = self.collectedFood + 1 end
+
 return Nest

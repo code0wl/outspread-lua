@@ -38,12 +38,11 @@ function Ant:update(foodCollection, target, dt)
     self:handleFood(foodCollection)
 end
 
-function Ant:returnFoodToNest(target)
-    if self.hasFood then
-        if util.distanceBetween(self.x, self.y, target.x, target.y) < 45 then
-            self.hasFood = false
-            target.collectedFood = target.collectedFood + 1
-        end
+function Ant:returnFoodToNest(nest)
+    if self.hasFood and util.distanceBetween(self.x, self.y, nest.x, nest.y) <
+        45 then
+        self.hasFood = false
+        nest:addFood()
     end
 end
 
@@ -90,13 +89,13 @@ function Ant:setTarget(target, dt)
 end
 
 function Ant:handleFood(food)
-    for i, f in ipairs(food) do
+    for _, f in ipairs(food) do
         if not self.hasFood and util.distanceBetween(self.x, self.y, f.x, f.y) <
             f.amount then
             self.hasFood = true
             self.scentLocation = f
             self.signal.foodSignalActive = true
-            f.amount = f.amount - 1
+            f:removeOneFood()
         elseif self.scentLocation and self.scentLocation.amount < 1 then
             self.scentLocation = nil
             self.signal.foodSignalActive = false
