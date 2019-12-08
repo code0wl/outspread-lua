@@ -29,6 +29,7 @@ local function dragMouse(x, y, dx, dy)
     end
 end
 
+-- fix zoom bug when max zoom is active user can keep scrolling
 function love.wheelmoved(x, y)
     if y > 0 and Cam.scale < maxZoom then
         currentScale = currentScale + .2
