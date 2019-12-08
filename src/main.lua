@@ -74,15 +74,12 @@ function love.update(dt)
             for _, otherAnt in ipairs(col()) do
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                     ant.signal.aggressionSignalSize then
-
-                    ant.target = {x = otherAnt.x, y = otherAnt.y}
-                    otherAnt.target = {x = ant.x, y = ant.y}
+                    ant.target = otherAnt
                 end
 
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                     30 then
                     ant:attack(otherAnt)
-                    otherAnt:attack(ant)
                 end
             end
 
@@ -90,8 +87,7 @@ function love.update(dt)
             for otherCreatureIndex, otherCreature in ipairs(WildLife) do
 
                 -- if scent is otherCreature
-                ant:handleAggression(otherCreature)
-                ant:attackAggressor(otherCreature)
+                ant:handleAggressor(otherCreature)
 
                 -- animal attack and hunt ant
                 if otherCreature.signal and

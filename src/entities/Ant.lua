@@ -108,7 +108,8 @@ function Ant:handleFood(food)
 end
 
 -- deals with non ant aggressors
-function Ant:handleAggression(otherCreature)
+function Ant:handleAggressor(otherCreature)
+
     if not self.hasFood and
         util.distanceBetween(self.x, self.y, otherCreature.x, otherCreature.y) <
         self.signal.aggressionSignalSize then
@@ -117,11 +118,13 @@ function Ant:handleAggression(otherCreature)
     else
         self.signal.aggressionSignalActive = false
     end
+
+    self:attackAggressor(otherCreature)
 end
 
 function Ant:attackAggressor(otherCreature)
-    -- ant attack other animals
-    if self.signal.aggressionSignalActive and
+
+    if self.signal and self.signal.aggressionSignalActive and
         util.distanceBetween(self.x, self.y, otherCreature.x, otherCreature.y) <
         otherCreature.width then self:attack(otherCreature) end
 end
