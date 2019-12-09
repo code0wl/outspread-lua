@@ -1,4 +1,6 @@
-local Ant = class('Ant')
+local Actor = require('entities.Actor')
+
+local Ant = class('Ant', Actor)
 
 function Ant:initialize(antConfig)
     self.antConfig = antConfig
@@ -8,7 +10,7 @@ function Ant:initialize(antConfig)
     self.x, self.y = Component.position(self.antConfig.x, self.antConfig.y)
     self.nest = {x = self.antConfig.x, y = self.antConfig.y}
     self.hasFood = nil
-    
+
     self.target = {x = self.antConfig.x, y = self.antConfig.y}
     self.isAlive = true
     self.scentLocation = nil

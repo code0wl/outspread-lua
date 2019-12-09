@@ -1,34 +1,30 @@
-local Spider = {}
+local Actor = require('entities.Actor')
+local Spider = class('Spider', Actor)
 
-function Spider:new(spiderConfig)
-    local spider = setmetatable({}, {__index = Spider})
+function Spider:initialize(spiderConfig)
+    self.type = spiderConfig.type
 
-    spider.state = spiderConfig.state
-    spider.type = spiderConfig.type
+    self.image = Lg.newImage("images/spiders/spider" .. self.type ..
+                                 "/spritesheets/sheet_spider_walk-small.png")
 
-    spider.image = Lg.newImage("images/spiders/spider" .. spider.type ..
-                                   "/spritesheets/sheet_spider_walk-small.png")
-
-    spider.x, spider.y = Component.position(-100, 100)
-    spider.speed = 80
-    spider.maxEnergy = 1000
-    spider.energy = 10
-    spider.health = Component.health(10000)
-    spider.width = 180
-    spider.height = 150
-    spider.target = {x = -100, y = 100}
-    spider.isAlive = true
+    self.x, self.y = Component.position(-100, 100)
+    self.speed = 80
+    self.maxEnergy = 1000
+    self.energy = 10
+    self.health = Component.health(10000)
+    self.width = 180
+    self.height = 150
+    self.target = {x = -100, y = 100}
+    self.isAlive = true
 
     -- Signal first draft
-    spider.signal = Component.signal(400, false, 500, false)
+    self.signal = Component.signal(400, false, 500, false)
 
-    spider.grid = anim8.newGrid(spider.width, spider.height,
-                                spider.image:getWidth(),
-                                spider.image:getHeight() + 1)
+    self.grid = anim8.newGrid(self.width, self.height, self.image:getWidth(),
+                              self.image:getHeight() + 1)
 
-    spider.animation = anim8.newAnimation(spider.grid('1-5', 1, '1-5', 2), 0.04)
+    self.animation = anim8.newAnimation(self.grid('1-5', 1, '1-5', 2), 0.04)
 
-    return spider
 end
 
 function Spider:draw()
@@ -43,20 +39,7 @@ function Spider:hunt(animal)
     if self.energy < self.maxEnergy then
         self.speed = 500
         self.target = animal
-        self:eat(animal)
-    end
-end
-
-function Spider:eat(animal)
-    if util.distanceBetween(animal.x, animal.y, self.x, self.y) < animal.width then
-        self.energy = self.energy + 20
-        self.speed = 80
-
-        -- kill any animal that has been eaten
-        animal.isAlive = false
-
-        if self.health < 100 then self.health = self.health + 5 end
-
+        self:eat(animal, 10, 80)
     end
 end
 

@@ -158,7 +158,7 @@ function love.draw()
 
     end)
 
-    printDetailsToScreen(Colonies)
+    PrintDetailsToScreen(Colonies)
 
 end
 
