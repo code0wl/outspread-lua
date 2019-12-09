@@ -1,5 +1,4 @@
 local Ant = require('entities.Ant')
-
 local WorkerAnt = class('WorkerAnt', Ant)
 
 function WorkerAnt:initialize(antConfig)

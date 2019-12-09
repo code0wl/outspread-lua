@@ -4,7 +4,7 @@ require("Debug")
 
 local Colony = require("entities.Colony")
 local Control = require("Control")
-local Spider = require("entities.Spider")
+local SpiderTarantula = require("entities.SpiderTarantula")
 local Food = require("entities.Food")
 
 function love.load()
@@ -35,7 +35,7 @@ function love.load()
     end
 
     -- insert other WildLife
-    table.insert(WildLife, Spider:new({type = 1, x = 600, y = 100, state = 1}))
+    table.insert(WildLife, SpiderTarantula:new({x = 600, y = 100, state = 1}))
 
 end
 

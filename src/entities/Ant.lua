@@ -1,8 +1,9 @@
 local Actor = require('entities.Actor')
-
 local Ant = class('Ant', Actor)
 
 function Ant:initialize(antConfig)
+    Actor.initialize(self)
+    
     self.antConfig = antConfig
 
     self.type = self.antConfig.type
@@ -12,7 +13,6 @@ function Ant:initialize(antConfig)
     self.hasFood = nil
 
     self.target = {x = self.antConfig.x, y = self.antConfig.y}
-    self.isAlive = true
     self.scentLocation = nil
 
     -- Signal first draft
