@@ -75,11 +75,13 @@ function love.update(dt)
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                     ant.signal.aggressionSignalSize then
                     ant.target = otherAnt
+                    otherAnt.target = ant
                 end
 
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
-                    30 then
+                    ant.height then
                     ant:attack(otherAnt)
+                    otherAnt:attack(ant)
                 end
             end
 

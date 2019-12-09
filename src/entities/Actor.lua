@@ -1,20 +1,31 @@
-local Ant = class('Ant')
+local Ant = {}
 
-function Ant:initialize(antConfig)
-    self.antConfig = antConfig
+function Ant:new(antConfig)
+    local ant = setmetatable({}, {__index = Ant})
 
-    self.type = self.antConfig.type
+    ant.type = antConfig.type
 
-    self.x, self.y = Component.position(self.antConfig.x, self.antConfig.y)
-    self.nest = {x = self.antConfig.x, y = self.antConfig.y}
-    self.hasFood = nil
-    
-    self.target = {x = self.antConfig.x, y = self.antConfig.y}
-    self.isAlive = true
-    self.scentLocation = nil
+    ant.image = Lg.newImage("images/ants/spritesheets/ant" .. ant.type ..
+                                "/_ant_walk-small.png")
+
+    ant.x, ant.y = Component.position(antConfig.x, antConfig.y)
+    ant.nest = {x = antConfig.x, y = antConfig.y}
+    ant.hasFood = nil
+
+    ant.target = {x = antConfig.x, y = antConfig.y}
+    ant.isAlive = true
+    ant.scentLocation = nil
 
     -- Signal first draft
-    self.signal = Component.signal(100, false, 150, false)
+    ant.signal = Component.signal(100, false, 150, false)
+
+    ant.grid = anim8.newGrid(ant.width, ant.height, ant.image:getWidth(),
+                             ant.image:getHeight() + 1)
+
+    ant.animation = anim8.newAnimation(ant.grid('1-5', 1, '1-5', 2, '1-5', 3),
+                                       0.04)
+
+    return ant
 
 end
 

@@ -6,6 +6,7 @@
         "sti",
         "inspect",
         "util",
-        "beholder"
+        "beholder",
+        "class"
     ]
 }
