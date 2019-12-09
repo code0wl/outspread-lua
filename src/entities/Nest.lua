@@ -1,28 +1,26 @@
 local WorkerAnt = require("entities/WorkerAnt")
 
-local Nest = {}
+local Nest = class('Nest')
 
-function Nest:new(nestConfig)
-    local nest = setmetatable({}, {__index = Nest})
-    nest.type = nestConfig.type
-    nest.x = nestConfig.x
-    nest.y = nestConfig.y
-    nest.target = nil
-    nest.startingPopulation = nestConfig.population
-    nest.collectedFood = 0
-    nest.ants = {}
-    nest.width = 16
-    nest.height = 27
+function Nest:initialize(nestConfig)
+    self.type = nestConfig.type
+    self.x = nestConfig.x
+    self.y = nestConfig.y
+    self.target = nil
+    self.startingPopulation = nestConfig.population
+    self.collectedFood = 0
+    self.ants = {}
+    self.width = 16
+    self.height = 27
 
-    nest.graphic = Lg.newQuad(300, 70, 80, 80,
+    self.graphic = Lg.newQuad(300, 70, 80, 80,
                               TerrainSprites.terrain:getDimensions())
 
-    for i = 0, nest.startingPopulation do
-        table.insert(nest.ants, WorkerAnt:new(
-                         {type = nest.type, x = nest.x, y = nest.y, state = 1}))
+    for i = 0, self.startingPopulation do
+        table.insert(self.ants, WorkerAnt:new(
+                         {type = self.type, x = self.x, y = self.y, state = 1}))
     end
 
-    return nest
 end
 
 function Nest:update()

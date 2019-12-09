@@ -1,20 +1,16 @@
 local Nest = require("entities/Nest")
 
-local Colony = {}
+local Colony = class("Colony")
 
-function Colony:new(colonyConfig)
-    local colony = setmetatable({}, {__index = Colony})
-
-    colony.type = colonyConfig.type
-    colony.population = colonyConfig.population
-    colony.nest = Nest:new({
-        type = colony.type,
+function Colony:initialize(colonyConfig)
+    self.type = colonyConfig.type
+    self.population = colonyConfig.population
+    self.nest = Nest:new({
+        type = self.type,
         x = colonyConfig.x,
         y = colonyConfig.y,
         population = colonyConfig.population
     })
-
-    return colony
 end
 
 return Colony

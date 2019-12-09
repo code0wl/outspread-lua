@@ -1,11 +1,9 @@
-local Food = {}
+local Food = class('Food')
 
-function Food:new(foodConfig)
-    local food = setmetatable({}, {__index = Food})
-    food.x = foodConfig.x
-    food.y = foodConfig.y
-    food.amount = 100
-    return food
+function Food:initialize(foodConfig)
+    self.x = foodConfig.x
+    self.y = foodConfig.y
+    self.amount = 100
 end
 
 function Food:draw()
