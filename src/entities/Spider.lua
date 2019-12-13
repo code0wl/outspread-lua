@@ -5,12 +5,11 @@ local spiderStats = {health = nil, energy = nil}
 
 function Spider:initialize(spiderConfig)
     Actor.initialize(self)
-
     self.maxEnergy = 100
     self.spiderConfig = spiderConfig
     self.x, self.y =
         Component.position(self.spiderConfig.x, self.spiderConfig.y)
-    self.target = {x = 10, y = 10}
+    self.target = {x = spiderConfig.x, y = spiderConfig.y}
 end
 
 function Spider:draw()
@@ -35,27 +34,24 @@ function Spider:update(dt)
 
     spiderStats = {energy = self.energy, health = self.health}
 
-    if self.isAlive then
-        if self.health < 1 then self.isAlive = false end
+    if self.health < 1 then self.isAlive = false end
 
-        self.signal.aggressionSignalActive = false
-        TimePassedAntSpider = TimePassedAntSpider + 1 * dt
+    self.signal.aggressionSignalActive = false
+    TimePassedAntSpider = TimePassedAntSpider + 1 * dt
 
-        self.animation:update(dt)
+    self.animation:update(dt)
 
-        if not self.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
-            self.energy = self.energy - .5
-            TimePassedAntSpider = 0
-            self.target = util.travelRandomly()
-        end
-
-        if self.energy >= self.maxEnergy then
-            self.target = util.travelRandomlyOffScreen()
-        end
-
-        self.x, self.y = util.setDirectionToTarget(self, dt)
+    if not self.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
+        self.energy = self.energy - .5
+        TimePassedAntSpider = 0
+        self.target = util.travelRandomly()
     end
 
+    if self.energy >= self.maxEnergy then
+        self.target = util.travelRandomlyOffScreen()
+    end
+
+    self.x, self.y = util.setDirectionToTarget(self, dt)
 end
 
 return Spider
