@@ -40,6 +40,16 @@ function love.update(dt)
 
             ant:update(FoodCollection, colony.nest, dt)
 
+            -- get ants to share info to their mates about events
+            for j, a in ipairs(antLocations[colonyIndex]) do
+                -- Relay information about food to other ants in the same colony
+                if a.signal.foodSignalActive and not ant.scentLocation and
+                    util.distanceBetween(a.x, a.y, ant.x, ant.y) <
+                    a.signal.foodSignalSize then
+                    ant.scentLocation = a.scentLocation
+                end
+            end
+
             -- Logic for other ants
             for _, otherAnt in ipairs(antLocations[colonySwap[colonyIndex]]) do
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
@@ -81,15 +91,6 @@ function love.update(dt)
                     table.remove(WildLife, otherCreatureIndex)
                 end
 
-            end
-
-            for j, a in ipairs(colony.nest.ants) do
-                -- Relay information about food to other ants in the same colony
-                if a.signal.foodSignalActive and not ant.scentLocation and
-                    util.distanceBetween(a.x, a.y, ant.x, ant.y) <
-                    a.signal.foodSignalSize then
-                    ant.scentLocation = a.scentLocation
-                end
             end
 
         end
