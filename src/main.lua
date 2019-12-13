@@ -55,13 +55,18 @@ function love.update(dt)
                     ant.signal.aggressionSignalSize then
                     ant.target = otherAnt
                     otherAnt.target = ant
+                    ant.aggressionSignalActive = true
 
                     if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                         ant.height then
                         ant:attack(otherAnt)
                         otherAnt:attack(ant)
                     end
+
+                else
+                    ant.aggressionSignalActive = false
                 end
+
             end
 
             -- handle otherCreature with ant interaction
