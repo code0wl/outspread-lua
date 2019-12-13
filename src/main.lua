@@ -40,7 +40,6 @@ function love.update(dt)
 
             ant:update(FoodCollection, colony.nest, dt)
 
-            -- get ants to share info to their mates about events
             for j, a in ipairs(antLocations[colonyIndex]) do
                 -- Relay information about food to other ants in the same colony
                 if a.signal.foodSignalActive and not ant.scentLocation and
@@ -56,12 +55,12 @@ function love.update(dt)
                     ant.signal.aggressionSignalSize then
                     ant.target = otherAnt
                     otherAnt.target = ant
-                end
 
-                if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
-                    ant.height then
-                    ant:attack(otherAnt)
-                    otherAnt:attack(ant)
+                    if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
+                        ant.height then
+                        ant:attack(otherAnt)
+                        otherAnt:attack(ant)
+                    end
                 end
             end
 
