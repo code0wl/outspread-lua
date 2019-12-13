@@ -107,7 +107,7 @@ function Ant:handleAggressor(otherCreature)
 end
 
 function Ant:attackAggressor(otherCreature)
-    if self.signal and self.signal.aggressionSignalActive and
+    if self.signal.aggressionSignalActive and
         util.distanceBetween(self.x, self.y, otherCreature.x, otherCreature.y) <
         otherCreature.width then self:attack(otherCreature) end
 end

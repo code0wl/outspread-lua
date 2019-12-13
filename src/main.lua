@@ -49,12 +49,17 @@ function love.update(dt)
                 end
             end
 
+            -- refactor to make use of own class
             -- Logic for other ants
             for _, otherAnt in ipairs(antLocations[colonySwap[colonyIndex]]) do
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                     ant.signal.aggressionSignalSize then
                     ant.target = otherAnt
                     otherAnt.target = ant
+
+                    otherAnt.scentLocation = nil
+                    ant.scentLocation = nil
+
                     ant.aggressionSignalActive = true
 
                     if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
