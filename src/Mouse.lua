@@ -4,6 +4,8 @@ local currentScale = 1
 local scrollThreshold = 20
 local scrollSpeed = 10
 
+Cam:setScale(1)
+
 local function isScrollingLeft(mouseX) return mouseX < scrollThreshold end
 
 local function isScrollingRight(mouseX)

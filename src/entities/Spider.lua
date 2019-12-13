@@ -1,13 +1,16 @@
 local Actor = require('entities.Actor')
 local Spider = class('Spider', Actor)
 
+local spiderStats = {health = nil, energy = nil}
+
 function Spider:initialize(spiderConfig)
     Actor.initialize(self)
-    
+
+    self.maxEnergy = 100
     self.spiderConfig = spiderConfig
     self.x, self.y =
         Component.position(self.spiderConfig.x, self.spiderConfig.y)
-    self.target = {x = self.x, y = self.y}
+    self.target = {x = 10, y = 10}
 end
 
 function Spider:draw()
@@ -15,6 +18,8 @@ function Spider:draw()
                         util.getAngle(self.target.y, self.y, self.target.x,
                                       self.x) + math.pi, nil, nil,
                         util.getCenter(self.width), util.getCenter(self.height))
+
+    Lg.print("Spider stats : " .. tostring(inspect(spiderStats)), self.x, self.y)
 
 end
 
@@ -28,6 +33,8 @@ end
 
 function Spider:update(dt)
 
+    spiderStats = {energy = self.energy, health = self.health}
+
     if self.isAlive then
         if self.health < 1 then self.isAlive = false end
 
@@ -39,18 +46,16 @@ function Spider:update(dt)
         if not self.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
             self.energy = self.energy - .5
             TimePassedAntSpider = 0
-            self.target.x, self.target.y =
-                Component.position(math.random(GlobalWidth, 0),
-                                   math.random(GlobalHeight, 0))
+            self.target = util.travelRandomly()
         end
 
         if self.energy >= self.maxEnergy then
-            self.target = {x = -100, y = -100}
+            self.target = util.travelRandomlyOffScreen()
         end
 
         self.x, self.y = util.setDirectionToTarget(self, dt)
-
     end
+
 end
 
 return Spider

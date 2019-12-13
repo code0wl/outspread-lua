@@ -1,47 +1,26 @@
 require("Global")
 require("Mouse")
 require("Debug")
+require("Assets")
 
-local Colony = require("entities.Colony")
 local Control = require("Control")
 local SpiderTarantula = require("entities.SpiderTarantula")
 local Food = require("entities.Food")
 
 function love.load()
-    local red = 26 / 255
-    local green = 154 / 255
-    local blue = 105 / 255
 
-    Lg.setBackgroundColor(red, green, blue)
-
-    Cam:setScale(1)
-
-    local level1 = sti("levels/level-1.lua")
-
-    for _, obj in pairs(level1.layers["food"].objects) do
-        table.insert(FoodCollection, Food:new(obj))
-    end
-
-    for i, obj in pairs(level1.layers["nest"].objects) do
-        table.insert(Colonies, Colony:new(
-                         {
-                type = i,
-                x = obj.x,
-                y = obj.y,
-                population = 900,
-                width = obj.width,
-                height = obj.height
-            }))
-    end
+    GenerateWorldAssets()
 
     -- insert other WildLife
-    table.insert(WildLife, SpiderTarantula:new({x = 600, y = 100, state = 1}))
+    table.insert(WildLife, SpiderTarantula:new({x = -100, y = -100, state = 1}))
 
 end
 
 function love.update(dt)
 
     local antLocations = {{}, {}}
+
+    local colonySwap = {2, 1}
 
     Player:update()
 
@@ -61,17 +40,8 @@ function love.update(dt)
 
             ant:update(FoodCollection, colony.nest, dt)
 
-            -- refactor me. 
-            -- I check wether ants should keep the peace or not
-            local col = function()
-                if ant.type == 1 then
-                    return antLocations[2]
-                else
-                    return antLocations[1]
-                end
-            end
-
-            for _, otherAnt in ipairs(col()) do
+            -- Logic for other ants
+            for _, otherAnt in ipairs(antLocations[colonySwap[colonyIndex]]) do
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                     ant.signal.aggressionSignalSize then
                     ant.target = otherAnt

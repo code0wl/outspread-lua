@@ -4,4 +4,3 @@ function Player:update(v)
 end
 
 return Player
-

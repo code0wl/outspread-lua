@@ -10,6 +10,14 @@ function util.distanceBetween(x1, y1, x2, y2)
     return math.sqrt((y2 - y1) ^ 2 + (x2 - x1) ^ 2)
 end
 
+function util.travelRandomly()
+    return {x = math.random(GlobalWidth, 0), y = math.random(GlobalHeight, 0)}
+end
+
+function util.travelRandomlyOffScreen()
+    return {x = math.random(-GlobalWidth, 0), y = math.random(-GlobalHeight, 0)}
+end
+
 -- CheckCollision with physics body
 function util.CheckCollisionWithPhysics(body1, body2)
     return util.CheckCollision(body1.body:getX(), body1.body:getY(),

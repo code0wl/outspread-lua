@@ -3,7 +3,7 @@ local Ant = class('Ant', Actor)
 
 function Ant:initialize(antConfig)
     Actor.initialize(self)
-    
+
     self.antConfig = antConfig
 
     self.type = self.antConfig.type
@@ -60,12 +60,9 @@ function Ant:setTarget(target, dt)
     if self.hasFood then self.target = self.nest end
 
     -- Walk randomnly
-    if TimePassedAnt > 2 then
+    if not self.aggressionSignalActive and TimePassedAnt > 2 then
         TimePassedAnt = 0
-        self.target = {
-            x = math.random(GlobalWidth, 0),
-            y = math.random(GlobalHeight, 0)
-        }
+        self.target = util.travelRandomly()
     end
 
     -- Follow scent
