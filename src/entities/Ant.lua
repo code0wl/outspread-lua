@@ -22,7 +22,10 @@ end
 
 function Ant:update(foodCollection, target, dt)
     if self.isAlive then
-        if self.health < 1 then self.isAlive = false end
+        if self.health < 1 then
+            self.isAlive = false
+            util.dropFood(self, .001)
+        end
         self.animation:update(dt)
         self:setTarget(target, dt)
         self:handleFood(foodCollection)

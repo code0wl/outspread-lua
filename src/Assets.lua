@@ -20,7 +20,7 @@ function GenerateWorldAssets()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 400,
+                population = 300,
                 width = obj.width,
                 height = obj.height
             }))

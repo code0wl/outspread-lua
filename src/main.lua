@@ -5,7 +5,6 @@ require("Assets")
 
 local Control = require("Control")
 local SpiderTarantula = require("entities.SpiderTarantula")
-local Food = require("entities.Food")
 
 function love.load()
 
@@ -60,7 +59,18 @@ function love.update(dt)
                     otherAnt.scentLocation = nil
                     ant.scentLocation = nil
 
+                    -- if ant.hasFood then
+                    --     ant.hasFood = false
+                    --     dropFood(ant, 1)
+                    -- end
+
+                    -- if otherAnt.hasFood then
+                    --     otherAnt.hasFood = false
+                    --     dropFood(otherAnt, 1)
+                    -- end
+
                     ant.aggressionSignalActive = true
+                    otherAnt.aggressionSignalSize = true
 
                     if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                         ant.height then
@@ -70,6 +80,7 @@ function love.update(dt)
 
                 else
                     ant.aggressionSignalActive = false
+                    otherAnt.aggressionSignalSize = false
                 end
 
             end
@@ -91,12 +102,7 @@ function love.update(dt)
                 end
 
                 if not otherCreature.isAlive then
-                    table.insert(FoodCollection, Food:new(
-                                     {
-                            x = otherCreature.x,
-                            y = otherCreature.y,
-                            amount = otherCreature.height
-                        }))
+                    util.dropFood(otherCreature, otherCreature.height)
                     table.remove(WildLife, otherCreatureIndex)
                 end
 
@@ -114,7 +120,6 @@ function love.draw()
 
     -- Camera
     Cam:draw(function(l, t, w, h)
-
         for i, food in ipairs(FoodCollection) do
             if (food.amount < 1) then table.remove(FoodCollection, i) end
             food:draw()
@@ -123,15 +128,19 @@ function love.draw()
         -- draw ants
         for _, colony in ipairs(Colonies) do
             colony.nest:draw()
-            for _, ant in ipairs(colony.nest.ants) do ant:draw() end
+
+            for _, ant in ipairs(colony.nest.ants) do
+                if ant.x > l and ant.y > t then ant:draw() end
+            end
         end
 
         -- draw other animals
         for _, life in ipairs(WildLife) do life:draw() end
 
+        -- Draw player phermones
         for _, phermone in ipairs(Player.phermones) do
             Lg.setColor(255, 153, 153)
-            Lg.circle('line', phermone.x, phermone.y, 5)
+            Lg.circle('fill', phermone.x, phermone.y, 5)
         end
 
         UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
