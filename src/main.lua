@@ -59,15 +59,15 @@ function love.update(dt)
                     otherAnt.scentLocation = nil
                     ant.scentLocation = nil
 
-                    -- if ant.hasFood then
-                    --     ant.hasFood = false
-                    --     dropFood(ant, 1)
-                    -- end
+                    if ant.hasFood then
+                        ant.hasFood = false
+                        util.dropFood(ant, 1)
+                    end
 
-                    -- if otherAnt.hasFood then
-                    --     otherAnt.hasFood = false
-                    --     dropFood(otherAnt, 1)
-                    -- end
+                    if otherAnt.hasFood then
+                        otherAnt.hasFood = false
+                        util.dropFood(otherAnt, 1)
+                    end
 
                     ant.aggressionSignalActive = true
                     otherAnt.aggressionSignalSize = true

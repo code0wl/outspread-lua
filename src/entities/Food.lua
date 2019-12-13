@@ -3,7 +3,7 @@ local Food = class('Food')
 function Food:initialize(foodConfig)
     self.x = foodConfig.x
     self.y = foodConfig.y
-    self.amount = 100
+    self.amount = foodConfig.amount or 10
 end
 
 function Food:draw()

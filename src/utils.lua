@@ -3,8 +3,8 @@ local Food = require("entities.Food")
 local util = {}
 
 function util.dropFood(location, amount)
-    table.insert(FoodCollection, Food:new(
-                     {x = location.x + 10, y = location.y + 10, amount = amount}))
+    table.insert(FoodCollection,
+                 Food:new({x = location.x, y = location.y, amount = amount}))
 end
 
 function util.getCenter(value) return value / 2 end
