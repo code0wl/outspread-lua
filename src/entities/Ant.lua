@@ -15,7 +15,6 @@ function Ant:initialize(antConfig)
     self.target = {x = self.antConfig.x, y = self.antConfig.y}
     self.scentLocation = nil
 
-    -- Signal first draft
     self.signal = Component.signal(100, false, 150, false)
 
 end
@@ -24,11 +23,18 @@ function Ant:update(foodCollection, target, dt)
     if self.isAlive then
         if self.health < 1 then
             self.isAlive = false
-            util.dropFood(self.x, self.y, 5)
+            -- util.dropFood(self.x, self.y, 5)
+            util.dropDeadAnt(self.type, self.x, self.y, self.width, self.height,
+                             self.angle)
         end
         self.animation:update(dt)
         self:setTarget(target, dt)
         self:handleFood(foodCollection)
+
+        self.angle =
+            util.getAngle(self.target.y, self.y, self.target.x, self.x) + 1.6 +
+                math.pi
+
     end
 end
 
@@ -41,9 +47,7 @@ function Ant:returnFoodToNest(nest)
 end
 
 function Ant:draw()
-    self.animation:draw(self.image, self.x, self.y,
-                        util.getAngle(self.target.y, self.y, self.target.x,
-                                      self.x) + 1.6 + math.pi, .4, .4,
+    self.animation:draw(self.image, self.x, self.y, self.angle, .4, .4,
                         util.getCenter(self.width), util.getCenter(self.height))
 
     -- Attach food particle to ant once has food

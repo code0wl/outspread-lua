@@ -1,9 +1,22 @@
 local Food = require("entities.Food")
+local DeadAnt = require("entities.DeadAnt")
 
 local util = {}
 
 function util.dropFood(x, y, amount)
     table.insert(FoodCollection, Food:new({x = x, y = y, amount = amount}))
+end
+
+function util.dropDeadAnt(type, x, y, height, width, angle)
+    table.insert(DeadCollection, DeadAnt:new(
+                     {
+            type = type,
+            x = x,
+            y = y,
+            width = width,
+            height = height,
+            angle = angle
+        }))
 end
 
 function util.getCenter(value) return value / 2 end
@@ -21,14 +34,6 @@ end
 
 function util.travelRandomlyOffScreen()
     return {x = math.random(-GlobalWidth, 0), y = math.random(-GlobalHeight, 0)}
-end
-
--- CheckCollision with physics body
-function util.CheckCollisionWithPhysics(body1, body2)
-    return util.CheckCollision(body1.body:getX(), body1.body:getY(),
-                               body1.width, body1.height, body2.body:getX(),
-                               body2.body:getY(), body2.width, body2.height)
-
 end
 
 function util.generateRandomInteger(min, max)

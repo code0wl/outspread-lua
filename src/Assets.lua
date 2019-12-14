@@ -21,7 +21,7 @@ function asset.generateWorldAssets()
                 type = 1,
                 x = obj.x,
                 y = obj.y,
-                population = 3000,
+                population = 500,
                 width = obj.width,
                 height = obj.height
             }))

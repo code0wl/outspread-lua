@@ -22,6 +22,11 @@ function love.load()
                            RedWalkAnimationGrid('1-5', 1, '1-5', 2, '1-5', 3),
                            0.04)
 
+    DeadAntBlack = Lg.newImage(
+                       "images/ants/spritesheets/ant1/_ant_dead-small.png")
+    DeadAntRed =
+        Lg.newImage("images/ants/spritesheets/ant2/_ant_dead-small.png")
+
     asset.generateWorldAssets()
 
     -- insert other WildLife
@@ -137,7 +142,7 @@ function love.draw()
             food:draw()
         end
 
-        -- for d, dead in ipairs(DeadCollection) do dead:draw() end
+        for _, dead in ipairs(DeadCollection) do dead:draw() end
 
         -- draw ants
         for _, colony in ipairs(Colonies) do
