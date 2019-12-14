@@ -24,7 +24,7 @@ function Ant:update(foodCollection, target, dt)
     if self.isAlive then
         if self.health < 1 then
             self.isAlive = false
-            util.dropFood(self, 5)
+            util.dropFood(self.x, self.y, 5)
         end
         self.animation:update(dt)
         self:setTarget(target, dt)

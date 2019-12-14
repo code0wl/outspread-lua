@@ -98,7 +98,8 @@ function love.update(dt)
                 end
 
                 if not otherCreature.isAlive then
-                    util.dropFood(otherCreature, otherCreature.height)
+                    util.dropFood(otherCreature.x, otherCreature.y,
+                                  otherCreature.height)
                     table.remove(WildLife, otherCreatureIndex)
                 end
 
