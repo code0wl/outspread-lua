@@ -70,8 +70,11 @@ function love.update(dt)
             -- refactor to make use of own class
             -- Logic for other ants
             for _, otherAnt in ipairs(antLocations[colonySwap[colonyIndex]]) do
-                if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
-                    ant.signal.aggressionSignalSize then
+
+                local isClose = util.distanceBetween(ant.x, ant.y, otherAnt.x,
+                                                     otherAnt.y)
+
+                if isClose < ant.signal.aggressionSignalSize then
 
                     ant:handleAggressor(otherAnt)
                     ant:dropFood()
@@ -82,8 +85,7 @@ function love.update(dt)
                     ant.aggressionSignalActive = true
                     otherAnt.aggressionSignalSize = true
 
-                    if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
-                        ant.height then
+                    if isClose < ant.height then
                         ant:attack(otherAnt)
                         otherAnt:attack(ant)
                     end
