@@ -22,7 +22,6 @@ end
 function Ant:update(foodCollection, target, dt)
     if self.health < 1 then
         self.isAlive = false
-        -- util.dropFood(self.x, self.y, 5)
         util.dropDeadAnt(self.type, self.x, self.y, self.width, self.height,
                          self.angle)
     end
@@ -53,6 +52,11 @@ function Ant:draw()
         Lg.circle("fill", self.x, self.y, 2)
     end
 
+end
+
+function Ant:dropFood()
+    self.hasFood = false
+    self.scentLocation = false
 end
 
 function Ant:attack(animal) animal.health = animal.health - self.damage end

@@ -72,17 +72,12 @@ function love.update(dt)
             for _, otherAnt in ipairs(antLocations[colonySwap[colonyIndex]]) do
                 if util.distanceBetween(ant.x, ant.y, otherAnt.x, otherAnt.y) <
                     ant.signal.aggressionSignalSize then
-                    ant.target = otherAnt
-                    otherAnt.target = ant
 
-                    otherAnt.scentLocation = nil
-                    ant.scentLocation = nil
+                    ant:handleAggressor(otherAnt)
+                    ant:dropFood()
 
-                    if ant.hasFood then ant.hasFood = false end
-
-                    if otherAnt.hasFood then
-                        otherAnt.hasFood = false
-                    end
+                    otherAnt:handleAggressor(ant)
+                    otherAnt:dropFood()
 
                     ant.aggressionSignalActive = true
                     otherAnt.aggressionSignalSize = true
