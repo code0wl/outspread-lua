@@ -8,8 +8,8 @@ return {
   height = 500,
   tilewidth = 10,
   tileheight = 10,
-  nextlayerid = 5,
-  nextobjectid = 22,
+  nextlayerid = 6,
+  nextobjectid = 23,
   properties = {},
   tilesets = {
     {
@@ -285,7 +285,7 @@ return {
     {
       type = "objectgroup",
       id = 4,
-      name = "nest",
+      name = "player_nest",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -293,19 +293,6 @@ return {
       draworder = "topdown",
       properties = {},
       objects = {
-        {
-          id = 18,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 420.5,
-          y = 1311,
-          width = 61.5,
-          height = 61.5,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
         {
           id = 20,
           name = "",
@@ -315,6 +302,32 @@ return {
           y = 1142.42,
           width = 75.7576,
           height = 63.6364,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      id = 5,
+      name = "enemy_nest",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {
+        {
+          id = 22,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 409.603,
+          y = 1304.26,
+          width = 88.1921,
+          height = 74.4733,
           rotation = 0,
           visible = true,
           properties = {}

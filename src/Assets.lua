@@ -15,13 +15,25 @@ function asset.generateWorldAssets()
         table.insert(FoodCollection, Food:new(obj))
     end
 
-    for i, obj in pairs(level1.layers["nest"].objects) do
+    for _, obj in pairs(level1.layers["player_nest"].objects) do
         table.insert(Colonies, Colony:new(
                          {
-                type = i,
+                type = 1,
                 x = obj.x,
                 y = obj.y,
-                population = 1000,
+                population = 3000,
+                width = obj.width,
+                height = obj.height
+            }))
+    end
+
+    for _, obj in pairs(level1.layers["enemy_nest"].objects) do
+        table.insert(Colonies, Colony:new(
+                         {
+                type = 2,
+                x = obj.x,
+                y = obj.y,
+                population = 3000,
                 width = obj.width,
                 height = obj.height
             }))
