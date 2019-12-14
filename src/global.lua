@@ -34,7 +34,6 @@ FoodSprites = {food = Lg.newImage("images/food/food.png")}
 -- game states
 Colonies = {}
 FoodCollection = {}
-DeadCollection = {}
 WildLife = {}
 
 -- components

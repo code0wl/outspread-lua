@@ -11,17 +11,13 @@ function asset.generateWorldAssets()
 
     Lg.setBackgroundColor(red, green, blue)
 
-    for _, obj in pairs(level1.layers["food"].objects) do
-        table.insert(FoodCollection, Food:new(obj))
-    end
-
     for _, obj in pairs(level1.layers["player_nest"].objects) do
         table.insert(Colonies, Colony:new(
                          {
                 type = 1,
                 x = obj.x,
                 y = obj.y,
-                population = 500,
+                population = 100,
                 width = obj.width,
                 height = obj.height
             }))
@@ -33,7 +29,7 @@ function asset.generateWorldAssets()
                 type = 2,
                 x = obj.x,
                 y = obj.y,
-                population = 3000,
+                population = 100,
                 width = obj.width,
                 height = obj.height
             }))

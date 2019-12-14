@@ -142,8 +142,6 @@ function love.draw()
             food:draw()
         end
 
-        for _, dead in ipairs(DeadCollection) do dead:draw() end
-
         -- draw ants
         for _, colony in ipairs(Colonies) do
             colony.nest:draw()

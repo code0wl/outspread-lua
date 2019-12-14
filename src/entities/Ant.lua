@@ -90,7 +90,7 @@ function Ant:handleFood(food)
             self.hasFood = true
             self.scentLocation = f
             self.signal.foodSignalActive = true
-            f:removeOneFood()
+            f:removeFood()
         elseif self.scentLocation and self.scentLocation.amount < 1 then
             self.scentLocation = nil
             self.signal.foodSignalActive = false

@@ -9,6 +9,8 @@ function DeadAnt:initialize(deadAntConfig)
     self.height = deadAntConfig.height
     self.width = deadAntConfig.width
 
+    self.amount = 1
+
     -- Make a util
     if self.type == 1 then
         self.image = DeadAntBlack
@@ -21,5 +23,7 @@ end
 function DeadAnt:draw()
     love.graphics.draw(self.image, self.x, self.y, self.angle, .4, .4)
 end
+
+function DeadAnt:removeFood() self.amount = self.amount - 1 end
 
 return DeadAnt

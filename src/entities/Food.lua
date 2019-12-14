@@ -13,7 +13,7 @@ function Food:draw()
     end
 end
 
-function Food:removeOneFood() self.amount = self.amount - 1 end
+function Food:removeFood() self.amount = self.amount - 1 end
 
 return Food
 

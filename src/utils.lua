@@ -8,7 +8,7 @@ function util.dropFood(x, y, amount)
 end
 
 function util.dropDeadAnt(type, x, y, height, width, angle)
-    table.insert(DeadCollection, DeadAnt:new(
+    table.insert(FoodCollection, DeadAnt:new(
                      {
             type = type,
             x = x,
