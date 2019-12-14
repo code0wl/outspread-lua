@@ -9,6 +9,7 @@ sti = require("libs/sti")
 anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
+Vector = require("libs.vector")
 
 -- create instance for Camera
 GlobalWidth = 5000

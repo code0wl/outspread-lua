@@ -1,9 +1,10 @@
 local Colony = require("entities.Colony")
 local Food = require("entities.Food")
-
 local level1 = sti("levels/level-1.lua")
 
-function GenerateWorldAssets()
+local asset = {}
+
+function asset.generateWorldAssets()
     local red = 26 / 255
     local green = 154 / 255
     local blue = 105 / 255
@@ -20,7 +21,7 @@ function GenerateWorldAssets()
                 type = i,
                 x = obj.x,
                 y = obj.y,
-                population = 300,
+                population = 3000,
                 width = obj.width,
                 height = obj.height
             }))
@@ -28,3 +29,4 @@ function GenerateWorldAssets()
 
 end
 
+return asset

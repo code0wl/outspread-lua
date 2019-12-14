@@ -1,14 +1,14 @@
 require("Global")
 require("Mouse")
 require("Debug")
-require("Assets")
+local asset = require("Assets")
 
 local Control = require("Control")
 local SpiderTarantula = require("entities.SpiderTarantula")
 
 function love.load()
 
-    GenerateWorldAssets()
+    asset.generateWorldAssets()
 
     -- insert other WildLife
     table.insert(WildLife, SpiderTarantula:new({x = -100, y = -100, state = 1}))
