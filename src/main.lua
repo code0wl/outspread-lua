@@ -39,8 +39,8 @@ function love.update(dt)
 
             ant:update(FoodCollection, colony.nest, dt)
 
+            -- Relay information about food to other ants in the same colony
             for j, a in ipairs(antLocations[colonyIndex]) do
-                -- Relay information about food to other ants in the same colony
                 if a.signal.foodSignalActive and
                     util.distanceBetween(a.x, a.y, ant.x, ant.y) <
                     a.signal.foodSignalSize then
@@ -59,14 +59,10 @@ function love.update(dt)
                     otherAnt.scentLocation = nil
                     ant.scentLocation = nil
 
-                    if ant.hasFood then
-                        ant.hasFood = false
-                        util.dropFood(ant, 1)
-                    end
+                    if ant.hasFood then ant.hasFood = false end
 
                     if otherAnt.hasFood then
                         otherAnt.hasFood = false
-                        util.dropFood(otherAnt, 1)
                     end
 
                     ant.aggressionSignalActive = true
@@ -120,18 +116,19 @@ function love.draw()
 
     -- Camera
     Cam:draw(function(l, t, w, h)
+
         for i, food in ipairs(FoodCollection) do
             if (food.amount < 1) then table.remove(FoodCollection, i) end
             food:draw()
         end
 
+        -- for d, dead in ipairs(DeadCollection) do dead:draw() end
+
         -- draw ants
         for _, colony in ipairs(Colonies) do
             colony.nest:draw()
 
-            for _, ant in ipairs(colony.nest.ants) do
-                if ant.x > l and ant.y > t then ant:draw() end
-            end
+            for _, ant in ipairs(colony.nest.ants) do ant:draw() end
         end
 
         -- draw other animals

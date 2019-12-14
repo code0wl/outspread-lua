@@ -5,8 +5,8 @@ function WorkerAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
     self.speed = 90
     self.health = 10
-    self.width = 16
     self.damage = 1
+    self.width = 16
     self.height = 27
 
     self.image = Lg.newImage("images/ants/spritesheets/ant" .. self.type ..
