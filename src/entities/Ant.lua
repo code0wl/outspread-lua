@@ -20,22 +20,19 @@ function Ant:initialize(antConfig)
 end
 
 function Ant:update(foodCollection, target, dt)
-    if self.isAlive then
-        if self.health < 1 then
-            self.isAlive = false
-            -- util.dropFood(self.x, self.y, 5)
-            util.dropDeadAnt(self.type, self.x, self.y, self.width, self.height,
-                             self.angle)
-        end
-        self.animation:update(dt)
-        self:setTarget(target, dt)
-        self:handleFood(foodCollection)
-
-        self.angle =
-            util.getAngle(self.target.y, self.y, self.target.x, self.x) + 1.6 +
-                math.pi
-
+    if self.health < 1 then
+        self.isAlive = false
+        -- util.dropFood(self.x, self.y, 5)
+        util.dropDeadAnt(self.type, self.x, self.y, self.width, self.height,
+                         self.angle)
     end
+    self.animation:update(dt)
+    self:setTarget(target, dt)
+    self:handleFood(foodCollection)
+
+    self.angle = util.getAngle(self.target.y, self.y, self.target.x, self.x) +
+                     1.6 + math.pi
+
 end
 
 function Ant:returnFoodToNest(nest)
