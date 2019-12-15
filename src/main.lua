@@ -6,6 +6,14 @@ local asset = require("Assets")
 local Control = require("Control")
 local SpiderTarantula = require("entities.SpiderTarantula")
 
+local bg_image = Lg.newImage("/images/background/background.png")
+
+bg_image:setWrap("repeat", "repeat")
+
+-- note how the Quad's width and height are larger than the image width and height.
+QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
+                    bg_image:getHeight())
+
 function love.load()
     asset.generateWorldAssets()
 
@@ -111,6 +119,8 @@ function love.draw()
 
     -- Camera
     Cam:draw(function(l, t, w, h)
+
+        Lg.draw(bg_image, QuadBQ, 0, 0)
 
         for i, food in ipairs(FoodCollection) do
             if (food.amount < 1) then table.remove(FoodCollection, i) end
