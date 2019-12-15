@@ -1,6 +1,6 @@
 local Colony = require("entities.Colony")
-local MoveSystem = require("systems.Move")
-local DrawSystem = require("systems.Draw")
+local SpiderDrawSystem = require("systems.SpiderDraw")
+local SpiderMoveSystem = require("systems.SpiderMove")
 
 local SpiderTarantula = require("entities.SpiderTarantula")
 
@@ -54,12 +54,13 @@ function asset.generateWorldAssets()
     end
 
     -- Do not add engine in custom wildlife arr
-    local spider = SpiderTarantula:new({x = 10, y = 10, state = 1})
+    local spider = SpiderTarantula:new({x = 100, y = 100})
+
     table.insert(WildLife, spider)
 
     engine:addEntity(spider)
-    engine:addSystem(MoveSystem())
-    engine:addSystem(DrawSystem(), "draw")
+    engine:addSystem(SpiderMoveSystem())
+    engine:addSystem(SpiderDrawSystem(), "draw")
 
 end
 

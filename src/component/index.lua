@@ -1,6 +1,8 @@
 Components = {}
 
-require("component.position")
-require("component.velocity")
+require("component.Velocity")
+require("component.Position")
+require("component.Spider")
+require("component.Stats")
 
 return Components
