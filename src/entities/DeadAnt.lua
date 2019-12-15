@@ -20,9 +20,7 @@ function DeadAnt:initialize(deadAntConfig)
 
 end
 
-function DeadAnt:draw()
-    love.graphics.draw(self.image, self.x, self.y, self.angle, .4, .4)
-end
+function DeadAnt:draw() Lg.draw(self.image, self.x, self.y, self.angle, .4, .4) end
 
 function DeadAnt:removeFood() self.amount = self.amount - 1 end
 

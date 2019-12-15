@@ -1,5 +1,4 @@
 local Food = require("entities.Food")
-local DeadAnt = require("entities.DeadAnt")
 
 local util = {}
 
@@ -7,8 +6,8 @@ function util.dropFood(x, y, amount)
     table.insert(FoodCollection, Food:new({x = x, y = y, amount = amount}))
 end
 
-function util.dropDeadAnt(type, x, y, height, width, angle)
-    table.insert(FoodCollection, DeadAnt:new(
+function util.dropFoodOnMap(type, x, y, height, width, angle, actor)
+    table.insert(FoodCollection, actor:new(
                      {
             type = type,
             x = x,

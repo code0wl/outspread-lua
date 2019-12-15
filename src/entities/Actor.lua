@@ -6,13 +6,6 @@ function Actor:initialize()
     self.maxHealth = self.health or 100
 end
 
-function Actor:update(dt)
-    if self.isAlive then
-        if self.health < 1 then self.isAlive = false end
-        self.animation:update(dt)
-    end
-end
-
 function Actor:heal(amount)
     if self.health < self.maxHealth then self.health = self.health + amount end
 end

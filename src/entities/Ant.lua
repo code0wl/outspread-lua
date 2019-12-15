@@ -1,4 +1,6 @@
 local Actor = require('entities.Actor')
+local DeadAnt = require("entities.DeadAnt")
+
 local Ant = class('Ant', Actor)
 
 function Ant:initialize(antConfig)
@@ -22,9 +24,10 @@ end
 function Ant:update(foodCollection, target, dt)
     if self.health < 1 then
         self.isAlive = false
-        util.dropDeadAnt(self.type, self.x, self.y, self.width, self.height,
-                         self.angle)
+        util.dropFoodOnMap(self.type, self.x, self.y, self.width, self.height,
+                           self.angle, DeadAnt)
     end
+
     self.animation:update(dt)
     self:setTarget(target, dt)
     self:handleFood(foodCollection)

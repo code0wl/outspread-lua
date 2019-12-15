@@ -1,4 +1,6 @@
 local Actor = require('entities.Actor')
+local DeadSpider = require('entities.DeadSpider')
+
 local Spider = class('Spider', Actor)
 
 local spiderStats = {health = nil, energy = nil}
@@ -34,7 +36,11 @@ function Spider:update(dt)
 
     spiderStats = {energy = self.energy, health = self.health}
 
-    if self.health < 1 then self.isAlive = false end
+    if self.health < 1 then
+        self.isAlive = false
+        util.dropFoodOnMap(self.type, self.x, self.y, self.width, self.height,
+                           self.angle, DeadSpider)
+    end
 
     self.signal.aggressionSignalActive = false
     TimePassedAntSpider = TimePassedAntSpider + 1 * dt
