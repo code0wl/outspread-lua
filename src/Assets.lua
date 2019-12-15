@@ -59,7 +59,7 @@ function asset.generateWorldAssets()
     table.insert(WildLife, spider)
 
     engine:addEntity(spider)
-    engine:addSystem(SpiderMoveSystem())
+    engine:addSystem(SpiderMoveSystem(), 'update')
     engine:addSystem(SpiderDrawSystem(), "draw")
 
 end

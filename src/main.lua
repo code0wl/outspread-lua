@@ -138,9 +138,9 @@ function love.draw()
             Lg.circle('fill', phermone.x, phermone.y, 5)
         end
 
-        UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
-
         engine:draw()
+
+        UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
 
     end)
 

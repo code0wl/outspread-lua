@@ -1,4 +1,5 @@
 local Spider = require('entities.Spider')
+
 local SpiderTarantula = class('SpiderTarantula', Spider)
 
 function SpiderTarantula:initialize(spiderConfig)
