@@ -1,5 +1,6 @@
 local Actor = require('entities.Actor')
 local DeadSpider = require('entities.DeadSpider')
+local Components = require('component.index')
 
 local Spider = class('Spider', Actor)
 
@@ -7,9 +8,14 @@ local spiderStats = {health = nil, energy = nil}
 
 function Spider:initialize(spiderConfig)
     Actor.initialize(self)
+
+    self:add(Components.Velocity(80))
+    self:add(Components.Position(spiderConfig.x, spiderConfig.y))
+
+    self.speed = 80
+    self.x, self.y = spiderConfig.x, spiderConfig.y
     self.maxEnergy = 100
     self.spiderConfig = spiderConfig
-    self.x, self.y = spiderConfig.x, spiderConfig.y
     self.target = {x = 0, y = 0}
     self.signal = util.signal(400, false, 500, false)
 end

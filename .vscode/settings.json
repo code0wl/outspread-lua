@@ -8,6 +8,11 @@
         "util",
         "beholder",
         "class",
-        "lovetoys"
+        "lovetoys",
+        "Entity",
+        "System",
+        "Engine",
+        "engine",
+        "Component"
     ]
 }

@@ -1,6 +1,7 @@
-local Actor = class('Actor')
+local Actor = class('Actor', Entity)
 
 function Actor:initialize()
+    Entity.initialize(self)
     self.isAlive = true
     self.scentLocation = nil
     self.maxHealth = self.health or 100

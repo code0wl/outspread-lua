@@ -1,1 +1,1 @@
-function Component.position(x, y) return x, y end
+Components.Position = Component.create("position", {"x", "y"})

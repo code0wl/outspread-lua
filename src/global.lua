@@ -39,3 +39,6 @@ WildLife = {}
 
 -- Player class
 Player = require("entities/Player")
+
+-- ECS engine 
+engine = Engine()

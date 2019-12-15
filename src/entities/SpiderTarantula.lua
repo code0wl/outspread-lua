@@ -3,8 +3,6 @@ local SpiderTarantula = class('SpiderTarantula', Spider)
 
 function SpiderTarantula:initialize(spiderConfig)
     Spider.initialize(self, spiderConfig)
-
-    self.speed = 80
     self.maxEnergy = 1000
     self.energy = 10
     self.health = 10000

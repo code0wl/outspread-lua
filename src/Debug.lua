@@ -7,7 +7,4 @@ function PrintDetailsToScreen(Colonies)
             30 * i)
     end
 
-    Lg.print("Current food on map : " .. tostring(table.getn(FoodCollection)),
-             10, 100)
-
 end

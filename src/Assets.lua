@@ -1,4 +1,9 @@
 local Colony = require("entities.Colony")
+local MoveSystem = require("systems.Move")
+local DrawSystem = require("systems.Draw")
+
+local SpiderTarantula = require("entities.SpiderTarantula")
+
 local level1 = sti("levels/level-1.lua")
 
 BlackWalk = Lg.newImage("images/ants/spritesheets/ant1/_ant_walk-small.png")
@@ -23,13 +28,14 @@ DeadTarantulaSpider = Lg.newImage(
 local asset = {}
 
 function asset.generateWorldAssets()
+
     for _, obj in pairs(level1.layers["player_nest"].objects) do
         table.insert(Colonies, Colony:new(
                          {
                 type = 1,
                 x = obj.x,
                 y = obj.y,
-                population = 600,
+                population = 1000,
                 width = obj.width,
                 height = obj.height
             }))
@@ -41,11 +47,19 @@ function asset.generateWorldAssets()
                 type = 2,
                 x = obj.x,
                 y = obj.y,
-                population = 600,
+                population = 1000,
                 width = obj.width,
                 height = obj.height
             }))
     end
+
+    -- Do not add engine in custom wildlife arr
+    local spider = SpiderTarantula:new({x = 10, y = 10, state = 1})
+    table.insert(WildLife, spider)
+
+    engine:addEntity(spider)
+    engine:addSystem(MoveSystem())
+    engine:addSystem(DrawSystem(), "draw")
 
 end
 

@@ -1,7 +1,6 @@
-Component = {}
+Components = {}
 
 require("component.position")
-require("component.signal")
-require("component.health")
+require("component.velocity")
 
-return Component
+return Components

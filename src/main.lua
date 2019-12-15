@@ -4,7 +4,6 @@ require("Debug")
 local asset = require("Assets")
 
 local Control = require("Control")
-local SpiderTarantula = require("entities.SpiderTarantula")
 
 local bg_image = Lg.newImage("/images/background/background.png")
 
@@ -14,18 +13,11 @@ bg_image:setWrap("repeat", "repeat")
 QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
                     bg_image:getHeight())
 
-function love.load()
-    asset.generateWorldAssets()
-
-    local Position = Component.create("position", {"x", "y"}, {x = 0, y = 0})
-    local Velocity = Component.create("velocity", {"vx", "vy"})
-
-    -- insert other WildLife
-    table.insert(WildLife, SpiderTarantula:new({x = -100, y = -100, state = 1}))
-
-end
+function love.load() asset.generateWorldAssets() end
 
 function love.update(dt)
+
+    engine:update(dt)
 
     local antLocations = {{}, {}}
 
@@ -147,6 +139,8 @@ function love.draw()
         end
 
         UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
+
+        engine:draw()
 
     end)
 
