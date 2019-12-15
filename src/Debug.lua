@@ -8,6 +8,7 @@ function PrintDetailsToScreen(Colonies)
         "Current red Pop : " .. tostring(table.getn(Colonies[2].nest.ants)), 10,
         70)
 
-    love.graphics.print('Memory actually used (in kB): ' ..
-                            collectgarbage('count'), 10, 100)
+    Lg.print("Current food on map : " .. tostring(table.getn(FoodCollection)),
+             10, 100)
+
 end

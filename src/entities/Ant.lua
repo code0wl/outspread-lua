@@ -29,9 +29,6 @@ function Ant:update(foodCollection, target, dt)
     self:setTarget(target, dt)
     self:handleFood(foodCollection)
 
-    self.angle = util.getAngle(self.target.y, self.y, self.target.x, self.x) +
-                     1.6 + math.pi
-
 end
 
 function Ant:returnFoodToNest(nest)
@@ -82,12 +79,15 @@ function Ant:setTarget(target, dt)
     self:returnFoodToNest(target)
 
     self.x, self.y = util.setDirectionToTarget(self, dt)
+
+    self.angle = util.getAngle(self.target.y, self.y, self.target.x, self.x) +
+                     1.6 + math.pi
 end
 
 function Ant:handleFood(food)
     for _, f in ipairs(food) do
         if not self.hasFood and util.distanceBetween(self.x, self.y, f.x, f.y) <
-            f.amount then
+            10 then
             self.hasFood = true
             self.scentLocation = f
             self.signal.foodSignalActive = true
