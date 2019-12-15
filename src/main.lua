@@ -62,8 +62,8 @@ function love.update(dt)
                     otherAnt:handleAggressor(ant)
                     otherAnt:dropFood()
 
-                    ant.aggressionSignalActive = true
-                    otherAnt.aggressionSignalSize = true
+                    ant:fightMode(true)
+                    otherAnt:fightMode(true)
 
                     if isClose < ant.height then
                         ant:attack(otherAnt)
@@ -71,8 +71,8 @@ function love.update(dt)
                     end
 
                 else
-                    ant.aggressionSignalActive = false
-                    otherAnt.aggressionSignalSize = false
+                    ant:fightMode(false)
+                    otherAnt:fightMode(false)
                 end
 
             end
@@ -94,8 +94,6 @@ function love.update(dt)
                 end
 
                 if not otherCreature.isAlive then
-                    util.dropFood(otherCreature.x, otherCreature.y,
-                                  otherCreature.height)
                     table.remove(WildLife, otherCreatureIndex)
                 end
 

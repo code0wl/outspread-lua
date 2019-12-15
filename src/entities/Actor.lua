@@ -19,6 +19,8 @@ function Actor:eat(animal, energy, speed)
     end
 end
 
+function Actor:fightMode(isActive) self.aggressionSignalActive = isActive end
+
 function Actor:attack(animal) animal.health = animal.health - self.damage end
 
 return Actor

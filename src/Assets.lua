@@ -35,7 +35,7 @@ function asset.generateWorldAssets()
                 type = 1,
                 x = obj.x,
                 y = obj.y,
-                population = 500,
+                population = 399,
                 width = obj.width,
                 height = obj.height
             }))

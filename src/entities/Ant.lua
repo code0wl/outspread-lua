@@ -90,7 +90,7 @@ end
 function Ant:handleFood(food)
     for _, f in ipairs(food) do
         if not self.hasFood and util.distanceBetween(self.x, self.y, f.x, f.y) <
-            10 then
+            f.width then
             self.hasFood = true
             self.scentLocation = f
             self.signal.foodSignalActive = true
