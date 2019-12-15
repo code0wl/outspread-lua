@@ -7,6 +7,7 @@
         "inspect",
         "util",
         "beholder",
-        "class"
+        "class",
+        "lovetoys"
     ]
 }

@@ -9,9 +9,9 @@ function Spider:initialize(spiderConfig)
     Actor.initialize(self)
     self.maxEnergy = 100
     self.spiderConfig = spiderConfig
-    self.x, self.y =
-        Component.position(self.spiderConfig.x, self.spiderConfig.y)
-    self.target = {x = spiderConfig.x, y = spiderConfig.y}
+    self.x, self.y = spiderConfig.x, spiderConfig.y
+    self.target = {x = 0, y = 0}
+    self.signal = util.signal(400, false, 500, false)
 end
 
 function Spider:draw()
@@ -21,7 +21,6 @@ function Spider:draw()
                         util.getCenter(self.width), util.getCenter(self.height))
 
     Lg.print("Spider stats : " .. tostring(inspect(spiderStats)), self.x, self.y)
-
 end
 
 function Spider:hunt(animal)

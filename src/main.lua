@@ -17,6 +17,9 @@ QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
 function love.load()
     asset.generateWorldAssets()
 
+    local Position = Component.create("position", {"x", "y"}, {x = 0, y = 0})
+    local Velocity = Component.create("velocity", {"vx", "vy"})
+
     -- insert other WildLife
     table.insert(WildLife, SpiderTarantula:new({x = -100, y = -100, state = 1}))
 

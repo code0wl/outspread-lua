@@ -54,4 +54,14 @@ function util.setDirectionToTarget(actor, dt)
 
 end
 
+function util.signal(foodSignalSize, foodSignalActive, aggressionSignalSize,
+                     aggressionSignalActive)
+    return {
+        foodSignalSize = foodSignalSize,
+        foodSignalActive = foodSignalActive,
+        aggressionSignalSize = aggressionSignalSize,
+        aggressionSignalActive = aggressionSignalActive
+    }
+end
+
 return util

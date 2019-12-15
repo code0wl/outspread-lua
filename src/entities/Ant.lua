@@ -10,14 +10,14 @@ function Ant:initialize(antConfig)
 
     self.type = self.antConfig.type
 
-    self.x, self.y = Component.position(self.antConfig.x, self.antConfig.y)
+    self.x, self.y = self.antConfig.x, self.antConfig.y
     self.nest = {x = self.antConfig.x, y = self.antConfig.y}
     self.hasFood = nil
 
     self.target = {x = self.antConfig.x, y = self.antConfig.y}
     self.scentLocation = nil
 
-    self.signal = Component.signal(100, false, 150, false)
+    self.signal = util.signal(100, false, 150, false)
 
 end
 

@@ -9,11 +9,12 @@ sti = require("libs/sti")
 anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
-Vector = require("libs.vector")
+lovetoys = require("libs.lovetoys")
+lovetoys.initialize({globals = true, debug = true})
 
 -- create instance for Camera
-GlobalWidth = 5000
-GlobalHeight = 5000
+GlobalWidth = 3000
+GlobalHeight = 3000
 local gamera = require('libs.gamera')
 Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
@@ -35,9 +36,6 @@ FoodSprites = {food = Lg.newImage("images/food/food.png")}
 Colonies = {}
 FoodCollection = {}
 WildLife = {}
-
--- components
-Component = require("component/index")
 
 -- Player class
 Player = require("entities/Player")
