@@ -32,8 +32,6 @@ function love.update(dt)
 
     Control.update(dt)
 
-    for _, life in ipairs(WildLife) do life:update(dt) end
-
     for colonyIndex, colony in ipairs(Colonies) do
         colony.nest:update(dt)
 

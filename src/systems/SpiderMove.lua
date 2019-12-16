@@ -13,10 +13,14 @@ function SpiderMoveSystem:update(dt)
 
         entity.x, entity.y = position.x, position.y
 
+        entity.signal.aggressionSignalActive = false
+
+        TimePassedAntSpider = TimePassedAntSpider + 1 * dt
+
         if not entity.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
             energy.amount = energy.amount - .5
             TimePassedAntSpider = 0
-            self.target = util.travelRandomly()
+            entity.target = util.travelRandomly()
         end
 
         position.x, position.y = util.setDirection(position.x, position.y,
