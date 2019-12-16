@@ -8,8 +8,11 @@ function HealthSystem:update(dt)
         local health = entity:get("health")
         local position = entity:get("position")
 
+        entity.health = health.amount
+
         if health.amount < 1 then
             entity.isAlive = false
+            engine.remove(entity)
             util.dropFoodOnMap(self.type, position.x, position.y, self.width,
                                self.height, self.angle, health.graphic)
         end
