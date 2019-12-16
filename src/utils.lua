@@ -44,6 +44,14 @@ function util.isOutOfBounds(element)
                element.y > Lg.getHeight()
 end
 
+function util.setDirection(actorX, actorY, velocity, target, dt)
+    local speed = velocity * dt
+    return
+        (actorX - math.cos(util.getAngle(target.y, actorX, target.x, actorX)) *
+            speed), (actorY -
+            math.sin(util.getAngle(target.y, actorY, target.x, actorX)) * speed)
+end
+
 function util.setDirectionToTarget(actor, dt)
     local speed = actor.speed * dt
     return (actor.x -

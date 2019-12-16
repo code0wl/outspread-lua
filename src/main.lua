@@ -129,9 +129,6 @@ function love.draw()
             for _, ant in ipairs(colony.nest.ants) do ant:draw() end
         end
 
-        -- draw other animals
-        for _, life in ipairs(WildLife) do life:draw() end
-
         -- Draw player phermones
         for _, phermone in ipairs(Player.phermones) do
             Lg.setColor(255, 153, 153)

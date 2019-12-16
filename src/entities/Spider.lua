@@ -4,13 +4,12 @@ local Components = require('components.index')
 
 local Spider = class('Spider', Actor)
 
-local spiderStats = {health = nil, energy = nil}
-
 function Spider:initialize(spiderConfig)
     Actor.initialize(self)
 
     self:add(Components.Position(150, 25))
     self:add(Components.Velocity(80))
+    self:add(Components.Spider(true))
 
     self.speed = 80
     self.x, self.y = spiderConfig.x, spiderConfig.y
@@ -18,15 +17,6 @@ function Spider:initialize(spiderConfig)
     self.spiderConfig = spiderConfig
     self.target = {x = 0, y = 0}
     self.signal = util.signal(400, false, 500, false)
-end
-
-function Spider:draw()
-    self.animation:draw(self.image, self.x, self.y,
-                        util.getAngle(self.target.y, self.y, self.target.x,
-                                      self.x) + math.pi, nil, nil,
-                        util.getCenter(self.width), util.getCenter(self.height))
-
-    Lg.print("Spider stats : " .. tostring(inspect(spiderStats)), self.x, self.y)
 end
 
 function Spider:hunt(animal)
@@ -38,8 +28,6 @@ function Spider:hunt(animal)
 end
 
 function Spider:update(dt)
-
-    spiderStats = {energy = self.energy, health = self.health}
 
     if self.health < 1 then
         self.isAlive = false
@@ -61,8 +49,6 @@ function Spider:update(dt)
     if self.energy >= self.maxEnergy then
         self.target = util.travelRandomlyOffScreen()
     end
-
-    self.x, self.y = util.setDirectionToTarget(self, dt)
 end
 
 return Spider
