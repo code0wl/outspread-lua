@@ -10,10 +10,10 @@ function Spider:initialize(spiderConfig)
     self:add(Components.Position(150, 25))
     self:add(Components.Velocity(80))
     self:add(Components.Spider(true))
+    self:add(Components.Energy(100, 50))
 
     self.speed = 80
     self.x, self.y = spiderConfig.x, spiderConfig.y
-    self.maxEnergy = 100
     self.spiderConfig = spiderConfig
     self.target = {x = 0, y = 0}
     self.signal = util.signal(400, false, 500, false)
@@ -40,15 +40,6 @@ function Spider:update(dt)
 
     self.animation:update(dt)
 
-    if not self.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
-        self.energy = self.energy - .5
-        TimePassedAntSpider = 0
-        self.target = util.travelRandomly()
-    end
-
-    if self.energy >= self.maxEnergy then
-        self.target = util.travelRandomlyOffScreen()
-    end
 end
 
 return Spider

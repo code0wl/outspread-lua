@@ -1,13 +1,14 @@
 -- Create a draw System.
 local SpiderDrawSystem = class("SpiderDrawSystem", System)
 
-function SpiderDrawSystem:requires() return {"position", "spider"} end
+function SpiderDrawSystem:requires() return {"position", "spider", 'energy'} end
 
 function SpiderDrawSystem:draw()
     for _, entity in pairs(self.targets) do
         local position = entity:get("position")
+        local energy = entity:get("energy")
 
-        local spiderStats = {energy = entity.energy, health = entity.health}
+        local spiderStats = {energy = energy, health = entity.health}
 
         entity.animation:draw(entity.image, position.x, position.y,
                               util.getAngle(entity.target.y, position.y,
