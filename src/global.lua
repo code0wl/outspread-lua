@@ -10,7 +10,7 @@ anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
 lovetoys = require("libs.lovetoys")
-lovetoys.initialize({globals = true, debug = true})
+lovetoys.initialize({globals = true})
 
 -- create instance for Camera
 GlobalWidth = 3000

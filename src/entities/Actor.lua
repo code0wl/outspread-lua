@@ -7,16 +7,9 @@ function Actor:initialize()
     self.maxHealth = self.health or 100
 end
 
-function Actor:heal(amount)
-    if self.health < self.maxHealth then self.health = self.health + amount end
-end
-
 function Actor:eat(animal, energy, speed)
     if util.distanceBetween(animal.x, animal.y, self.x, self.y) < animal.width then
-        self.energy = self.energy + energy
-        self.speed = speed
         animal.isAlive = false
-        self:heal(energy)
     end
 end
 

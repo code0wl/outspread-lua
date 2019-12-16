@@ -25,6 +25,7 @@ function SpiderMoveSystem:update(dt)
 
         position.x, position.y = util.setDirection(position.x, position.y,
                                                    velocity.speed,
+
                                                    entity.target, dt)
 
     end

@@ -1,6 +1,7 @@
 require("Global")
 require("Mouse")
 require("Debug")
+require("PrepareImages")
 
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")

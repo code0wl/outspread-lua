@@ -1,1 +1,1 @@
-Components.Health = Component.create("health", {"amount", "graphic"})
+Components.Health = Component.create("health", {"amount", "deadInstance"})

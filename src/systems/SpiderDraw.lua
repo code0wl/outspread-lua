@@ -19,6 +19,7 @@ function SpiderDrawSystem:draw()
 
         Lg.print("Spider stats : " .. tostring(inspect(spiderStats)),
                  position.x, position.y)
+
     end
 
 end
