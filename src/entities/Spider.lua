@@ -11,6 +11,7 @@ function Spider:initialize(spiderConfig)
     self:add(Components.Velocity(80))
     self:add(Components.Spider(true))
     self:add(Components.Energy(100, 50))
+    self:add(Components.Animation(true))
 
     self.speed = 80
     self.x, self.y = spiderConfig.x, spiderConfig.y
@@ -37,8 +38,6 @@ function Spider:update(dt)
 
     self.signal.aggressionSignalActive = false
     TimePassedAntSpider = TimePassedAntSpider + 1 * dt
-
-    self.animation:update(dt)
 
 end
 

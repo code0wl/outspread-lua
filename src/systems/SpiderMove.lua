@@ -11,6 +11,8 @@ function SpiderMoveSystem:update(dt)
         local energy = entity:get("energy")
         local velocity = entity:get("velocity")
 
+        entity.x, entity.y = position.x, position.y
+
         if not entity.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
             energy.amount = energy.amount - .5
             TimePassedAntSpider = 0
