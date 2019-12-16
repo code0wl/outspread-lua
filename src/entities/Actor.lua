@@ -7,9 +7,11 @@ function Actor:initialize()
     self.maxHealth = self.health or 100
 end
 
-function Actor:eat(animal, energy, speed)
-    if util.distanceBetween(animal.x, animal.y, self.x, self.y) < animal.width then
-        animal.isAlive = false
+function Actor:eat(prey)
+
+    if util.distanceBetween(prey.x, prey.y, self:get("position").x,
+                            self:get("position").y) < prey.width then
+        prey.isAlive = false
     end
 end
 

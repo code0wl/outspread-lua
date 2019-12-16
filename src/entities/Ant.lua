@@ -89,6 +89,16 @@ end
 
 function Ant:handleFood(food)
     for _, f in ipairs(food) do
+
+        -- remove me once everything is migrated
+        local x = nil
+        local y = nil
+        if (not f.x) then
+            x, y = f:get("position").x, f:get("position").y
+        else
+            x, y = f.x, f.y
+        end
+
         if not self.hasFood and util.distanceBetween(self.x, self.y, f.x, f.y) <
             f.width then
             self.hasFood = true
@@ -104,23 +114,32 @@ end
 
 -- deals with non ant aggressors
 function Ant:handleAggressor(otherCreature)
+    -- remove me once everything is migrated
+    local x = nil
+    local y = nil
 
-    if not self.hasFood and
-        util.distanceBetween(self.x, self.y, otherCreature.x, otherCreature.y) <
+    if (not otherCreature.x) then
+        x, y = otherCreature:get("position").x, otherCreature:get("position").y
+    else
+        x, y = otherCreature.x, otherCreature.y
+    end
+
+    if not self.hasFood and util.distanceBetween(self.x, self.y, x, y) <
         self.signal.aggressionSignalSize then
-        self.target = {x = otherCreature.x, y = otherCreature.y}
+        self.target = {x = x, y = y}
         self.signal.aggressionSignalActive = true
     else
         self.signal.aggressionSignalActive = false
     end
 
-    self:attackAggressor(otherCreature)
+    self:attackAggressor(x, y, otherCreature.width, otherCreature)
 end
 
-function Ant:attackAggressor(otherCreature)
+function Ant:attackAggressor(x, y, width, otherCreature)
     if self.signal.aggressionSignalActive and
-        util.distanceBetween(self.x, self.y, otherCreature.x, otherCreature.y) <
-        otherCreature.width then self:attack(otherCreature) end
+        util.distanceBetween(self.x, self.y, x, y) < width then
+        self:attack(otherCreature)
+    end
 end
 
 return Ant

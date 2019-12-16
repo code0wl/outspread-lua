@@ -85,7 +85,11 @@ function love.update(dt)
             end
 
             -- handle otherCreature with ant interaction
-            for otherCreatureIndex, otherCreature in ipairs(WildLife) do
+            for _, otherCreature in ipairs(
+                                        engine:getEntitiesWithComponent("spider")) do
+
+                local x, y = otherCreature:get("position").x,
+                             otherCreature:get("position").y
 
                 -- if scent is otherCreature
                 ant:handleAggressor(otherCreature)
@@ -93,15 +97,10 @@ function love.update(dt)
                 -- animal attack and hunt ant
                 if otherCreature.signal and
                     not otherCreature.signal.aggressionSignalActive and
-                    util.distanceBetween(ant.x, ant.y, otherCreature.x,
-                                         otherCreature.y) <
+                    util.distanceBetween(ant.x, ant.y, x, y) <
                     otherCreature.signal.aggressionSignalSize then
                     otherCreature.signal.aggressionSignalActive = true
                     otherCreature:hunt(ant)
-                end
-
-                if not otherCreature.isAlive then
-                    table.remove(WildLife, otherCreatureIndex)
                 end
 
             end

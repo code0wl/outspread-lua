@@ -13,9 +13,6 @@ function OutSpreadEngine.addSystems()
     local spider = SpiderTarantula:new({x = 100, y = 100})
     local spiderTwo = SpiderTarantula:new({x = 1000, y = 1000})
 
-    table.insert(WildLife, spider)
-    table.insert(WildLife, spiderTwo)
-
     engine:addEntity(spider)
     engine:addEntity(spiderTwo)
     engine:addSystem(SpiderMoveSystem(), "update")

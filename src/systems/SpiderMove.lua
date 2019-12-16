@@ -11,8 +11,6 @@ function SpiderMoveSystem:update(dt)
         local energy = entity:get("energy")
         local velocity = entity:get("velocity")
 
-        entity.x, entity.y = position.x, position.y
-
         entity.signal.aggressionSignalActive = false
 
         TimePassedAntSpider = TimePassedAntSpider + 1 * dt
