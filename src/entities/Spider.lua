@@ -12,9 +12,9 @@ function Spider:initialize(spiderConfig)
     self:add(Components.Spider(true))
     self:add(Components.Energy(100, 50))
     self:add(Components.Animation(true))
+    self:add(Components.Health(10000, DeadSpider))
 
     self.speed = 80
-    self.x, self.y = spiderConfig.x, spiderConfig.y
     self.spiderConfig = spiderConfig
     self.target = {x = 0, y = 0}
     self.signal = util.signal(400, false, 500, false)
@@ -29,12 +29,6 @@ function Spider:hunt(animal)
 end
 
 function Spider:update(dt)
-
-    if self.health < 1 then
-        self.isAlive = false
-        util.dropFoodOnMap(self.type, self.x, self.y, self.width, self.height,
-                           self.angle, DeadSpider)
-    end
 
     self.signal.aggressionSignalActive = false
     TimePassedAntSpider = TimePassedAntSpider + 1 * dt

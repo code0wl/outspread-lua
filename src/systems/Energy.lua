@@ -15,4 +15,3 @@ function EnergySystem:update(dt)
 end
 
 return EnergySystem
-
