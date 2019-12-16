@@ -8,7 +8,7 @@ function SpiderDrawSystem:draw()
         local position = entity:get("position")
         local energy = entity:get("energy")
 
-        local spiderStats = {energy = energy, health = entity.health}
+        local spiderStats = {energy = energy.amount, health = entity.health}
 
         entity.animation:draw(entity.image, position.x, position.y,
                               util.getAngle(entity.target.y, position.y,

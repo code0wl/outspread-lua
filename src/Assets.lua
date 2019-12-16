@@ -1,10 +1,4 @@
 local Colony = require("entities.Colony")
-local SpiderDrawSystem = require("systems.SpiderDraw")
-local SpiderMoveSystem = require("systems.SpiderMove")
-local EnergySystem = require("systems.Energy")
-
-local SpiderTarantula = require("entities.SpiderTarantula")
-
 local level1 = sti("levels/level-1.lua")
 
 BlackWalk = Lg.newImage("images/ants/spritesheets/ant1/_ant_walk-small.png")
@@ -25,18 +19,6 @@ DeadAntRed = Lg.newImage("images/ants/spritesheets/ant2/_ant_dead-small.png")
 
 DeadTarantulaSpider = Lg.newImage(
                           "images/spiders/spider1/spritesheets/sheet_spider_die-small.png")
-
-local function addSystems()
-    -- Do not add engine in custom wildlife arr
-    local spider = SpiderTarantula:new({x = 100, y = 100})
-
-    table.insert(WildLife, spider)
-
-    engine:addEntity(spider)
-    engine:addSystem(SpiderMoveSystem(), 'update')
-    engine:addSystem(EnergySystem(), 'update')
-    engine:addSystem(SpiderDrawSystem(), "draw")
-end
 
 local asset = {}
 
@@ -66,7 +48,6 @@ function asset.generateWorldAssets()
             }))
     end
 
-    addSystems()
 end
 
 return asset

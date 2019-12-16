@@ -1,7 +1,9 @@
 require("Global")
 require("Mouse")
 require("Debug")
+
 local asset = require("Assets")
+local OutSpreadEngine = require("OutSpreadEngine")
 
 local Control = require("Control")
 
@@ -13,7 +15,10 @@ bg_image:setWrap("repeat", "repeat")
 QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
                     bg_image:getHeight())
 
-function love.load() asset.generateWorldAssets() end
+function love.load()
+    asset.generateWorldAssets()
+    OutSpreadEngine.addSystems()
+end
 
 function love.update(dt)
 
