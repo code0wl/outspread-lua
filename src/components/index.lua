@@ -6,5 +6,6 @@ require("components.Spider")
 require("components.Energy")
 require("components.Animation")
 require("components.Health")
+require("components.Stats")
 
 return Components

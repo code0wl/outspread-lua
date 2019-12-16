@@ -13,6 +13,7 @@ function Spider:initialize()
     self:add(Components.Energy(100, 50))
     self:add(Components.Animation(true))
     self:add(Components.Health(100, DeadSpider))
+    self:add(Components.Stats(true))
 
     self.target = {x = 0, y = 0}
     self.signal = util.signal(400, false, 500, false)
