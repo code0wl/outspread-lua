@@ -1,8 +1,10 @@
 local WorkerAnt = require("entities/WorkerAnt")
 
-local Nest = class('Nest')
+local Nest = class('Nest', Entity)
 
 function Nest:initialize(nestConfig)
+    Entity.initialize(self)
+
     self.type = nestConfig.type
     self.x = nestConfig.x
     self.y = nestConfig.y

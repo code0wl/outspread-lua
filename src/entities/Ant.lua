@@ -9,7 +9,6 @@ function Ant:initialize(antConfig)
     self.antConfig = antConfig
 
     self.type = self.antConfig.type
-
     self.x, self.y = self.antConfig.x, self.antConfig.y
     self.nest = {x = self.antConfig.x, y = self.antConfig.y}
     self.hasFood = nil
