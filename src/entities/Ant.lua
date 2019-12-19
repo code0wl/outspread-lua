@@ -34,8 +34,10 @@ function Ant:update(foodCollection, target, dt)
 end
 
 function Ant:returnFoodToNest(nest)
-    if self.hasFood and util.distanceBetween(self.x, self.y, nest.x, nest.y) <
-        45 then
+
+    if self.hasFood and
+        util.distanceBetween(self.x, self.y, nest:get("position").x,
+                             nest:get("position").y) < 45 then
         self.hasFood = false
         nest:addFood()
     end
