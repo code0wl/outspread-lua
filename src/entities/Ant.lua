@@ -118,11 +118,16 @@ function Ant:handleAggressor(otherCreature)
     -- remove me once everything is migrated
     local x = nil
     local y = nil
+    local width = nil
+    local height = nil
 
-    if (not otherCreature.x) then
+    if (not otherCreature.x and not otherCreature.width) then
         x, y = otherCreature:get("position").x, otherCreature:get("position").y
+        width, height = otherCreature:get("dimension").width,
+                        otherCreature:get("dimension").height
     else
         x, y = otherCreature.x, otherCreature.y
+        width, height = otherCreature.width, otherCreature.height
     end
 
     if not self.hasFood and util.distanceBetween(self.x, self.y, x, y) <
@@ -133,7 +138,7 @@ function Ant:handleAggressor(otherCreature)
         self.signal.aggressionSignalActive = false
     end
 
-    self:attackAggressor(x, y, otherCreature.width, otherCreature)
+    self:attackAggressor(x, y, width, otherCreature)
 end
 
 function Ant:attackAggressor(x, y, width, otherCreature)

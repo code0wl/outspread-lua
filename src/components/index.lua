@@ -7,5 +7,6 @@ require("components.Energy")
 require("components.Animation")
 require("components.Health")
 require("components.Stats")
+require("components.Dimension")
 
 return Components

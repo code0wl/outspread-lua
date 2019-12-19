@@ -8,7 +8,6 @@ function Actor:initialize()
 end
 
 function Actor:eat(prey)
-
     if util.distanceBetween(prey.x, prey.y, self:get("position").x,
                             self:get("position").y) < prey.width then
         prey.isAlive = false
