@@ -1,7 +1,7 @@
 -- move System
 local HealthSystem = class("HealthSystem", System)
 
-function HealthSystem:requires() return {"health", "position", "dimension"} end
+function HealthSystem:requires() return {"health", "position"} end
 
 function HealthSystem:update(dt)
     for _, entity in pairs(self.targets) do

@@ -7,12 +7,11 @@ function Nest:initialize(nestConfig)
 
     self.type = nestConfig.type
     self:add(Components.Position(nestConfig.x, nestConfig.y))
+    self:add(Components.Dimension(16, 27))
     self.target = nil
     self.startingPopulation = nestConfig.population
     self.collectedFood = 0
     self.ants = {}
-    self.width = 16
-    self.height = 27
 
     self.graphic = Lg.newQuad(300, 70, 80, 80,
                               TerrainSprites.terrain:getDimensions())

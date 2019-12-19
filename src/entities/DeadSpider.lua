@@ -1,13 +1,14 @@
-local DeadSpider = class('DeadSpider')
+local DeadSpider = class('DeadSpider', Entity)
 
 function DeadSpider:initialize(deadSpiderConfig)
+    Entity.initialize(self)
 
     self.type = deadSpiderConfig.type
     self.x = deadSpiderConfig.x
     self.y = deadSpiderConfig.y
     self.angle = deadSpiderConfig.angle
-    self.height = deadSpiderConfig.height
-    self.width = deadSpiderConfig.width
+    self:add(Components.Dimension(deadSpiderConfig.width,
+                                  deadSpiderConfig.height))
 
     self.amount = 100
 

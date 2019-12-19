@@ -9,9 +9,8 @@ end
 
 function Actor:eat(prey)
     if util.distanceBetween(prey.x, prey.y, self:get("position").x,
-                            self:get("position").y) < prey.width then
-        prey.isAlive = false
-    end
+                            self:get("position").y) <
+        prey:get("dimension").width then prey.isAlive = false end
 end
 
 function Actor:fightMode(isActive) self.aggressionSignalActive = isActive end

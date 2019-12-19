@@ -23,8 +23,9 @@ end
 function Ant:update(foodCollection, target, dt)
     if self.health < 1 then
         self.isAlive = false
-        util.dropFoodOnMap(self.type, self.x, self.y, self.width, self.height,
-                           self.angle, DeadAnt)
+        util.dropFoodOnMap(self.type, self.x, self.y,
+                           self:get('dimension').width,
+                           self:get('dimension').height, self.angle, DeadAnt)
     end
 
     self.animation:update(dt)
@@ -45,7 +46,8 @@ end
 
 function Ant:draw()
     self.animation:draw(self.image, self.x, self.y, self.angle, .4, .4,
-                        util.getCenter(self.width), util.getCenter(self.height))
+                        util.getCenter(self:get('dimension').width),
+                        util.getCenter(self:get('dimension').height))
 
     -- Attach food particle to ant once has food
     if self.hasFood then
@@ -101,7 +103,7 @@ function Ant:handleFood(food)
         end
 
         if not self.hasFood and util.distanceBetween(self.x, self.y, f.x, f.y) <
-            f.width then
+            f:get('dimension').width then
             self.hasFood = true
             self.scentLocation = f
             self.signal.foodSignalActive = true
@@ -118,16 +120,11 @@ function Ant:handleAggressor(otherCreature)
     -- remove me once everything is migrated
     local x = nil
     local y = nil
-    local width = nil
-    local height = nil
 
-    if (not otherCreature.x and not otherCreature.width) then
+    if (not otherCreature.x) then
         x, y = otherCreature:get("position").x, otherCreature:get("position").y
-        width, height = otherCreature:get("dimension").width,
-                        otherCreature:get("dimension").height
     else
         x, y = otherCreature.x, otherCreature.y
-        width, height = otherCreature.width, otherCreature.height
     end
 
     if not self.hasFood and util.distanceBetween(self.x, self.y, x, y) <
@@ -138,7 +135,8 @@ function Ant:handleAggressor(otherCreature)
         self.signal.aggressionSignalActive = false
     end
 
-    self:attackAggressor(x, y, width, otherCreature)
+    self:attackAggressor(x, y, otherCreature:get('dimension').width,
+                         otherCreature)
 end
 
 function Ant:attackAggressor(x, y, width, otherCreature)

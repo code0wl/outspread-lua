@@ -72,7 +72,7 @@ function love.update(dt)
                     ant:fightMode(true)
                     otherAnt:fightMode(true)
 
-                    if isClose < ant.height then
+                    if isClose < ant:get("dimension").height then
                         ant:attack(otherAnt)
                         otherAnt:attack(ant)
                     end

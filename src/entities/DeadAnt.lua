@@ -1,13 +1,14 @@
-local DeadAnt = class('DeadAnt')
+local DeadAnt = class('DeadAnt', Entity)
 
 function DeadAnt:initialize(deadAntConfig)
+    Entity.initialize(self)
 
     self.type = deadAntConfig.type
     self.x = deadAntConfig.x
     self.y = deadAntConfig.y
     self.angle = deadAntConfig.angle
-    self.height = deadAntConfig.height
-    self.width = deadAntConfig.width
+
+    self:add(Components.Dimension(deadAntConfig.width, deadAntConfig.height))
 
     self.amount = 1
 
