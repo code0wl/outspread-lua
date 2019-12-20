@@ -34,7 +34,6 @@ FoodSprites = {food = Lg.newImage("images/food/food.png")}
 
 -- game states
 Colonies = {}
-FoodCollection = {}
 
 -- Player class
 Player = require("entities/Player")

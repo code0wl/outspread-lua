@@ -2,20 +2,17 @@ local Food = require("entities.Food")
 
 local util = {}
 
-function util.dropFood(x, y, amount)
-    table.insert(FoodCollection, Food:new({x = x, y = y, amount = amount}))
-end
-
 function util.dropFoodOnMap(type, x, y, height, width, angle, actor)
-    table.insert(FoodCollection, actor:new(
-                     {
-            type = type,
-            x = x,
-            y = y,
-            width = width,
-            height = height,
-            angle = angle
-        }))
+    local deadActor = actor:new({
+        type = type,
+        x = x,
+        y = y,
+        width = width,
+        height = height,
+        angle = angle
+    })
+
+    engine:addEntity(deadActor)
 end
 
 function util.getCenter(value) return value / 2 end

@@ -1,17 +1,15 @@
-local Food = class('Food')
+local Food = class('Food', Entity)
 
 function Food:initialize(foodConfig)
-    self.x = foodConfig.x
-    self.y = foodConfig.y
-    self.amount = foodConfig.amount or 10
+    Entity:initialize(self)
+    self:add(Components.Position(foodConfig.x, foodConfig.y))
+    self:add(Components.Food(foodConfig.amount or 10))
 end
 
-function Food:draw()
-    Lg.setColor(255, 153, 153)
-    Lg.circle("fill", self.x, self.y, self.amount)
+function Food:removeFood()
+    local food = self:get("food")
+    food.amount = food.amount - 1
 end
-
-function Food:removeFood() self.amount = self.amount - 1 end
 
 return Food
 

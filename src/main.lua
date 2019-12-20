@@ -24,13 +24,9 @@ end
 function love.update(dt)
 
     engine:update(dt)
-
     local antLocations = {{}, {}}
-
     local colonySwap = {2, 1}
-
     Player:update()
-
     Control.update(dt)
 
     for colonyIndex, colony in ipairs(Colonies) do
@@ -43,7 +39,7 @@ function love.update(dt)
 
             if not ant.isAlive then table.remove(colony.nest.ants, i) end
 
-            ant:update(FoodCollection, colony.nest, dt)
+            ant:update(engine:getEntitiesWithComponent("food"), colony.nest, dt)
 
             -- Relay information about food to other ants in the same colony
             for j, a in ipairs(antLocations[colonyIndex]) do
@@ -64,10 +60,8 @@ function love.update(dt)
                 if isClose < ant.signal.aggressionSignalSize then
 
                     ant:handleAggressor(otherAnt)
-                    ant:dropFood()
 
                     otherAnt:handleAggressor(ant)
-                    otherAnt:dropFood()
 
                     ant:fightMode(true)
                     otherAnt:fightMode(true)
@@ -119,11 +113,6 @@ function love.draw()
     Cam:draw(function(l, t, w, h)
 
         Lg.draw(bg_image, QuadBQ, 0, 0)
-
-        for i, food in ipairs(FoodCollection) do
-            if (food.amount < 1) then table.remove(FoodCollection, i) end
-            food:draw()
-        end
 
         -- draw ants
         for _, colony in ipairs(Colonies) do
