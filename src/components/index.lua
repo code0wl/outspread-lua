@@ -10,5 +10,6 @@ require("components.Stats")
 require("components.Dimension")
 require("components.Food")
 require("components.Scale")
+require("components.Signal")
 
 return Components

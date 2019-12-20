@@ -14,9 +14,9 @@ function Spider:initialize()
     self:add(Components.Animation(true))
     self:add(Components.Health(100, DeadSpider))
     self:add(Components.Stats(true))
+    self:add(Components.Signal(400, false, 500, false))
 
     self.target = {x = 0, y = 0}
-    self.signal = util.signal(400, false, 500, false)
 end
 
 function Spider:hunt(animal)

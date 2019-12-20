@@ -2,7 +2,7 @@
 local SpiderMoveSystem = class("SpiderMoveSystem", System)
 
 function SpiderMoveSystem:requires()
-    return {"position", "velocity", "spider", "energy"}
+    return {"position", "velocity", "spider", "energy", "signal"}
 end
 
 function SpiderMoveSystem:update(dt)
@@ -10,12 +10,13 @@ function SpiderMoveSystem:update(dt)
         local position = entity:get("position")
         local energy = entity:get("energy")
         local velocity = entity:get("velocity")
+        local signal = entity:get("signal")
 
-        entity.signal.aggressionSignalActive = false
+        signal.aggressionSignalActive = false
 
         TimePassedAntSpider = TimePassedAntSpider + 1 * dt
 
-        if not entity.signal.aggressionSignalActive and TimePassedAntSpider > 6 then
+        if not signal.aggressionSignalActive and TimePassedAntSpider > 6 then
             energy.amount = energy.amount - .5
             TimePassedAntSpider = 0
             entity.target = util.travelRandomly()

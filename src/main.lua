@@ -89,11 +89,11 @@ function love.update(dt)
                 ant:handleAggressor(otherCreature)
 
                 -- animal attack and hunt ant
-                if otherCreature.signal and
-                    not otherCreature.signal.aggressionSignalActive and
+                if otherCreature:get("signal") and
+                    not otherCreature:get("signal").aggressionSignalActive and
                     util.distanceBetween(ant.x, ant.y, x, y) <
-                    otherCreature.signal.aggressionSignalSize then
-                    otherCreature.signal.aggressionSignalActive = true
+                    otherCreature:get("signal").aggressionSignalSize then
+                    otherCreature:get("signal").aggressionSignalActive = true
                     otherCreature:hunt(ant)
                 end
 
