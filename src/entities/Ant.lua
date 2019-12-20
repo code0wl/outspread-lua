@@ -9,6 +9,7 @@ function Ant:initialize(antConfig)
     self.antConfig = antConfig
 
     self:add(Components.Signal(100, false, 150, false))
+    self:add(Components.Position(self.antConfig.x, self.antConfig.y))
 
     self.type = self.antConfig.type
     self.x, self.y = self.antConfig.x, self.antConfig.y
@@ -21,12 +22,6 @@ function Ant:initialize(antConfig)
 end
 
 function Ant:update(foodCollection, target, dt)
-    if self.health < 1 then
-        self.isAlive = false
-        util.dropFoodOnMap(self.type, self.x, self.y,
-                           self:get('dimension').width,
-                           self:get('dimension').height, self.angle, DeadAnt)
-    end
 
     self.animation:update(dt)
     self:setTarget(target, dt)
@@ -35,7 +30,6 @@ function Ant:update(foodCollection, target, dt)
 end
 
 function Ant:returnFoodToNest(nest)
-
     if self.hasFood and
         util.distanceBetween(self.x, self.y, nest:get("position").x,
                              nest:get("position").y) < 45 then
@@ -62,7 +56,9 @@ function Ant:dropFood()
     self.scentLocation = false
 end
 
-function Ant:attack(animal) animal.health = animal.health - self.damage end
+function Ant:attack(animal) 
+    animal:get('health').amount = animal:get('health').amount - self.damage 
+end
 
 function Ant:setTarget(target, dt)
 

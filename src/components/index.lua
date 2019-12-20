@@ -2,14 +2,19 @@ Components = {}
 
 require("components.Velocity")
 require("components.Position")
-require("components.Spider")
-require("components.Energy")
-require("components.Animation")
-require("components.Health")
-require("components.Stats")
 require("components.Dimension")
+
+require("components.Energy")
+require("components.Health")
 require("components.Food")
-require("components.Scale")
 require("components.Signal")
+
+require("components.Nest")
+require("components.Colony")
+require("components.Spider")
+
+require("components.Animation")
+require("components.Stats")
+require("components.Scale")
 
 return Components

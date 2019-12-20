@@ -5,9 +5,12 @@ local Nest = class('Nest', Entity)
 function Nest:initialize(nestConfig)
     Entity.initialize(self)
 
-    self.type = nestConfig.type
     self:add(Components.Position(nestConfig.x, nestConfig.y))
     self:add(Components.Dimension(16, 27))
+    self:add(Components.Nest(true))
+
+    self.type = nestConfig.type
+
     self.target = nil
     self.startingPopulation = nestConfig.population
     self.collectedFood = 0

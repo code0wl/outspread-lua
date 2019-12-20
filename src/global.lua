@@ -32,9 +32,6 @@ TerrainSprites = {terrain = Lg.newImage("images/terrain/terrain.png")}
 -- food map
 FoodSprites = {food = Lg.newImage("images/food/food.png")}
 
--- game states
-Colonies = {}
-
 -- Player class
 Player = require("entities/Player")
 

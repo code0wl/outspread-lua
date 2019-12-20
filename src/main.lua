@@ -22,6 +22,7 @@ function love.load()
 end
 
 function love.update(dt)
+    local Colonies = engine:getEntitiesWithComponent("colony")
 
     engine:update(dt)
     local antLocations = {{}, {}}
@@ -36,8 +37,6 @@ function love.update(dt)
         for i, ant in ipairs(colony.nest.ants) do
 
             table.insert(antLocations[colonyIndex], ant)
-
-            if not ant.isAlive then table.remove(colony.nest.ants, i) end
 
             ant:update(engine:getEntitiesWithComponent("food"), colony.nest, dt)
 
@@ -106,6 +105,7 @@ function love.update(dt)
 end
 
 function love.draw()
+    local Colonies = engine:getEntitiesWithComponent("colony")
     local mouseX, mouseY = Lm.getPosition()
     local currentX, currentY = Cam:getPosition()
 
