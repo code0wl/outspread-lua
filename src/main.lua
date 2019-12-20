@@ -43,9 +43,9 @@ function love.update(dt)
 
             -- Relay information about food to other ants in the same colony
             for j, a in ipairs(antLocations[colonyIndex]) do
-                if a.signal.foodSignalActive and
+                if a:get("signal").foodSignalActive and
                     util.distanceBetween(a.x, a.y, ant.x, ant.y) <
-                    a.signal.foodSignalSize then
+                    a:get("signal").foodSignalSize then
                     ant.scentLocation = a.scentLocation
                 end
             end
@@ -57,7 +57,7 @@ function love.update(dt)
                 local isClose = util.distanceBetween(ant.x, ant.y, otherAnt.x,
                                                      otherAnt.y)
 
-                if isClose < ant.signal.aggressionSignalSize then
+                if isClose < ant:get("signal").aggressionSignalSize then
 
                     ant:handleAggressor(otherAnt)
 

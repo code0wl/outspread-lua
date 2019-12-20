@@ -8,6 +8,8 @@ function Ant:initialize(antConfig)
 
     self.antConfig = antConfig
 
+    self:add(Components.Signal(100, false, 150, false))
+
     self.type = self.antConfig.type
     self.x, self.y = self.antConfig.x, self.antConfig.y
     self.nest = {x = self.antConfig.x, y = self.antConfig.y}
@@ -15,8 +17,6 @@ function Ant:initialize(antConfig)
 
     self.target = {x = self.antConfig.x, y = self.antConfig.y}
     self.scentLocation = nil
-
-    self.signal = util.signal(100, false, 150, false)
 
 end
 
@@ -128,11 +128,11 @@ function Ant:handleAggressor(otherCreature)
     end
 
     if not self.hasFood and util.distanceBetween(self.x, self.y, x, y) <
-        self.signal.aggressionSignalSize then
+        self:get("signal").aggressionSignalSize then
         self.target = {x = x, y = y}
-        self.signal.aggressionSignalActive = true
+        self:get("signal").aggressionSignalActive = true
     else
-        self.signal.aggressionSignalActive = false
+        self:get("signal").aggressionSignalActive = false
     end
 
     self:attackAggressor(x, y, otherCreature:get('dimension').width,
@@ -140,7 +140,7 @@ function Ant:handleAggressor(otherCreature)
 end
 
 function Ant:attackAggressor(x, y, width, otherCreature)
-    if self.signal.aggressionSignalActive and
+    if self:get("signal").aggressionSignalActive and
         util.distanceBetween(self.x, self.y, x, y) < width then
         self:attack(otherCreature)
     end

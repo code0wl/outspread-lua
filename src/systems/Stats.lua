@@ -10,8 +10,6 @@ function StatsSystem:draw()
         local signal = entity:get("signal")
         local spiderStats = {energy = energy.amount, health = entity.health}
 
-        print(signal.aggressiveSignalActive)
-
         if signal.aggressiveSignalActive then
             Lg.setColor(1, 1, 1)
             Lg.circle("fill", position.x, position.y,
