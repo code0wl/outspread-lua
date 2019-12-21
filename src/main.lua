@@ -38,7 +38,7 @@ function love.update(dt)
 
             table.insert(antLocations[colonyIndex], ant)
 
-            ant:update(engine:getEntitiesWithComponent("food"), colony.nest, dt)
+            ant:update(engine:getEntitiesWithComponent("food"), dt)
 
             -- Relay information about food to other ants in the same colony
             for j, a in ipairs(antLocations[colonyIndex]) do

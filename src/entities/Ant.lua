@@ -23,10 +23,10 @@ function Ant:initialize(antConfig)
 
 end
 
-function Ant:update(foodCollection, target, dt)
+function Ant:update(foodCollection, dt)
 
     self.animation:update(dt)
-    self:setTarget(target, dt)
+    self:setTarget(dt)
     self:handleFood(foodCollection)
 
 end
@@ -61,7 +61,7 @@ function Ant:dropFood()
     self.scentLocation = false
 end
 
-function Ant:setTarget(target, dt)
+function Ant:setTarget(dt)
     local position = self:get('position')
     local velocity = self:get('velocity')
 
@@ -81,7 +81,7 @@ function Ant:setTarget(target, dt)
     end
 
     -- deliver food to nest
-    self:returnFoodToNest(target)
+    self:returnFoodToNest(self.nest)
 
     position.x, position.y = util.setDirection(
         position.x,
