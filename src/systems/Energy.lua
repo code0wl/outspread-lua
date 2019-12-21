@@ -8,7 +8,7 @@ function EnergySystem:update(dt)
         local energy = entity:get("energy")
 
         if energy.amount >= energy.maxEnergy then
-            entity.target = util.travelRandomlyOffScreen()
+            entity.target = Components.Position(util.travelRandomlyOffScreen())
         end
 
     end

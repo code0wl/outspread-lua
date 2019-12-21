@@ -16,11 +16,13 @@ function Spider:initialize()
     self:add(Components.Stats(true))
     self:add(Components.Signal(400, false, 500, false))
 
-    self.target = {x = 0, y = 0}
+    self.target = Components.Position(0, 0)
 end
 
 function Spider:hunt(animal)
-    self.target = animal
+    print(animal:get("position"))
+    self.target.x, self.target.y = animal:get("position").x,
+                                   animal:get("position").y
     self:eat(animal, 10, 80)
 end
 

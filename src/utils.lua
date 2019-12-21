@@ -17,19 +17,20 @@ end
 
 function util.getCenter(value) return value / 2 end
 
-local pi = math.pi
-function util.getAngle(y1, y2, x1, x2) return math.atan2(y1 - y2, x1 - x2) + pi end
+function util.getAngle(y1, y2, x1, x2)
+    return math.atan2(y1 - y2, x1 - x2) + math.pi
+end
 
 function util.distanceBetween(x1, y1, x2, y2)
     return math.sqrt((y2 - y1) ^ 2 + (x2 - x1) ^ 2)
 end
 
 function util.travelRandomly()
-    return {x = math.random(GlobalWidth, 0), y = math.random(GlobalHeight, 0)}
+    return math.random(GlobalWidth, 0), math.random(GlobalHeight, 0)
 end
 
 function util.travelRandomlyOffScreen()
-    return {x = math.random(-GlobalWidth, 0), y = math.random(-GlobalHeight, 0)}
+    return math.random(-GlobalWidth, 0), math.random(-GlobalHeight, 0)
 end
 
 function util.generateRandomInteger(min, max)
@@ -42,31 +43,12 @@ function util.isOutOfBounds(element)
 end
 
 function util.setDirection(actorX, actorY, velocity, target, dt)
+    print(target)
     local speed = velocity * dt
     return
         (actorX - math.cos(util.getAngle(target.y, actorX, target.x, actorX)) *
             speed), (actorY -
             math.sin(util.getAngle(target.y, actorY, target.x, actorX)) * speed)
-end
-
-function util.setDirectionToTarget(actor, dt)
-    local speed = actor.speed * dt
-    return (actor.x -
-               math.cos(util.getAngle(actor.target.y, actor.x, actor.target.x,
-                                      actor.x)) * speed), (actor.y -
-               math.sin(util.getAngle(actor.target.y, actor.y, actor.target.x,
-                                      actor.x)) * speed)
-
-end
-
-function util.signal(foodSignalSize, foodSignalActive, aggressionSignalSize,
-                     aggressionSignalActive)
-    return {
-        foodSignalSize = foodSignalSize,
-        foodSignalActive = foodSignalActive,
-        aggressionSignalSize = aggressionSignalSize,
-        aggressionSignalActive = aggressionSignalActive
-    }
 end
 
 return util

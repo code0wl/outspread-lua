@@ -34,7 +34,7 @@ function love.update(dt)
         colony.nest:update(dt)
 
         -- ant locations 
-        for i, ant in ipairs(colony.nest.ants) do
+        for _, ant in ipairs(colony.nest.ants) do
 
             table.insert(antLocations[colonyIndex], ant)
 
@@ -43,7 +43,7 @@ function love.update(dt)
             -- Relay information about food to other ants in the same colony
             for j, a in ipairs(antLocations[colonyIndex]) do
                 if a:get("signal").foodSignalActive and
-                    util.distanceBetween(a.x, a.y, ant.x, ant.y) <
+                    util.distanceBetween(a:get("position").x, a:get("position").y, ant:get("position").x, ant:get("position").y) <
                     a:get("signal").foodSignalSize then
                     ant.scentLocation = a.scentLocation
                 end
@@ -53,8 +53,8 @@ function love.update(dt)
             -- Logic for other ants
             for _, otherAnt in ipairs(antLocations[colonySwap[colonyIndex]]) do
 
-                local isClose = util.distanceBetween(ant.x, ant.y, otherAnt.x,
-                                                     otherAnt.y)
+                local isClose = util.distanceBetween(ant:get("position").x, ant:get("position").y, otherAnt:get("position").x,
+                                                     otherAnt:get("position").y)
 
                 if isClose < ant:get("signal").aggressionSignalSize then
 
@@ -90,7 +90,7 @@ function love.update(dt)
                 -- animal attack and hunt ant
                 if otherCreature:get("signal") and
                     not otherCreature:get("signal").aggressionSignalActive and
-                    util.distanceBetween(ant.x, ant.y, x, y) <
+                    util.distanceBetween(ant:get('position').x, ant:get("position").y, x, y) <
                     otherCreature:get("signal").aggressionSignalSize then
                     otherCreature:get("signal").aggressionSignalActive = true
                     otherCreature:hunt(ant)

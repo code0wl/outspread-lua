@@ -11,7 +11,6 @@ function Nest:initialize(nestConfig)
 
     self.type = nestConfig.type
 
-    self.target = nil
     self.startingPopulation = nestConfig.population
     self.collectedFood = 0
     self.ants = {}

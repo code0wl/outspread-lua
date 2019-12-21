@@ -8,13 +8,15 @@ function Actor:initialize()
 end
 
 function Actor:eat(prey)
-    if util.distanceBetween(prey.x, prey.y, self:get("position").x,
+    if util.distanceBetween(prey:get("position").x, prey:get("position").y, self:get("position").x,
                             self:get("position").y) <
         prey:get("dimension").width then prey.isAlive = false end
 end
 
 function Actor:fightMode(isActive) self.aggressionSignalActive = isActive end
 
-function Actor:attack(animal) animal.health = animal.health - self.damage end
+function Actor:attack(animal) 
+    animal:get('health').amount = animal:get('health').amount - self.damage 
+end
 
 return Actor

@@ -19,12 +19,11 @@ function SpiderMoveSystem:update(dt)
         if not signal.aggressionSignalActive and TimePassedAntSpider > 6 then
             energy.amount = energy.amount - .5
             TimePassedAntSpider = 0
-            entity.target = util.travelRandomly()
+            entity.target = Components.Position(util.travelRandomly())
         end
 
         position.x, position.y = util.setDirection(position.x, position.y,
                                                    velocity.speed,
-
                                                    entity.target, dt)
 
     end
