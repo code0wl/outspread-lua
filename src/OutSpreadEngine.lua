@@ -4,6 +4,7 @@ local SpiderMoveSystem = require("systems.SpiderMove")
 local EnergySystem = require("systems.Energy")
 local AnimationSystem = require("systems.Animation")
 local StatsSystem = require("systems.Stats")
+local AntDrawSystem = require("systems.AntDraw")
 local HealthSystem = require("systems.Health")
 
 local SpiderTarantula = require("entities.SpiderTarantula")
@@ -25,6 +26,7 @@ function OutSpreadEngine.addSystems()
     -- Draw systems
     engine:addSystem(FoodDrawSystem(), "draw")
     engine:addSystem(SpiderDrawSystem(), "draw")
+    engine:addSystem(AntDrawSystem(), "draw")
     engine:addSystem(StatsSystem(), "draw")
 end
 

@@ -14,21 +14,15 @@ function Ant:initialize(antConfig)
 
     -- Delta for nest location
     self.nest = Components.Position(self.antConfig.x, self.antConfig.y)
-
     self.type = self.antConfig.type
     self.hasFood = nil
-
     self.target = self.nest
-
     self.scentLocation = nil
-
 end
 
 function Ant:update(foodCollection, dt)
-
     self:setTarget(dt)
     self:handleFood(foodCollection)
-
 end
 
 function Ant:returnFoodToNest(nest)
@@ -39,21 +33,6 @@ function Ant:returnFoodToNest(nest)
         self.hasFood = false
         nest:addFood()
     end
-end
-
-function Ant:draw()
-    local position = self:get('position')
-    
-    self.animation:draw(self.image, position.x, position.y, self.angle, .4, .4,
-                        util.getCenter(self:get('dimension').width),
-                        util.getCenter(self:get('dimension').height))
-
-    -- Attach food particle to ant once has food
-    if self.hasFood then
-        Lg.setColor(255, 153, 153)
-        Lg.circle("fill", position.x, position.y, 2)
-    end
-
 end
 
 function Ant:dropFood()
@@ -91,7 +70,6 @@ function Ant:setTarget(dt)
         dt
     )
 
-    
     self.angle = util.getAngle(self.target.y, position.y, self.target.x, position.x) +
                      1.6 + math.pi
 end

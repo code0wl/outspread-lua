@@ -19,13 +19,11 @@ function Nest:initialize(nestConfig)
                               TerrainSprites.terrain:getDimensions())
 
     for i = 0, self.startingPopulation do
-        table.insert(self.ants, WorkerAnt:new(
-                         {
-                type = self.type,
-                x = nestConfig.x,
-                y = nestConfig.y,
-                state = 1
-            }))
+        engine:addEntity(WorkerAnt:new({
+            type = self.type,
+            x = nestConfig.x,
+            y = nestConfig.y
+        }))
     end
 
 end
@@ -34,8 +32,7 @@ function Nest:update()
     local x, y = self:get("position").x, self:get("position").y
     for i = 1, self.collectedFood do
         self.collectedFood = self.collectedFood - 2
-        table.insert(self.ants,
-                     WorkerAnt:new({type = self.type, x = x, y = y, state = 1}))
+        engine:addEntity(WorkerAnt:new({type = self.type, x = x, y = y}))
     end
 end
 
