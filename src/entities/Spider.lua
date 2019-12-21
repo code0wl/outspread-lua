@@ -20,7 +20,6 @@ function Spider:initialize()
 end
 
 function Spider:hunt(animal)
-    print(animal:get("position"))
     self.target.x, self.target.y = animal:get("position").x,
                                    animal:get("position").y
     self:eat(animal, 10, 80)
