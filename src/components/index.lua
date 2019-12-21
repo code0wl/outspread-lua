@@ -12,6 +12,7 @@ require("components.Signal")
 require("components.Nest")
 require("components.Colony")
 require("components.Spider")
+require("components.Ant")
 
 require("components.Animation")
 require("components.Stats")
