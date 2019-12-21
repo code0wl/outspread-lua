@@ -5,7 +5,7 @@ require("PrepareImages")
 
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
-
+local Colonies = engine:getEntitiesWithComponent("colony")
 local Control = require("Control")
 
 local bg_image = Lg.newImage("/images/background/background.png")
@@ -22,11 +22,11 @@ function love.load()
 end
 
 function love.update(dt)
-    local Colonies = engine:getEntitiesWithComponent("colony")
 
     engine:update(dt)
     local antLocations = {{}, {}}
     local colonySwap = {2, 1}
+    
     Player:update()
     Control.update(dt)
 
@@ -41,7 +41,7 @@ function love.update(dt)
             ant:update(engine:getEntitiesWithComponent("food"), dt)
 
             -- Relay information about food to other ants in the same colony
-            for j, a in ipairs(antLocations[colonyIndex]) do
+            for _, a in ipairs(antLocations[colonyIndex]) do
                 if a:get("signal").foodSignalActive and
                     util.distanceBetween(a:get("position").x, a:get("position").y, ant:get("position").x, ant:get("position").y) <
                     a:get("signal").foodSignalSize then
@@ -105,7 +105,6 @@ function love.update(dt)
 end
 
 function love.draw()
-    local Colonies = engine:getEntitiesWithComponent("colony")
     local mouseX, mouseY = Lm.getPosition()
     local currentX, currentY = Cam:getPosition()
 

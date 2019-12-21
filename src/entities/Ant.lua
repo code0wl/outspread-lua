@@ -9,6 +9,7 @@ function Ant:initialize(antConfig)
     self:add(Components.Signal(100, false, 150, false))
     self:add(Components.Position(self.antConfig.x, self.antConfig.y))
     self:add(Components.Velocity(80))
+    self:add(Components.Animation(true))
     self:add(Components.Ant(true))
 
     -- Delta for nest location
@@ -25,7 +26,6 @@ end
 
 function Ant:update(foodCollection, dt)
 
-    self.animation:update(dt)
     self:setTarget(dt)
     self:handleFood(foodCollection)
 
