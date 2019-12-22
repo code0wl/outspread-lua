@@ -12,7 +12,7 @@ function DrawSystem:draw()
         if entity.animation then
             entity.animation:draw(entity.image, position.x, position.y,
                                   util.getAngle(entity.target.y, position.y,
-                                                entity.target.x, position.x) +
+                                                entity.target.x, position.x) -
                                       1.6 + math.pi, scale.amount, scale.amount,
                                   util.getCenter(dimension.width),
                                   util.getCenter(dimension.height))

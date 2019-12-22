@@ -35,17 +35,16 @@ function util.generateRandomInteger(min, max)
     return math.floor(math.random() * (max - min + 1)) + min
 end
 
-function util.isOutOfBounds(element)
-    return element.x < 0 or element.y < 0 or element.x > Lg.getWidth() or
-               element.y > Lg.getHeight()
+function util.isOutOfBounds(x, y)
+    return x < 0 or y < 0 or x > GlobalWidth or y > GlobalHeight
 end
 
 function util.setDirection(actorX, actorY, velocity, target, dt)
     local speed = velocity * dt
     return
-        (actorX - math.cos(util.getAngle(target.y, actorX, target.x, actorX)) *
-            speed), (actorY -
-            math.sin(util.getAngle(target.y, actorY, target.x, actorX)) * speed)
+        actorX + math.cos(util.getAngle(target.y, actorX, target.x, actorX)) *
+            speed, actorY +
+            math.sin(util.getAngle(target.y, actorY, target.x, actorX)) * speed
 end
 
 return util

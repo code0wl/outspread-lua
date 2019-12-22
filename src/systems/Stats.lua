@@ -12,7 +12,11 @@ function StatsSystem:draw()
         local signal = entity:get("signal")
         local health = entity:get("health")
 
-        local spiderStats = {energy = energy.amount, health = health.amount}
+        local spiderStats = {
+            energy = energy.amount,
+            health = health.amount,
+            position = {x = position.x, y = position.y}
+        }
 
         if signal.aggressiveSignalActive then
             Lg.setColor(1, 1, 1)

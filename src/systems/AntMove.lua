@@ -1,9 +1,7 @@
 -- move System
 local AntMoveSystem = class("AntMoveSystem", System)
 
-function AntMoveSystem:requires()
-    return {"position", "velocity", "ant", "signal"}
-end
+function AntMoveSystem:requires() return {"ant"} end
 
 function AntMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
@@ -22,21 +20,18 @@ function AntMoveSystem:update(dt)
             entity.target = Components.Position(util.travelRandomly())
         end
 
-        -- Follow scent
-        if not self.hasFood and self.scentLocation then
-            self.target = Components.Position(self.scentLocation.x,
-                                              self.scentLocation.y)
+        -- if out of bounds 
+        if util.isOutOfBounds(position.x, position.y) then
+            entity.target = entity.nest
         end
 
-        -- deliver food to nest
-        entity:returnFoodToNest(entity.nest)
+        entity.angle = util.getAngle(entity.target.y, position.y,
+                                     entity.target.x, position.x) * math.pi
 
         position.x, position.y = util.setDirection(position.x, position.y,
                                                    velocity.speed,
                                                    entity.target, dt)
 
-        self.angle = util.getAngle(entity.target.y, position.y, entity.target.x,
-                                   position.x) + 1.6 + math.pi
     end
 end
 
