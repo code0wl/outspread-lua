@@ -6,7 +6,6 @@ require("PrepareImages")
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
 local Colonies = engine:getEntitiesWithComponent("colony")
-local Spiders = engine:getEntitiesWithComponent("spider")
 local Nests = engine:getEntitiesWithComponent("nest")
 local Control = require("Control")
 
@@ -21,8 +20,6 @@ QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
 function love.load()
     asset.generateWorldAssets()
     OutSpreadEngine.addSystems()
-
-    print(Spiders)
 end
 
 function love.update(dt)
@@ -41,9 +38,6 @@ function love.draw()
     Cam:draw(function(l, t, w, h)
 
         Lg.draw(bg_image, QuadBQ, 0, 0)
-
-        -- draw nests
-        for _, nest in ipairs(Nests) do nest:draw() end
 
         -- Draw player phermones
         for _, phermone in ipairs(Player.phermones) do

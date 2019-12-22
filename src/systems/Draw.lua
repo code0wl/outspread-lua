@@ -9,13 +9,17 @@ function DrawSystem:draw()
         local dimension = entity:get("dimension")
         local scale = entity:get("scale")
 
-        entity.animation:draw(entity.image, position.x, position.y,
-                              util.getAngle(entity.target.y, position.y,
-                                            entity.target.x, position.x) + 1.6 +
-                                  math.pi, scale.amount, scale.amount,
-                              util.getCenter(dimension.width),
-                              util.getCenter(dimension.height))
-
+        if entity.animation then
+            entity.animation:draw(entity.image, position.x, position.y,
+                                  util.getAngle(entity.target.y, position.y,
+                                                entity.target.x, position.x) +
+                                      1.6 + math.pi, scale.amount, scale.amount,
+                                  util.getCenter(dimension.width),
+                                  util.getCenter(dimension.height))
+        else
+            Lg.draw(TerrainSprites.terrain, entity.graphic, position.x,
+                    position.y, nil, scale.amount, scale.amount)
+        end
     end
 
 end

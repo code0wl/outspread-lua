@@ -18,8 +18,6 @@ function OutSpreadEngine.addSystems()
 
     -- Test for engine
     engine:addEntity(spider)
-    engine:addEntity(spider2)
-    engine:addEntity(spider3)
 
     -- Update systems
     engine:addSystem(SpiderMoveSystem(), "update")
@@ -32,6 +30,7 @@ function OutSpreadEngine.addSystems()
     engine:addSystem(FoodDrawSystem(), "draw")
     engine:addSystem(DrawSystem(), "draw")
     engine:addSystem(StatsSystem(), "draw")
+
 end
 
 return OutSpreadEngine

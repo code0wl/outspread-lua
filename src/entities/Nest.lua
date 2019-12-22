@@ -9,6 +9,8 @@ function Nest:initialize(nestConfig)
     self:add(Components.Position(nestConfig.x, nestConfig.y))
     self:add(Components.Dimension(16, 27))
     self:add(Components.Nest(true))
+    self:add(Components.Scale(.4))
+    self:add(Components.Static(true))
 
     self.type = nestConfig.type
 
@@ -30,18 +32,12 @@ function Nest:initialize(nestConfig)
 end
 
 function Nest:update()
-    print('called')
+    print("update")
     local x, y = self:get("position").x, self:get("position").y
     for i = 1, self.collectedFood do
         self.collectedFood = self.collectedFood - 2
         engine:addEntity(WorkerAnt:new({type = self.type, x = x, y = y}))
     end
-end
-
-function Nest:draw()
-    print("drawing nest")
-    local x, y = self:get("position").x, self:get("position").y
-    Lg.draw(TerrainSprites.terrain, self.graphic, x, y, nil, .4, .4)
 end
 
 function Nest:addFood() self.collectedFood = self.collectedFood + 1 end
