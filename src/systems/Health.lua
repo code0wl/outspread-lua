@@ -14,7 +14,6 @@ function HealthSystem:update(dt)
                                dimension.width, dimension.height, entity.angle,
                                health.deadInstance)
             engine:removeEntity(entity)
-            world:remove(entity)
         end
 
     end
