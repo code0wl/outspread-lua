@@ -5,8 +5,6 @@ require("PrepareImages")
 
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
-local Colonies = engine:getEntitiesWithComponent("colony")
-local Nests = engine:getEntitiesWithComponent("nest")
 local Control = require("Control")
 
 local bg_image = Lg.newImage("/images/background/background.png")
@@ -24,10 +22,8 @@ end
 
 function love.update(dt)
     engine:update(dt)
-
     Player:update()
     Control.update(dt)
-
 end
 
 function love.draw()
@@ -51,7 +47,7 @@ function love.draw()
 
     end)
 
-    PrintDetailsToScreen(Colonies)
+    PrintDetailsToScreen(engine:getEntitiesWithComponent('nest'))
 
 end
 

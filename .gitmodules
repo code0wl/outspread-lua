@@ -4,3 +4,6 @@
 [submodule "src/libs/lovetoys"]
 	path = src/libs/lovetoys
 	url = https://github.com/Lovetoys/lovetoys
+[submodule "src/libs/bump.lua"]
+	path = src/libs/bump.lua
+	url = https://github.com/kikito/bump.lua

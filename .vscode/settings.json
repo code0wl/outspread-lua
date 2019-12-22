@@ -13,7 +13,9 @@
         "System",
         "Engine",
         "engine",
-        "Component"
+        "Component",
+        "bump",
+        "world"
     ],
     "files.exclude": {
         "**/.git": true,
@@ -28,6 +30,5 @@
         "**/.factorypath": true,
         "libs": true,
         "**/.vscode": true
-    },
-    "explorerExclude.backup": null
+    }
 }

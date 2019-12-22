@@ -6,6 +6,7 @@ local EnergySystem = require("systems.Energy")
 local AnimationSystem = require("systems.Animation")
 local StatsSystem = require("systems.Stats")
 local HealthSystem = require("systems.Health")
+local BattleSystem = require("systems.Battle")
 
 local SpiderTarantula = require("entities.SpiderTarantula")
 
@@ -23,6 +24,7 @@ function OutSpreadEngine.addSystems()
     engine:addSystem(AnimationSystem(), 'update')
     engine:addSystem(EnergySystem(), "update")
     engine:addSystem(HealthSystem(), "update")
+    engine:addSystem(BattleSystem(), "update")
 
     -- Draw systems
     engine:addSystem(FoodDrawSystem(), "draw")
