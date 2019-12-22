@@ -19,9 +19,6 @@ local gamera = require('libs.gamera')
 Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
 
--- Walk timers -- please remove
-TimePassedAnt = 0
-
 -- own util
 util = require("utils")
 

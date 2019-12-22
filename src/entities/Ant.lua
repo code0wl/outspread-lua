@@ -6,9 +6,12 @@ function Ant:initialize(antConfig)
 
     self.antConfig = antConfig
 
+    self.TimePassedAnt = 0
+
     self:add(Components.Signal(100, false, 150, false))
     self:add(Components.Position(self.antConfig.x, self.antConfig.y))
     self:add(Components.Velocity(80))
+    self:add(Components.Scale(.4))
     self:add(Components.Animation(true))
     self:add(Components.Ant(true))
 
@@ -18,11 +21,6 @@ function Ant:initialize(antConfig)
     self.hasFood = nil
     self.target = self.nest
     self.scentLocation = nil
-end
-
-function Ant:update(foodCollection, dt)
-    self:setTarget(dt)
-    self:handleFood(foodCollection)
 end
 
 function Ant:returnFoodToNest(nest)
@@ -38,40 +36,6 @@ end
 function Ant:dropFood()
     self.hasFood = false
     self.scentLocation = false
-end
-
-function Ant:setTarget(dt)
-    local position = self:get('position')
-    local velocity = self:get('velocity')
-
-    TimePassedAnt = TimePassedAnt + 1 * dt
-
-    if self.hasFood then self.target = self.nest end
-
-    -- Walk randomnly
-    if not self.aggressionSignalActive and TimePassedAnt > 2 then
-        TimePassedAnt = 0
-        self.target = Components.Position(util.travelRandomly())
-    end
-
-    -- Follow scent
-    if not self.hasFood and self.scentLocation then
-        self.target = Components.Position(self.scentLocation.x, self.scentLocation.y)
-    end
-
-    -- deliver food to nest
-    self:returnFoodToNest(self.nest)
-
-    position.x, position.y = util.setDirection(
-        position.x,
-        position.y,
-        velocity.speed,
-        self.target, 
-        dt
-    )
-
-    self.angle = util.getAngle(self.target.y, position.y, self.target.x, position.x) +
-                     1.6 + math.pi
 end
 
 function Ant:handleFood(food)

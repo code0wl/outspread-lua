@@ -8,12 +8,14 @@ function SpiderTarantula:initialize(spiderConfig)
     self:add(Components.Dimension(180, 150))
     self:add(Components.Health(100, DeadTarantulaSpider))
     self:add(Components.Velocity(80))
+    self:add(Components.Scale(1))
     self.image = WalkingTarantula
 
-    local grid = anim8.newGrid(180, 150, self.image:getWidth(),
+    local grid = anim8.newGrid(150, 180, self.image:getWidth(),
                                self.image:getHeight() + 1)
 
-    self.animation = anim8.newAnimation(grid('1-5', 1, '1-5', 2), 0.04)
+    self.animation = anim8.newAnimation(grid('1-2', 1, '1-2', 2, '1-2', 3,
+                                             '1-2', 4, '1-2', 5), 0.15)
 
     return Spider
 

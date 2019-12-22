@@ -14,11 +14,12 @@ function SpiderMoveSystem:update(dt)
 
         signal.aggressionSignalActive = false
 
-        entity.TimePassedAntSpider = entity.TimePassedAntSpider + 1 * dt
+        entity.TimePassedSpider = entity.TimePassedSpider + 1 * dt
 
-        if not signal.aggressionSignalActive and entity.TimePassedAntSpider > 6 then
+        if not signal.aggressionSignalActive and entity.TimePassedSpider >
+            math.random(3, 6) then
             energy.amount = energy.amount - .5
-            entity.TimePassedAntSpider = 0
+            entity.TimePassedSpider = 0
             entity.target = Components.Position(util.travelRandomly())
         end
 

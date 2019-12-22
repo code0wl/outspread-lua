@@ -3,6 +3,7 @@ Components = {}
 require("components.Velocity")
 require("components.Position")
 require("components.Dimension")
+require("components.Scale")
 
 require("components.Energy")
 require("components.Health")

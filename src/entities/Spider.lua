@@ -18,7 +18,7 @@ function Spider:initialize(spiderConfig)
     self.target = Components.Position(0, 0)
 
     -- Create timer component
-    self.TimePassedAntSpider = 0
+    self.TimePassedSpider = 0
 
 end
 

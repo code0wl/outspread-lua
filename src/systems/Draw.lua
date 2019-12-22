@@ -1,17 +1,18 @@
 -- Create a draw System.
-local SpiderDrawSystem = class("SpiderDrawSystem", System)
+local DrawSystem = class("DrawSystem", System)
 
-function SpiderDrawSystem:requires() return {"position", "spider", "dimension"} end
+function DrawSystem:requires() return {"position", "scale", "dimension"} end
 
-function SpiderDrawSystem:draw()
+function DrawSystem:draw()
     for _, entity in pairs(self.targets) do
         local position = entity:get("position")
         local dimension = entity:get("dimension")
+        local scale = entity:get("scale")
 
         entity.animation:draw(entity.image, position.x, position.y,
                               util.getAngle(entity.target.y, position.y,
-                                            entity.target.x, position.x) +
-                                  math.pi, nil, nil,
+                                            entity.target.x, position.x) + 1.6 +
+                                  math.pi, scale.amount, scale.amount,
                               util.getCenter(dimension.width),
                               util.getCenter(dimension.height))
 
@@ -19,4 +20,4 @@ function SpiderDrawSystem:draw()
 
 end
 
-return SpiderDrawSystem
+return DrawSystem
