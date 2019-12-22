@@ -13,8 +13,6 @@ local OutSpreadEngine = {}
 
 function OutSpreadEngine.addSystems()
     local spider = SpiderTarantula:new({x = 100, y = 100})
-    local spider2 = SpiderTarantula:new({x = 200, y = 400})
-    local spider3 = SpiderTarantula:new({x = 500, y = 400})
 
     -- Test for engine
     engine:addEntity(spider)
