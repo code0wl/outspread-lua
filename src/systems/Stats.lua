@@ -1,14 +1,18 @@
 -- move System
 local StatsSystem = class("StatsSystem", System)
 
-function StatsSystem:requires() return {"stats", "energy", "position", "signal"} end
+function StatsSystem:requires()
+    return {"stats", "energy", "position", "signal", "health"}
+end
 
 function StatsSystem:draw()
     for _, entity in pairs(self.targets) do
         local energy = entity:get("energy")
         local position = entity:get("position")
         local signal = entity:get("signal")
-        local spiderStats = {energy = energy.amount, health = entity.health}
+        local health = entity:get("health")
+
+        local spiderStats = {energy = energy.amount, health = health.amount}
 
         if signal.aggressiveSignalActive then
             Lg.setColor(1, 1, 1)

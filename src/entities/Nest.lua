@@ -1,9 +1,10 @@
 local WorkerAnt = require("entities/WorkerAnt")
+local Actor = require("entities.Actor")
 
-local Nest = class('Nest', Entity)
+local Nest = class('Nest', Actor)
 
 function Nest:initialize(nestConfig)
-    Entity.initialize(self)
+    Actor.initialize(self)
 
     self:add(Components.Position(nestConfig.x, nestConfig.y))
     self:add(Components.Dimension(16, 27))
@@ -29,6 +30,7 @@ function Nest:initialize(nestConfig)
 end
 
 function Nest:update()
+    print('called')
     local x, y = self:get("position").x, self:get("position").y
     for i = 1, self.collectedFood do
         self.collectedFood = self.collectedFood - 2
@@ -37,6 +39,7 @@ function Nest:update()
 end
 
 function Nest:draw()
+    print("drawing nest")
     local x, y = self:get("position").x, self:get("position").y
     Lg.draw(TerrainSprites.terrain, self.graphic, x, y, nil, .4, .4)
 end

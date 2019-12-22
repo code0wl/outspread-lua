@@ -5,8 +5,9 @@ require("PrepareImages")
 
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
-local Ants = engine:getEntitiesWithComponent("ant")
 local Colonies = engine:getEntitiesWithComponent("colony")
+local Spiders = engine:getEntitiesWithComponent("spider")
+local Nests = engine:getEntitiesWithComponent("nest")
 local Control = require("Control")
 
 local bg_image = Lg.newImage("/images/background/background.png")
@@ -21,8 +22,7 @@ function love.load()
     asset.generateWorldAssets()
     OutSpreadEngine.addSystems()
 
-    print(Colonies)
-
+    print(Spiders)
 end
 
 function love.update(dt)
@@ -30,18 +30,6 @@ function love.update(dt)
 
     Player:update()
     Control.update(dt)
-
-    for colonyIndex, colony in ipairs(Colonies) do
-
-        print(colonyIndex)
-        -- for _, ant in ipairs(Ants) do
-        --     print(ant)
-
-        --     ant:update(engine:getEntitiesWithComponent("food"), dt)
-
-        -- end
-        -- colony.nest:update(dt)
-    end
 
 end
 
@@ -55,7 +43,7 @@ function love.draw()
         Lg.draw(bg_image, QuadBQ, 0, 0)
 
         -- draw nests
-        for _, colony in ipairs(Colonies) do colony.nest:draw() end
+        for _, nest in ipairs(Nests) do nest:draw() end
 
         -- Draw player phermones
         for _, phermone in ipairs(Player.phermones) do

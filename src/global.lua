@@ -21,7 +21,6 @@ Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
 
 -- Walk timers -- please remove
 TimePassedAnt = 0
-TimePassedAntSpider = 0
 
 -- own util
 util = require("utils")
