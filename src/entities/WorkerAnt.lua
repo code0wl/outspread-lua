@@ -6,6 +6,7 @@ function WorkerAnt:initialize(antConfig)
 
     self:add(Components.Dimension(16, 27))
     self:add(Components.Scale(.4))
+    self:add(Components.Energy(10, 5))
     self.speed = 120
     self.damage = 1
 
