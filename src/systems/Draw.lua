@@ -15,8 +15,8 @@ function DrawSystem:draw()
                                   util.getAngle(entity.target.y,
                                                 entity.body:getY(),
                                                 entity.target.x,
-                                                entity.body:getX()) - 1.6 +
-                                      math.pi, scale.amount, scale.amount,
+                                                entity.body:getX()) - PI,
+                                  scale.amount, scale.amount,
                                   util.getCenter(dimension.width),
                                   util.getCenter(dimension.height))
         else

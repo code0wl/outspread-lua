@@ -44,6 +44,8 @@ function love.draw()
 end
 
 function beginContact(a, b, coll)
-    local x, y = coll:getNormal()
-    print(a:getUserData(), b:getUserData())
+    if a:getUserData() and b:getUserData() then
+        -- and a:getUserData().type then print('hi') 
+        print(a:getUserData().TimePassedAnt, b:getUserData().TimePassedAnt)
+    end
 end

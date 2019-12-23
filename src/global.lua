@@ -37,3 +37,6 @@ engine = Engine()
 
 -- cells
 CellStore = {}
+
+-- some shit
+PI = 1.6 + math.pi
