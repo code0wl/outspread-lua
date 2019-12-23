@@ -17,6 +17,8 @@ function Ant:initialize(antConfig)
     self.hasFood = nil
     self.scentLocation = nil
 
+    self.fixture:setUserData(antConfig.type)
+
     self.body:setPosition(antConfig.x, antConfig.y)
 end
 

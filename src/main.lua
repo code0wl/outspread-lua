@@ -6,7 +6,6 @@ require("PrepareImages")
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
-local Grid = require("entities.Grid")
 
 local bg_image = Lg.newImage("/images/background/background.png")
 
@@ -19,6 +18,7 @@ QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
 function love.load()
     asset.generateWorldAssets()
     OutSpreadEngine.addSystems()
+    world:setCallbacks(beginContact)
 end
 
 function love.update(dt)
@@ -34,16 +34,16 @@ function love.draw()
 
     -- Camera
     Cam:draw(function(l, t, w, h)
-
         Lg.draw(bg_image, QuadBQ, 0, 0)
-
         engine:draw()
-
         UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
-
     end)
 
     PrintDetailsToScreen(engine:getEntitiesWithComponent('nest'))
 
 end
 
+function beginContact(a, b, coll)
+    local x, y = coll:getNormal()
+    print(a:getUserData(), b:getUserData())
+end
