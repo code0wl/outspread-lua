@@ -12,7 +12,6 @@ function Ant:initialize(antConfig)
     self:add(Components.Scale(.4))
     self:add(Components.Animation(true))
     self:add(Components.Ant(true, antConfig.type))
-    self:add(Components.Stats(true))
 
     -- Delta for nest location
     self.nest = Components.Position(antConfig.x, antConfig.y)
