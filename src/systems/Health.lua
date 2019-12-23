@@ -1,19 +1,20 @@
 -- move System
 local HealthSystem = class("HealthSystem", System)
 
-function HealthSystem:requires() return {"health", "position"} end
+function HealthSystem:requires() return {"health"} end
 
 function HealthSystem:update(dt)
     for _, entity in pairs(self.targets) do
         local health = entity:get("health")
-        local position = entity:get("position")
         local dimension = entity:get("dimension")
 
         if health.amount < 1 then
-            util.dropFoodOnMap(entity.type, position.x, position.y,
-                               dimension.width, dimension.height, entity.angle,
+            util.dropFoodOnMap(entity.type, entity.body:getX(),
+                               entity.body:getY(), dimension.width,
+                               dimension.height, entity.angle,
                                health.deadInstance)
             engine:removeEntity(entity)
+            entity.body:destroy()
         end
 
     end

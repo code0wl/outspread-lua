@@ -19,6 +19,9 @@ function DrawSystem:draw()
                                   scale.amount, scale.amount,
                                   util.getCenter(dimension.width),
                                   util.getCenter(dimension.height))
+        elseif entity.image then
+            Lg.draw(entity.image, position.x, position.y, nil, scale.amount,
+                    scale.amount)
         else
             Lg.draw(TerrainSprites.terrain, entity.graphic, position.x,
                     position.y, nil, scale.amount, scale.amount)

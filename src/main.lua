@@ -43,9 +43,12 @@ function love.draw()
 
 end
 
-function beginContact(a, b, coll)
-    if a:getUserData() and b:getUserData() then
-        -- and a:getUserData().type then print('hi') 
-        print(a:getUserData().TimePassedAnt, b:getUserData().TimePassedAnt)
+function beginContact(a, b)
+    local actorA = a:getUserData()
+    local actorB = b:getUserData()
+
+    if actorA and actorB and actorA.type ~= actorB.type then
+        actorA:attack(actorB)
+        actorB:attack(actorA)
     end
 end

@@ -14,6 +14,7 @@ function Ant:initialize(antConfig)
     -- Delta for nest location
     self.nest = Components.Position(antConfig.x, antConfig.y)
     self.target = Components.Position(antConfig.x, antConfig.y)
+    self.type = antConfig.type
     self.hasFood = nil
     self.scentLocation = nil
 
