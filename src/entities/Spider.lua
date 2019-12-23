@@ -12,7 +12,6 @@ function Spider:initialize(spiderConfig)
     self:add(Components.Animation(true))
     self:add(Components.Health(100, DeadSpider))
     self:add(Components.Stats(true))
-    self:add(Components.Signal(400, false, 500, false))
 
     self.target = Components.Position(0, 0)
 

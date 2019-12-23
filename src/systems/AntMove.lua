@@ -7,15 +7,13 @@ function AntMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
         local position = entity:get('position')
         local velocity = entity:get('velocity')
-        local signal = entity:get('signal')
 
         entity.TimePassedAnt = entity.TimePassedAnt + 1 * dt
 
         if entity.hasFood then entity.target = entity.nest end
 
         -- Walk randomnly
-        if not signal.aggressionSignalActive and entity.TimePassedAnt >
-            math.random(2, 4) then
+        if entity.TimePassedAnt > math.random(2, 4) then
             entity.TimePassedAnt = 0
             entity.target = Components.Position(util.travelRandomly())
         end

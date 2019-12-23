@@ -34,6 +34,5 @@ Player = require("entities/Player")
 -- ECS engine 
 engine = Engine()
 
--- correctional math
-sixthPi = 1.6 + math.pi
-
+-- cells
+CellStore = {}

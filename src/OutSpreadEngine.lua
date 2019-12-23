@@ -1,5 +1,4 @@
 local DrawSystem = require("systems.Draw")
-local DrawSignalSystem = require("systems.DrawSignal")
 local FoodDrawSystem = require("systems.FoodDraw")
 local SpiderMoveSystem = require("systems.SpiderMove")
 local AntMoveSystem = require("systems.AntMove")
@@ -31,7 +30,6 @@ function OutSpreadEngine.addSystems()
     engine:addSystem(FoodDrawSystem(), "draw")
     engine:addSystem(DrawSystem(), "draw")
     engine:addSystem(StatsSystem(), "draw")
-    engine:addSystem(DrawSignalSystem(), "draw")
 
 end
 

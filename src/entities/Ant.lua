@@ -6,7 +6,6 @@ function Ant:initialize(antConfig)
 
     self.TimePassedAnt = 0
 
-    self:add(Components.Signal(100, false, 150, false))
     self:add(Components.Position(antConfig.x, antConfig.y))
     self:add(Components.Velocity(80))
     self:add(Components.Scale(.4))
