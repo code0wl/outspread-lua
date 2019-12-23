@@ -12,6 +12,8 @@ function Spider:initialize(spiderConfig)
     self:add(Components.Health(100, DeadSpider))
     self:add(Components.Stats(true))
 
+    self.type = 3
+
     self.target = Components.Position(0, 0)
 
     -- Create timer component
