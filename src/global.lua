@@ -11,10 +11,11 @@ inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
 lovetoys = require("libs.lovetoys")
 lovetoys.initialize({globals = true})
+world = love.physics.newWorld(0, 0, true)
 
 -- create instance for Camera
-GlobalWidth = 3000
-GlobalHeight = 3000
+GlobalWidth = 4000
+GlobalHeight = 4000
 local gamera = require('libs.gamera')
 Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())

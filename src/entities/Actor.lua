@@ -1,10 +1,11 @@
 local Actor = class('Actor', Entity)
 
-function Actor:initialize()
+function Actor:initialize(config)
     Entity.initialize(self)
-    self.isAlive = true
-    self.scentLocation = nil
-    self.maxHealth = self.health or 100
+
+    self.body = Lp.newBody(world, 10, 10, "dynamic") 
+    self.shape = Lp.newRectangleShape(10, 10) 
+    self.fixture = Lp.newFixture(self.body, self.shape)
 end
 
 function Actor:eat(prey)

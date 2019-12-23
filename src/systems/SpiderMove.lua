@@ -5,7 +5,6 @@ function SpiderMoveSystem:requires() return {"spider"} end
 
 function SpiderMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
-        local position = entity:get("position")
         local energy = entity:get("energy")
         local velocity = entity:get("velocity")
 
@@ -17,9 +16,10 @@ function SpiderMoveSystem:update(dt)
             entity.target = Components.Position(util.travelRandomly())
         end
 
-        position.x, position.y = util.setDirection(position.x, position.y,
-                                                   velocity.speed,
-                                                   entity.target, dt)
+        entity.body:setPosition(util.setDirection(entity.body:getX(),
+                                                  entity.body:getY(),
+                                                  velocity.speed, entity.target,
+                                                  dt))
 
     end
 end

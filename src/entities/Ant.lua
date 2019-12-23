@@ -6,7 +6,6 @@ function Ant:initialize(antConfig)
 
     self.TimePassedAnt = 0
 
-    self:add(Components.Position(antConfig.x, antConfig.y))
     self:add(Components.Velocity(80))
     self:add(Components.Scale(.4))
     self:add(Components.Animation(true))
@@ -17,6 +16,8 @@ function Ant:initialize(antConfig)
     self.target = Components.Position(antConfig.x, antConfig.y)
     self.hasFood = nil
     self.scentLocation = nil
+
+    self.body:setPosition(antConfig.x, antConfig.y)
 end
 
 -- function Ant:returnFoodToNest(nest)

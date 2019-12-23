@@ -19,10 +19,10 @@ QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
 function love.load()
     asset.generateWorldAssets()
     OutSpreadEngine.addSystems()
-    Grid:new(20)
 end
 
 function love.update(dt)
+    world:update(dt)
     engine:update(dt)
     Player:update()
     Control.update(dt)
@@ -36,16 +36,6 @@ function love.draw()
     Cam:draw(function(l, t, w, h)
 
         Lg.draw(bg_image, QuadBQ, 0, 0)
-
-        for _, size in ipairs(CellStore) do
-            Lg.rectangle('line', size.x, size.y, size.width, size.height)
-        end
-
-        -- Draw player phermones
-        for _, phermone in ipairs(Player.phermones) do
-            Lg.setColor(255, 153, 153)
-            Lg.circle('fill', phermone.x, phermone.y, 5)
-        end
 
         engine:draw()
 

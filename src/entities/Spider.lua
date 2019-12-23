@@ -7,7 +7,6 @@ local Spider = class('Spider', Actor)
 function Spider:initialize(spiderConfig)
     Actor.initialize(self)
 
-    self:add(Components.Position(spiderConfig.x, spiderConfig.y))
     self:add(Components.Spider(true))
     self:add(Components.Animation(true))
     self:add(Components.Health(100, DeadSpider))
@@ -17,6 +16,8 @@ function Spider:initialize(spiderConfig)
 
     -- Create timer component
     self.TimePassedSpider = 0
+
+    self.body:setPosition(spiderConfig.x, spiderConfig.y)
 
 end
 

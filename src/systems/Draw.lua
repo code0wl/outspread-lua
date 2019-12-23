@@ -1,19 +1,22 @@
 -- Create a draw System.
 local DrawSystem = class("DrawSystem", System)
 
-function DrawSystem:requires() return {"position", "scale", "dimension"} end
+function DrawSystem:requires() return {"scale", "dimension"} end
 
 function DrawSystem:draw()
     for _, entity in pairs(self.targets) do
-        local position = entity:get("position")
         local dimension = entity:get("dimension")
         local scale = entity:get("scale")
+        local position = entity:get('position')
 
         if entity.animation then
-            entity.animation:draw(entity.image, position.x, position.y,
-                                  util.getAngle(entity.target.y, position.y,
-                                                entity.target.x, position.x) -
-                                      1.6 + math.pi, scale.amount, scale.amount,
+            entity.animation:draw(entity.image, entity.body:getX(),
+                                  entity.body:getY(),
+                                  util.getAngle(entity.target.y,
+                                                entity.body:getY(),
+                                                entity.target.x,
+                                                entity.body:getX()) - 1.6 +
+                                      math.pi, scale.amount, scale.amount,
                                   util.getCenter(dimension.width),
                                   util.getCenter(dimension.height))
         else
