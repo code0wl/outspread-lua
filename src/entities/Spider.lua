@@ -9,7 +9,7 @@ function Spider:initialize(spiderConfig)
 
     self:add(Components.Spider(true))
     self:add(Components.Animation(true))
-    self:add(Components.Health(100, DeadSpider))
+    self:add(Components.Health(10, DeadSpider))
     self:add(Components.Stats(true))
 
     self.type = 3

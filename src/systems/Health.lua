@@ -11,10 +11,11 @@ function HealthSystem:update(dt)
         if health.amount < 1 then
             util.dropFoodOnMap(entity.type, entity.body:getX(),
                                entity.body:getY(), dimension.width,
-                               dimension.height, entity.angle,
+                               dimension.height, entity.body:getAngle(),
                                health.deadInstance)
             engine:removeEntity(entity)
-            entity.body:destroy()
+            entity = nil
+            print(entity)
         end
 
     end
