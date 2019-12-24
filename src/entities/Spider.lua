@@ -19,8 +19,6 @@ function Spider:initialize(spiderConfig)
     -- Create timer component
     self.TimePassedSpider = 0
 
-    self.fixture:setUserData(self)
-
     self.body:setPosition(spiderConfig.x, spiderConfig.y)
 
 end

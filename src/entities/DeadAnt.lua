@@ -1,7 +1,12 @@
-local DeadAnt = class('DeadAnt', Entity)
+local Actor = require("entities.Actor")
+local DeadAnt = class('DeadAnt', Actor)
 
 function DeadAnt:initialize(deadAntConfig)
-    Entity.initialize(self)
+    self.width = deadAntConfig.width
+    self.height = deadAntConfig.height
+    self.dead = true
+
+    Actor.initialize(self)
 
     self.type = deadAntConfig.type
     self.angle = deadAntConfig.angle

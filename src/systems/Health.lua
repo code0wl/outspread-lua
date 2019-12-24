@@ -15,7 +15,6 @@ function HealthSystem:update(dt)
                                health.deadInstance)
             engine:removeEntity(entity)
             entity = nil
-            print(entity)
         end
 
     end

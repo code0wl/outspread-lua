@@ -6,7 +6,6 @@ function StatsSystem:requires() return {"stats", "energy", "health"} end
 function StatsSystem:draw()
     for _, entity in pairs(self.targets) do
         local energy = entity:get("energy")
-        local signal = entity:get("signal")
         local health = entity:get("health")
 
         local spiderStats = {

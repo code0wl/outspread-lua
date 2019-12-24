@@ -4,10 +4,14 @@ local Actor = require("entities.Actor")
 local Nest = class('Nest', Actor)
 
 function Nest:initialize(nestConfig)
+
+    self.width = 16
+    self.height = 27
+
     Actor.initialize(self)
 
     self:add(Components.Position(nestConfig.x, nestConfig.y))
-    self:add(Components.Dimension(16, 27))
+    self:add(Components.Dimension(self.width, self.height))
     self:add(Components.Nest(true))
     self:add(Components.Scale(.4))
     self:add(Components.Static(true))
@@ -34,7 +38,7 @@ end
 function Nest:update()
     print("update")
     local x, y = self:get("position").x, self:get("position").y
-    for i = 1, self.collectedFood do
+    for _ = 1, self.collectedFood do
         self.collectedFood = self.collectedFood - 2
         engine:addEntity(WorkerAnt:new({type = self.type, x = x, y = y}))
     end

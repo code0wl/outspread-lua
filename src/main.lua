@@ -24,7 +24,7 @@ end
 function love.update(dt)
     world:update(dt)
     engine:update(dt)
-    Player:update()
+    Player:update(dt)
     Control.update(dt)
 end
 
@@ -43,12 +43,22 @@ function love.draw()
 
 end
 
+-- Move to director class
 function beginContact(a, b)
     local actorA = a:getUserData()
     local actorB = b:getUserData()
 
-    if actorA and actorB and actorA.type ~= actorB.type then
-        actorA:attack(actorB)
-        actorB:attack(actorA)
+    -- if actors exist and both can do damage
+    if actorA and actorB then
+
+        if actorA.damage and actorB.damage and actorA.type ~= actorB.type then
+            print('attacking')
+            actorA:attack(actorB)
+            actorB:attack(actorA)
+        end
+
+        if actorA.dead or actorB.dead then actorB:carry(actorA) end
+
     end
+
 end

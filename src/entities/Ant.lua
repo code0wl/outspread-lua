@@ -6,7 +6,7 @@ function Ant:initialize(antConfig)
 
     self.TimePassedAnt = 0
 
-    self:add(Components.Velocity(80))
+    self:add(Components.Velocity(100))
     self:add(Components.Scale(.4))
     self:add(Components.Animation(true))
     self:add(Components.Ant(true, antConfig.type))
@@ -17,8 +17,6 @@ function Ant:initialize(antConfig)
     self.type = antConfig.type
     self.hasFood = nil
     self.scentLocation = nil
-
-    self.fixture:setUserData(self)
 
     self.body:setPosition(antConfig.x, antConfig.y)
 end

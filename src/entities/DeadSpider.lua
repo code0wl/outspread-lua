@@ -1,6 +1,10 @@
 local DeadSpider = class('DeadSpider', Entity)
 
 function DeadSpider:initialize(deadSpiderConfig)
+
+    self.width = deadSpiderConfig.width
+    self.height = deadSpiderConfig.height
+
     Entity.initialize(self)
 
     self.type = deadSpiderConfig.type
@@ -10,6 +14,8 @@ function DeadSpider:initialize(deadSpiderConfig)
     self:add(Components.Position(deadSpiderConfig.x, deadSpiderConfig.y))
     self:add(Components.Dimension(deadSpiderConfig.width,
                                   deadSpiderConfig.height))
+
+    self.dead = true
 
     self.image = DeadTarantulaSpider
 
