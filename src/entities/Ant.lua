@@ -16,7 +16,6 @@ function Ant:initialize(antConfig)
     self:add(Components.Ant(true, antConfig.type))
 
     -- Delta for nest location
-
     self.body:setPosition(antConfig.x, antConfig.y)
 end
 

@@ -51,13 +51,11 @@ function beginContact(a, b)
     -- if actors exist and both can do damage
     if actorA and actorB then
 
-        if actorA.damage and actorB.damage and actorA.type ~= actorB.type then
+        if not actorA.dead and not actorB.dead and actorA.type ~= actorB.type then
             actorA:attack(actorB)
-            actorB:attack(actorA)
         end
 
         if actorB.dead then actorA:carry(actorB) end
-        if actorA.dead then actorB:carry(actorA) end
 
     end
 
