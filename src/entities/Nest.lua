@@ -1,14 +1,14 @@
 local WorkerAnt = require("entities/WorkerAnt")
 local Actor = require("entities.Actor")
 
-local Nest = class('Nest', Actor)
+local Nest = class('Nest', Entity)
 
 function Nest:initialize(nestConfig)
 
     self.width = 16
     self.height = 27
 
-    Actor.initialize(self)
+    Entity.initialize(self)
 
     self:add(Components.Position(nestConfig.x, nestConfig.y))
     self:add(Components.Dimension(self.width, self.height))

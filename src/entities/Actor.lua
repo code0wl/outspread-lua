@@ -9,16 +9,13 @@ function Actor:initialize()
     self.body:setSleepingAllowed(true)
 
     self.fixture:setUserData(self)
-
 end
 
-function Actor:carry(food) 
-    self.food = food
-    self.hasFood = true
-    print('carrying ',  food)
+function Actor:carry(B) 
+    if self:get('ant') then
+        self:get('carry').actor = B
+    end
 end
-
-function Actor:fightMode(isActive) self.aggressionSignalActive = isActive end
 
 function Actor:attack(animal)
     animal:get('health').amount = animal:get('health').amount - self.damage

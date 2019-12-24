@@ -15,8 +15,7 @@ function WorkerAnt:initialize(antConfig)
     self:add(Components.Scale(.4))
     self:add(Components.Energy(10, 5))
 
-    -- Make a util
-    if self:get('ant').type == 1 then
+    if antConfig.type == 1 then
         self.image = BlackWalk
         self.grid = BlackWalkAnimationGrid
         self.animation = BlackWalkAnimation
