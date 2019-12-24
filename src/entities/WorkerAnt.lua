@@ -11,6 +11,7 @@ function WorkerAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
 
     self:add(Components.Dimension(self.width, self.height))
+    self:add(Components.Velocity(200))
     self:add(Components.Scale(.4))
     self:add(Components.Energy(10, 5))
 
