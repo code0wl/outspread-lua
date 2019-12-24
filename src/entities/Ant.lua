@@ -11,6 +11,7 @@ function Ant:initialize(antConfig)
     Actor.initialize(self)
 
     self:add(Components.Scale(.4))
+    self:add(Components.Carry(nil))
     self:add(Components.Animation(true))
     self:add(Components.Ant(true, antConfig.type))
 
