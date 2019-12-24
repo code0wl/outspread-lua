@@ -27,9 +27,6 @@ function WorkerAnt:initialize(antConfig)
 
     self:add(Components.Health(10, DeadAnt))
 
-    self:add(Components.Physics(self, antConfig.x, antConfig.y, self.width,
-                                self.height))
-
 end
 
 return WorkerAnt
