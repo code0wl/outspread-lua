@@ -12,7 +12,11 @@ function Actor:initialize()
 
 end
 
-function Actor:carry(food) print("carrying : ".. food) end
+function Actor:carry(food) 
+    self.food = food
+    self.hasFood = true
+    print('carrying ',  food)
+end
 
 function Actor:fightMode(isActive) self.aggressionSignalActive = isActive end
 

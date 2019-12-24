@@ -2,11 +2,12 @@ local Actor = require('entities.Actor')
 local Ant = class('Ant', Actor)
 
 function Ant:initialize(antConfig)
-    Actor.initialize(self)
-
+    self.hasFood = nil
+    self.scentLocation = nil
     self.TimePassedAnt = 0
 
-    self:add(Components.Velocity(100))
+    Actor.initialize(self)
+
     self:add(Components.Scale(.4))
     self:add(Components.Animation(true))
     self:add(Components.Ant(true, antConfig.type))
@@ -15,8 +16,6 @@ function Ant:initialize(antConfig)
     self.nest = Components.Position(antConfig.x, antConfig.y)
     self.target = Components.Position(antConfig.x, antConfig.y)
     self.type = antConfig.type
-    self.hasFood = nil
-    self.scentLocation = nil
 
     self.body:setPosition(antConfig.x, antConfig.y)
 end

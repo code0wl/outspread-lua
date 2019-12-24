@@ -52,12 +52,12 @@ function beginContact(a, b)
     if actorA and actorB then
 
         if actorA.damage and actorB.damage and actorA.type ~= actorB.type then
-            print('attacking')
             actorA:attack(actorB)
             actorB:attack(actorA)
         end
 
-        if actorA.dead or actorB.dead then actorB:carry(actorA) end
+        if actorB.dead then actorA:carry(actorB) end
+        if actorA.dead then actorB:carry(actorA) end
 
     end
 
