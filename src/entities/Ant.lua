@@ -2,7 +2,7 @@ local Actor = require('entities.Actor')
 local Ant = class('Ant', Actor)
 
 function Ant:initialize(antConfig)
-    Actor.initialize(self)
+    Actor.initialize(self, antConfig)
 
     self.TimePassedAnt = 0
 

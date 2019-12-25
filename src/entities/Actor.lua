@@ -1,6 +1,6 @@
 local Actor = class('Actor', Entity)
 
-function Actor:initialize()
+function Actor:initialize(config)
     Entity.initialize(self)
     self.isAlive = true
     self.scentLocation = nil
