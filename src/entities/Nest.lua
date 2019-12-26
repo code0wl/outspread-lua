@@ -4,7 +4,7 @@ local Actor = require("entities.Actor")
 local Nest = class('Nest', Actor)
 
 function Nest:initialize(nestConfig)
-    Actor.initialize(self)
+    Actor.initialize(self, nestConfig)
 
     self:add(Components.Position(nestConfig.x, nestConfig.y))
     self:add(Components.Dimension(16, 27))
@@ -15,18 +15,18 @@ function Nest:initialize(nestConfig)
     self.type = nestConfig.type
 
     self.startingPopulation = nestConfig.population
-    self.collectedFood = 0
-    self.ants = {}
 
     self.graphic = Lg.newQuad(300, 70, 80, 80,
                               TerrainSprites.terrain:getDimensions())
 
     for i = 0, self.startingPopulation do
+
         engine:addEntity(WorkerAnt:new({
             type = self.type,
             x = nestConfig.x,
             y = nestConfig.y
         }))
+
     end
 
 end
@@ -36,7 +36,10 @@ function Nest:update()
     local x, y = self:get("position").x, self:get("position").y
     for i = 1, self.collectedFood do
         self.collectedFood = self.collectedFood - 2
-        engine:addEntity(WorkerAnt:new({type = self.type, x = x, y = y}))
+        local ant = WorkerAnt:new({type = self.type, x = x, y = y})
+        engine:addEntity(ant)
+        world:add(ant, x, y, ant:get("dimension").width,
+                  ant:get("dimension").height)
     end
 end
 

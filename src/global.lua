@@ -12,6 +12,10 @@ class = require("libs.middleclass")
 lovetoys = require("libs.lovetoys")
 lovetoys.initialize({globals = true})
 
+-- collision
+local bump = require("libs.bump")
+world = bump.newWorld(64)
+
 -- create instance for Camera
 GlobalWidth = 3000
 GlobalHeight = 3000
