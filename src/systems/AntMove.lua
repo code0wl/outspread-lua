@@ -5,6 +5,7 @@ function AntMoveSystem:requires() return {"ant"} end
 
 local antFilter = function(item, other)
     if item.type ~= other.type then
+        item:attack(other)
         other:attack(item)
         return 'bounce'
     elseif item.type == other.type then

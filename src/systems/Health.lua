@@ -10,6 +10,7 @@ function HealthSystem:update(dt)
         local dimension = entity:get("dimension")
 
         if health.amount < 1 then
+            print('dead')
             util.dropFoodOnMap(entity.type, position.x, position.y,
                                dimension.width, dimension.height, entity.angle,
                                health.deadInstance)

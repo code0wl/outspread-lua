@@ -10,6 +10,8 @@ function WorkerAnt:initialize(antConfig)
     self:add(Components.Scale(.4))
     self:add(Components.Velocity(100))
     self:add(Components.Energy(10, 5))
+    self:add(Components.Health(10, DeadAnt))
+
     self.damage = 1
 
     -- Make a util
@@ -22,8 +24,6 @@ function WorkerAnt:initialize(antConfig)
         self.grid = RedWalkAnimationGrid
         self.animation = RedWalkAnimation
     end
-
-    self:add(Components.Health(10, DeadAnt))
 
 end
 
