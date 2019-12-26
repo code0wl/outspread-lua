@@ -14,7 +14,7 @@ lovetoys.initialize({globals = true})
 
 -- collision
 local bump = require("libs.bump")
-world = bump.newWorld(50)
+world = bump.newWorld(64)
 
 -- create instance for Camera
 GlobalWidth = 3000

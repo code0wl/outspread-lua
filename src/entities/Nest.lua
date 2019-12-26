@@ -15,8 +15,6 @@ function Nest:initialize(nestConfig)
     self.type = nestConfig.type
 
     self.startingPopulation = nestConfig.population
-    self.collectedFood = 0
-    self.ants = {}
 
     self.graphic = Lg.newQuad(300, 70, 80, 80,
                               TerrainSprites.terrain:getDimensions())
@@ -28,6 +26,7 @@ function Nest:initialize(nestConfig)
             x = nestConfig.x,
             y = nestConfig.y
         })
+
         engine:addEntity(ant)
 
         world:add(ant, nestConfig.x, nestConfig.y, ant:get("dimension").width,
