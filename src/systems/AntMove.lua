@@ -8,10 +8,14 @@ function AntMoveSystem:update(dt)
         local position = entity:get('position')
         local velocity = entity:get('velocity')
 
-        local speed = velocity.speed * dt
+        local speed = velocity.speed * dt - math.pi
         entity.TimePassedAnt = entity.TimePassedAnt + 1 * dt
 
-        if entity.hasFood then entity.target = entity.nest end
+        if entity.hasFood then
+            entity.target = entity.nest
+        else
+            entity.target = Components.Position(500, 500)
+        end
 
         -- Walk randomnly
         if entity.TimePassedAnt > math.random(2, 4) then
@@ -32,19 +36,14 @@ function AntMoveSystem:update(dt)
 
         local nextX, nextY, cols, len = world:move(entity, futureX, futureY)
 
-        position.x, position.y = util.setDirection(nextX - math.pi,
-                                                   nextY - math.pi,
-                                                   velocity.speed,
+        position.x, position.y = util.setDirection(nextX, nextY, velocity.speed,
                                                    entity.target, dt)
 
         -- Collision resolution
         -- Refactor later
         for i = 1, len do
             local other = cols[i].other
-            if entity.type == other.type then
-                print('crossing')
-                return 'cross'
-            end
+            if entity.type == other.type then return nil end
         end
 
     end

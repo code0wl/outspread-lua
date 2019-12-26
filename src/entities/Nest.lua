@@ -4,7 +4,7 @@ local Actor = require("entities.Actor")
 local Nest = class('Nest', Actor)
 
 function Nest:initialize(nestConfig)
-    Actor.initialize(self)
+    Actor.initialize(self, nestConfig)
 
     self:add(Components.Position(nestConfig.x, nestConfig.y))
     self:add(Components.Dimension(16, 27))
@@ -21,16 +21,12 @@ function Nest:initialize(nestConfig)
 
     for i = 0, self.startingPopulation do
 
-        local ant = WorkerAnt:new({
+        engine:addEntity(WorkerAnt:new({
             type = self.type,
             x = nestConfig.x,
             y = nestConfig.y
-        })
+        }))
 
-        engine:addEntity(ant)
-
-        world:add(ant, nestConfig.x, nestConfig.y, ant:get("dimension").width,
-                  ant:get("dimension").height)
     end
 
 end
