@@ -1,1 +1,1 @@
-Components.Ant = Component.create("ant", {"isAnt", "type"})
+Components.Ant = Component.create("ant", {"isAnt"})

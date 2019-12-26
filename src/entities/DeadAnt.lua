@@ -19,9 +19,4 @@ function DeadAnt:initialize(deadAntConfig)
 
 end
 
-function DeadAnt:removeFood()
-    local food = self:get("food")
-    food.amount = food.amount - 1
-end
-
 return DeadAnt

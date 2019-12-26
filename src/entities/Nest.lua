@@ -1,10 +1,9 @@
 local WorkerAnt = require("entities/WorkerAnt")
-local Actor = require("entities.Actor")
 
-local Nest = class('Nest', Actor)
+local Nest = class('Nest', Entity)
 
 function Nest:initialize(nestConfig)
-    Actor.initialize(self, nestConfig)
+    Entity.initialize(self)
 
     self:add(Components.Position(nestConfig.x, nestConfig.y))
     self:add(Components.Dimension(16, 27))
@@ -30,19 +29,5 @@ function Nest:initialize(nestConfig)
     end
 
 end
-
-function Nest:update()
-    print("update")
-    local x, y = self:get("position").x, self:get("position").y
-    for i = 1, self.collectedFood do
-        self.collectedFood = self.collectedFood - 2
-        local ant = WorkerAnt:new({type = self.type, x = x, y = y})
-        engine:addEntity(ant)
-        world:add(ant, x, y, ant:get("dimension").width,
-                  ant:get("dimension").height)
-    end
-end
-
-function Nest:addFood() self.collectedFood = self.collectedFood + 1 end
 
 return Nest

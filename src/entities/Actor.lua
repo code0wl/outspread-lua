@@ -6,7 +6,7 @@ function Actor:initialize(config)
     self.scentLocation = nil
     self.maxHealth = self.health or 100
 
-    world:add(self, config.x, config.y, 10, 10)
+    world:add(self, config.x, config.y, 5, 5)
 end
 
 function Actor:eat(prey)
@@ -18,6 +18,7 @@ end
 function Actor:fightMode(isActive) self.aggressionSignalActive = isActive end
 
 function Actor:attack(animal) 
+    if not self.damage then return end
     animal:get('health').amount = animal:get('health').amount - self.damage 
 end
 

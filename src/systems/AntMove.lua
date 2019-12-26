@@ -3,19 +3,23 @@ local AntMoveSystem = class("AntMoveSystem", System)
 
 function AntMoveSystem:requires() return {"ant"} end
 
+local antFilter = function(item, other)
+    if item.type ~= other.type then
+        other:attack(item)
+        return 'bounce'
+    elseif item.type == other.type then
+        return false
+    end
+end
+
 function AntMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
         local position = entity:get('position')
         local velocity = entity:get('velocity')
 
-        local speed = velocity.speed * dt - math.pi
         entity.TimePassedAnt = entity.TimePassedAnt + 1 * dt
 
-        if entity.hasFood then
-            entity.target = entity.nest
-        else
-            entity.target = Components.Position(500, 500)
-        end
+        if entity.hasFood then entity.target = entity.nest end
 
         -- Walk randomnly
         if entity.TimePassedAnt > math.random(2, 4) then
@@ -31,20 +35,13 @@ function AntMoveSystem:update(dt)
         entity.angle = util.getAngle(entity.target.y, position.y,
                                      entity.target.x, position.x)
 
-        local futureX = position.x + speed
-        local futureY = position.y + speed
+        local futureX = position.x
+        local futureY = position.y
 
-        local nextX, nextY, cols, len = world:move(entity, futureX, futureY)
+        local nextX, nextY = world:move(entity, futureX, futureY, antFilter)
 
         position.x, position.y = util.setDirection(nextX, nextY, velocity.speed,
                                                    entity.target, dt)
-
-        -- Collision resolution
-        -- Refactor later
-        for i = 1, len do
-            local other = cols[i].other
-            if entity.type == other.type then return nil end
-        end
 
     end
 end
