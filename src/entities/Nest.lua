@@ -11,23 +11,18 @@ function Nest:initialize(nestConfig)
     self:add(Components.Scale(.4))
     self:add(Components.Static(true))
 
+    self.amount = 0
     self.type = nestConfig.type
-
     self.startingPopulation = nestConfig.population
-
     self.graphic = Lg.newQuad(300, 70, 80, 80,
                               TerrainSprites.terrain:getDimensions())
 
     for i = 0, self.startingPopulation do
-
-        engine:addEntity(WorkerAnt:new({
-            type = self.type,
-            x = nestConfig.x,
-            y = nestConfig.y
-        }))
-
+        engine:addEntity(WorkerAnt:new({type = self.type, nest = self}))
     end
 
 end
+
+function Nest:receiveFood(amount) self.amount = self.amount + amount end
 
 return Nest

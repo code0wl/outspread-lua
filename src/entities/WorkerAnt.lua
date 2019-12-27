@@ -13,6 +13,8 @@ function WorkerAnt:initialize(antConfig)
     self:add(Components.Attack(1))
     self:add(Components.Health(10, DeadAnt))
 
+    local nestPosition = antConfig.nest:get('position')
+
     -- Make a util
     if self.type == 1 then
         self.image = BlackWalk
@@ -24,7 +26,7 @@ function WorkerAnt:initialize(antConfig)
         self.animation = RedWalkAnimation
     end
 
-    world:add(self, antConfig.x, antConfig.y, 16, 27)
+    world:add(self, nestPosition.x, nestPosition.y, 16, 27)
 
 end
 
