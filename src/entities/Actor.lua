@@ -2,11 +2,11 @@ local Actor = class('Actor', Entity)
 
 function Actor:initialize(config)
     Entity.initialize(self)
-    self.isAlive = true
     self.scentLocation = nil
+    self.dead = false
     self.maxHealth = self.health or 100
 
-    world:add(self, config.x, config.y, 5, 5)
+    world:add(self, config.x, config.y, 10, 10)
 end
 
 function Actor:eat(prey)

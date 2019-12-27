@@ -8,8 +8,8 @@ local antFilter = function(item, other)
         item:attack(other)
         other:attack(item)
         return 'bounce'
-    elseif item.type == other.type then
-        return false
+    elseif not item.dead and other.dead then
+        item:carry(other)
     end
 end
 
