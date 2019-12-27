@@ -14,7 +14,7 @@ function FoodDrawSystem:draw()
             else
                 love.graphics.setColor(1, 0, 0)
             end
-            Lg.circle('fill', position.x, position.y, 3, 6)
+            Lg.circle('fill', position.x, position.y, 4, 4)
             love.graphics.setColor(255, 255, 255)
         end
     end

@@ -36,7 +36,7 @@ function AntMoveSystem:update(dt)
         if entity.hasFood then entity.target = nestPosition end
 
         -- Deliver food to nest
-        if entity.food and
+        if entity.hasFood and
             util.distanceBetween(position.x, position.y, nestPosition.x,
                                  nestPosition.y) < 50 then
             entity.nest:receiveFood(entity.carryCapacity)

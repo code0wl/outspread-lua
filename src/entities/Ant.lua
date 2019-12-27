@@ -15,7 +15,7 @@ function Ant:initialize(antConfig)
 
     self:add(Components.Position(nestPosition.x, nestPosition.y))
     self:add(Components.Scale(.4))
-    self:add(Components.Food(10))
+    self:add(Components.Food(100))
     self:add(Components.Animation(true))
     self:add(Components.Ant(true))
 
