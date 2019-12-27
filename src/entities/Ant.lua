@@ -20,4 +20,10 @@ function Ant:initialize(antConfig)
 
 end
 
+function Ant:carry(actor)
+    -- Carry ther ant
+    actor.target = self:get('position')
+    self.hasFood = true
+end
+
 return Ant

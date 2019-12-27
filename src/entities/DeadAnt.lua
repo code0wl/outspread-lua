@@ -3,6 +3,7 @@ local DeadAnt = class('DeadAnt', Entity)
 function DeadAnt:initialize(deadAntConfig)
     Entity.initialize(self)
 
+    self.dead = true
     self.type = deadAntConfig.type
     self.angle = deadAntConfig.angle
     self:add(Components.Food(1))
@@ -16,6 +17,9 @@ function DeadAnt:initialize(deadAntConfig)
     else
         self.image = DeadAntRed
     end
+
+    world:add(self, deadAntConfig.x, deadAntConfig.y, deadAntConfig.width,
+              deadAntConfig.height)
 
 end
 

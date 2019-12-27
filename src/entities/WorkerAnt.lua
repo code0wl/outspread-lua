@@ -24,6 +24,8 @@ function WorkerAnt:initialize(antConfig)
         self.animation = RedWalkAnimation
     end
 
+    world:add(self, antConfig.x, antConfig.y, 16, 27)
+
 end
 
 return WorkerAnt

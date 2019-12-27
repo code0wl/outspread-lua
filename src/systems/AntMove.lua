@@ -4,13 +4,25 @@ local AntMoveSystem = class("AntMoveSystem", System)
 function AntMoveSystem:requires() return {"ant"} end
 
 local antFilter = function(item, other)
-    if item.type ~= other.type then
-        item:attack(other)
-        other:attack(item)
-        return 'bounce'
-    elseif not item.dead and other.dead then
-        item:carry(other)
+    local itemAlive = not item.dead
+    local otherAlive = not other.dead
+    local itemDead = item.dead
+    local otherDead = item.dead
+
+    if itemAlive and otherAlive then
+        --  Handle all actions if ant is alive
+        if item.type ~= other.type then
+            item:attack(other)
+            other:attack(item)
+            return 'bounce'
+        end
     end
+
+    if itemAlive and other.dead then
+        item:carry(other)
+        return 'slide'
+    end
+
 end
 
 function AntMoveSystem:update(dt)
@@ -26,6 +38,12 @@ function AntMoveSystem:update(dt)
         if entity.TimePassedAnt > math.random(2, 4) then
             entity.TimePassedAnt = 0
             entity.target = Components.Position(util.travelRandomly())
+        end
+
+        -- Deliver food to nest
+        if util.distanceBetween(position.x, position.y, entity.target.x,
+                                entity.target.y) < 40 then
+            entity.hasFood = false
         end
 
         -- if out of bounds 
@@ -46,5 +64,4 @@ function AntMoveSystem:update(dt)
 
     end
 end
-
 return AntMoveSystem

@@ -3,6 +3,7 @@ local DeadSpider = class('DeadSpider', Entity)
 function DeadSpider:initialize(deadSpiderConfig)
     Entity.initialize(self)
 
+    self.dead = true
     self.type = deadSpiderConfig.type
     self.angle = deadSpiderConfig.angle
     self:add(Components.Food(100))
