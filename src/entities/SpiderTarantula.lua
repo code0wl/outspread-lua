@@ -8,7 +8,8 @@ function SpiderTarantula:initialize(spiderConfig)
     self:add(Components.Dimension(180, 150))
     self:add(Components.Health(100, DeadTarantulaSpider))
     self:add(Components.Velocity(80))
-    self:add(Components.Energy(100, 50))
+    self:add(Components.Energy(10, 50))
+    self:add(Components.Attack(100))
     self:add(Components.Scale(1))
     self.image = WalkingTarantula
 

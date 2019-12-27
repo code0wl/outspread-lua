@@ -51,7 +51,7 @@ function love.draw()
 
     end)
 
-    PrintDetailsToScreen(engine:getEntitiesWithComponent('nest'))
+    PrintDetailsToScreen()
 
 end
 

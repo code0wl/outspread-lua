@@ -18,8 +18,7 @@ end
 function Actor:fightMode(isActive) self.aggressionSignalActive = isActive end
 
 function Actor:attack(animal)
-    if not animal:get('health').amount then return end
-    animal:get('health').amount = animal:get('health').amount - self.damage
+    animal:get('health').amount = animal:get('health').amount - self:get('attack').damage
 end
 
 return Actor

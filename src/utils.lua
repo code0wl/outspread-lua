@@ -1,15 +1,12 @@
-local Food = require("entities.Food")
-
 local util = {}
 
-function util.dropFoodOnMap(type, x, y, height, width, angle, actor)
+function util.dropFoodOnMap(type, x, y, width, height, actor)
     local deadActor = actor:new({
         type = type,
         x = x,
         y = y,
         width = width,
-        height = height,
-        angle = angle
+        height = height
     })
 
     engine:addEntity(deadActor)

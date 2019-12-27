@@ -3,6 +3,8 @@ local SpiderMoveSystem = class("SpiderMoveSystem", System)
 
 function SpiderMoveSystem:requires() return {"spider"} end
 
+local spiderFilter = function(item, other) return 'bounce' end
+
 function SpiderMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
         local position = entity:get("position")
@@ -17,8 +19,12 @@ function SpiderMoveSystem:update(dt)
             entity.target = Components.Position(util.travelRandomly())
         end
 
-        position.x, position.y = util.setDirection(position.x, position.y,
-                                                   velocity.speed,
+        local futureX = position.x
+        local futureY = position.y
+
+        local nextX, nextY = world:move(entity, futureX, futureY, spiderFilter)
+
+        position.x, position.y = util.setDirection(nextX, nextY, velocity.speed,
                                                    entity.target, dt)
 
     end

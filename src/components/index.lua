@@ -7,6 +7,7 @@ require("components.Scale")
 
 require("components.Energy")
 require("components.Health")
+require("components.Attack")
 require("components.Food")
 require("components.Static")
 require("components.Physics")
