@@ -4,6 +4,7 @@ function DeadAnt:initialize(deadAntConfig)
     Entity.initialize(self)
 
     self.dead = true
+    self.carryThreshold = 1
     self.type = deadAntConfig.type
     self.angle = deadAntConfig.angle
     self:add(Components.Food(1))

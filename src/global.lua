@@ -9,16 +9,16 @@ sti = require("libs/sti")
 anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
-lovetoys = require("libs.lovetoys")
+local lovetoys = require("libs.lovetoys")
 lovetoys.initialize({globals = true})
 
 -- collision
 local bump = require("libs.bump")
-world = bump.newWorld(64)
+world = bump.newWorld(16)
 
 -- create instance for Camera
-GlobalWidth = 3000
-GlobalHeight = 3000
+GlobalWidth = 4000
+GlobalHeight = 2500
 local gamera = require('libs.gamera')
 Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
@@ -37,6 +37,3 @@ Player = require("entities/Player")
 
 -- ECS engine 
 engine = Engine()
-
--- cells
-CellStore = {}

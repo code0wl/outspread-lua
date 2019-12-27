@@ -6,8 +6,7 @@ function Ant:initialize(antConfig)
 
     self.TimePassedAnt = 0
     self.type = antConfig.type
-    self.hasFood = nil
-    self.scentLocation = nil
+    self.food = nil
 
     -- Delta for nest location
     self.nest = Components.Position(antConfig.x, antConfig.y)
@@ -22,8 +21,7 @@ end
 
 function Ant:carry(actor)
     -- Carry ther ant
-    actor.target = self:get('position')
-    self.hasFood = true
+    self.food = actor
 end
 
 return Ant

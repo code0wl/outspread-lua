@@ -35,10 +35,6 @@ function love.draw()
 
         Lg.draw(bg_image, QuadBQ, 0, 0)
 
-        for _, size in ipairs(CellStore) do
-            Lg.rectangle('line', size.x, size.y, size.width, size.height)
-        end
-
         -- Draw player phermones
         for _, phermone in ipairs(Player.phermones) do
             Lg.setColor(255, 153, 153)

@@ -6,8 +6,7 @@ function AntMoveSystem:requires() return {"ant"} end
 local antFilter = function(item, other)
     local itemAlive = not item.dead
     local otherAlive = not other.dead
-    local itemDead = item.dead
-    local otherDead = item.dead
+    local otherDead = other.dead
 
     if itemAlive and otherAlive then
         --  Handle all actions if ant is alive
@@ -18,9 +17,9 @@ local antFilter = function(item, other)
         end
     end
 
-    if itemAlive and other.dead then
+    if itemAlive and otherDead then
         item:carry(other)
-        return 'slide'
+        return nil
     end
 
 end
@@ -32,18 +31,22 @@ function AntMoveSystem:update(dt)
 
         entity.TimePassedAnt = entity.TimePassedAnt + 1 * dt
 
-        if entity.hasFood then entity.target = entity.nest end
-
-        -- Walk randomnly
-        if entity.TimePassedAnt > math.random(2, 4) then
-            entity.TimePassedAnt = 0
-            entity.target = Components.Position(util.travelRandomly())
+        -- Is carrying food
+        if entity.food then
+            entity.food:get('position').x, entity.food:get('position').y = position.x, position.y
+            entity.target = entity.nest
         end
 
         -- Deliver food to nest
         if util.distanceBetween(position.x, position.y, entity.target.x,
                                 entity.target.y) < 40 then
-            entity.hasFood = false
+            entity.food = nil
+        end
+
+        -- Walk randomnly
+        if not entity.food and entity.TimePassedAnt > math.random(2, 4) then
+            entity.TimePassedAnt = 0
+            entity.target = Components.Position(util.travelRandomly())
         end
 
         -- if out of bounds 
