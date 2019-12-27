@@ -12,12 +12,6 @@ RedWalkAnimationGrid = anim8.newGrid(16, 27, RedWalk:getWidth(),
 RedWalkAnimation = anim8.newAnimation(RedWalkAnimationGrid('1-5', 1, '1-5', 2,
                                                            '1-5', 3), 0.04)
 
-DeadAntBlack = Lg.newImage("images/ants/spritesheets/ant1/_ant_dead-small.png")
-
-DeadAntRed = Lg.newImage("images/ants/spritesheets/ant2/_ant_dead-small.png")
-
 WalkingTarantula = Lg.newImage(
                        "images/spiders/spider1/spritesheets/sheet_spider_walk-small.png")
 
-DeadTarantulaSpider = Lg.newImage(
-                          "images/spiders/spider1/spritesheets/sheet_spider_die-small.png")

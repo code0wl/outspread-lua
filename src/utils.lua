@@ -1,17 +1,5 @@
 local util = {}
 
-function util.dropFoodOnMap(type, x, y, width, height, actor)
-    local deadActor = actor:new({
-        type = type,
-        x = x,
-        y = y,
-        width = width,
-        height = height
-    })
-
-    engine:addEntity(deadActor)
-end
-
 function util.getCenter(value) return value / 2 end
 
 function util.getAngle(y1, y2, x1, x2) return math.atan2(y1 - y2, x1 - x2) end

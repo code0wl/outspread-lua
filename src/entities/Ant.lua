@@ -6,7 +6,7 @@ function Ant:initialize(antConfig)
 
     self.TimePassedAnt = 0
     self.type = antConfig.type
-    self.food = nil
+    self.hasFood = false
 
     -- Delta for nest location
     local nestPosition = antConfig.nest:get('position')
@@ -15,15 +15,19 @@ function Ant:initialize(antConfig)
 
     self:add(Components.Position(nestPosition.x, nestPosition.y))
     self:add(Components.Scale(.4))
+    self:add(Components.Food(10))
     self:add(Components.Animation(true))
     self:add(Components.Ant(true))
 
 end
 
 function Ant:carry(actor)
-    -- Carry other ant
-    self.food = actor
+    actor:get('food').amount = actor:get('food').amount - 1
+    self.hasFood = true
+end
 
+function Ant:collectFood(animal)
+    self:get("food").amount = self:get("food").amount - animal.carryCapacity
 end
 
 return Ant

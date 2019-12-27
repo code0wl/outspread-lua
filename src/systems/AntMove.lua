@@ -12,7 +12,6 @@ local antFilter = function(item, other)
     if itemAlive and otherAlive then
         if item.type ~= other.type then
             item:attack(other)
-            other:attack(item)
             return 'bounce'
         end
     end
@@ -20,10 +19,6 @@ local antFilter = function(item, other)
     --  handle dead vars
     if itemAlive and otherDead then
         item:carry(other)
-        engine:removeEntity(other)
-
-
-        world:remove(other)
         return nil
     end
 
@@ -38,15 +33,14 @@ function AntMoveSystem:update(dt)
         entity.TimePassedAnt = entity.TimePassedAnt + 1 * dt
 
         -- Is carrying food
-        if entity.food then
-            entity.food:get('position').x, entity.food:get('position').y = position.x, position.y
-            entity.target = nestPosition
+        if entity.hasFood then entity.target = nestPosition end
 
         -- Deliver food to nest
-        elseif entity.food and util.distanceBetween(position.x, position.y, nestPosition.x, nestPosition.y) < 10 then
-            entity.nest:receiveFood(entity.food:get('food').amount)
-            entity.food.amount = nil
-            entity.food = nil
+        if entity.food and
+            util.distanceBetween(position.x, position.y, nestPosition.x,
+                                 nestPosition.y) < 50 then
+            entity.nest:receiveFood(entity.carryCapacity)
+            entity.hasFood = false
         end
 
         -- Walk randomnly
