@@ -13,12 +13,20 @@ local antFilter = function(item, other)
         if item.type ~= other.type then
             item:attack(other)
             return 'bounce'
+        else
+            if item.scentlocation and not other.scentlocation then
+                other.scentlocation = item.scentlocation
+            end
+            return nil
         end
+
     end
 
     --  handle dead vars
     if itemAlive and otherDead then
         item:carry(other)
+        item.scentlocation = other:get("position")
+        item.hasFood = true
         return nil
     end
 
@@ -44,8 +52,13 @@ function AntMoveSystem:update(dt)
                 entity.hasFood = false
             end
 
-            -- Walk randomnly
-            if not entity.food and entity.TimePassedAnt > math.random(2, 4) then
+            if entity.scentlocation and not entity.hasFood then
+                entity.target = entity.scentlocation
+            end
+
+            -- Search for food
+            if not entity.scentlocation and not entity.hasFood and
+                entity.TimePassedAnt > math.random(2, 4) then
                 entity.TimePassedAnt = 0
                 entity.target = Components.Position(util.travelRandomly())
             end
