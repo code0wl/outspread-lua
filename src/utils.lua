@@ -25,11 +25,11 @@ function util.isOutOfBounds(x, y)
 end
 
 function util.setDirection(actorX, actorY, velocity, target, dt)
-    local speed = velocity * dt
-    return
-        (actorX + math.cos(util.getAngle(target.y, actorX, target.x, actorX)) *
-            speed), (actorY +
-            math.sin(util.getAngle(target.y, actorY, target.x, actorX)) * speed)
+    local angle = util.getAngle(target.y, actorY, target.x, actorX)
+    local cos = math.cos(angle)
+    local sin = math.sin(angle)
+
+    return actorX + velocity * cos * dt, actorY + velocity * sin * dt
 end
 
 return util
