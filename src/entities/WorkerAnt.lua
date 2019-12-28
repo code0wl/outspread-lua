@@ -10,11 +10,12 @@ function WorkerAnt:initialize(antConfig)
     self:add(Components.Scale(.4))
     self:add(Components.Velocity(100))
     self:add(Components.Energy(10, 5))
+    self:add(Components.Food(10))
     self:add(Components.Attack(1))
     self:add(Components.Health(10))
 
     local nestPosition = antConfig.nest:get('position')
-    world:add(self, nestPosition.x, nestPosition.y, 16, 27)
+    world:add(self, nestPosition.x, nestPosition.y, 5, 5)
 
     -- Make a util
     if self.type == 1 then

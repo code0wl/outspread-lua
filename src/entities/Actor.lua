@@ -3,7 +3,7 @@ local Actor = class('Actor', Entity)
 function Actor:initialize()
     Entity.initialize(self)
     self.scentLocation = nil
-    self.dead = false
+    self.isAlive = true
     self.maxHealth = self.health or 100
 end
 

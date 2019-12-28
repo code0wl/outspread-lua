@@ -8,9 +8,9 @@ function HealthSystem:update()
         local health = entity:get("health")
         local food = entity:get("food")
 
-        if health.amount < 1 then entity.dead = true end
+        if health.amount < 1 then entity.isAlive = false end
 
-        if food.amount < 0 then
+        if food.amount < 1 then
             engine:removeEntity(entity)
             world:remove(entity)
         end
