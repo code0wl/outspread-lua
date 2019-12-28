@@ -15,7 +15,10 @@
         "engine",
         "Component",
         "bump",
-        "world"
+        "world",
+        "UIControl",
+        "UI_DRAW",
+        "suit"
     ],
     "files.exclude": {
         "**/.git": true,
