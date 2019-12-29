@@ -15,7 +15,7 @@ function ScoutAnt:initialize(antConfig)
     self:add(Components.Health(1))
 
     local nestPosition = antConfig.nest:get('position')
-    world:add(self, nestPosition.x, nestPosition.y, 10, 10)
+    world:add(self, nestPosition.x, nestPosition.y, 2, 2)
 
     -- Make a util
     if self.type == 1 then

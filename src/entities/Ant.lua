@@ -4,18 +4,16 @@ local Ant = class('Ant', Actor)
 function Ant:initialize(antConfig)
     Actor.initialize(self)
 
+    self:add(Components.Ant(true))
     self.TimePassedAnt = 0
     self.type = antConfig.type
     self.hasFood = false
+    self.nest = antConfig.nest
 
     -- Delta for nest location
-    local nestPosition = antConfig.nest:get('position')
-    self.nest = antConfig.nest
-    self.target = Components.Position(nestPosition.x, nestPosition.y)
-
-    self:add(Components.Position(nestPosition.x, nestPosition.y))
-    self:add(Components.Ant(true))
-
+    self.nestPosition = antConfig.nest:get('position')
+    self.target = self.nestPosition
+    self:add(Components.Position(self.nestPosition.x, self.nestPosition.y))
 end
 
 function Ant:carry(actor)
