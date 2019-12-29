@@ -20,7 +20,7 @@ local antFilter = function(item, other)
     end
 
     --  handle dead vars
-    if itemAlive and otherDead then
+    if itemAlive and item.carryCapacity and otherDead then
         item:carry(other)
         item.scentlocation = other
         item.hasFood = true

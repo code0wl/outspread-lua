@@ -34,6 +34,16 @@ function Nest:update()
         engine:addEntity(SoldierAnt:new({type = self.type, nest = self}))
     end
 
+    for i = 0, self.ants.scouts do
+        self.ants.scouts = self.ants.scouts - 1
+        engine:addEntity(ScoutAnt:new({type = self.type, nest = self}))
+    end
+
+    for i = 0, self.ants.workers do
+        self.ants.workers = self.ants.workers - 1
+        engine:addEntity(ScoutAnt:new({type = self.type, nest = self}))
+    end
+
 end
 
 return Nest

@@ -8,7 +8,7 @@ function ScoutAnt:initialize(antConfig)
     self.carryCapacity = 0
     self:add(Components.Dimension(8, 14))
     self:add(Components.Scale(.2))
-    self:add(Components.Velocity(80))
+    self:add(Components.Velocity(280))
     self:add(Components.Energy(10, 5))
     self:add(Components.Food(1))
     self:add(Components.Attack(0))

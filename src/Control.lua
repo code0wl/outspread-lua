@@ -45,7 +45,7 @@ function Control.update(dt)
     suit.layout:row(100, 30)
 
     if suit.Button("Worker", suit.layout:row()).hit then
-        playerColony.nest.ants.workers = playerColony.ants.workers + 1
+        playerColony.nest.ants.workers = playerColony.nest.ants.workers + 1
     end
 
     suit.layout:reset(140, windowHeight - 80)
@@ -61,7 +61,7 @@ function Control.update(dt)
     suit.layout:row(100, 30)
 
     if suit.Button("Scout", suit.layout:row()).hit then
-        print('creating scount')
+        playerColony.nest.ants.scouts = playerColony.nest.ants.scouts + 1
     end
 
 end
