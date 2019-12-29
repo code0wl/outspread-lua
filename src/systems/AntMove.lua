@@ -13,10 +13,8 @@ local antFilter = function(item, other)
         if item.type ~= other.type then
             item:attack(other)
             return 'bounce'
-        else
-            if item.scentlocation and not other.scentlocation then
-                other.scentlocation = item.scentlocation
-            end
+        elseif item.scentlocation and not other.scentlocation then
+            other.scentlocation = item.scentlocation
             return nil
         end
 
@@ -25,7 +23,7 @@ local antFilter = function(item, other)
     --  handle dead vars
     if itemAlive and otherDead then
         item:carry(other)
-        item.scentlocation = other:get("position")
+        item.scentlocation = other
         item.hasFood = true
         return nil
     end
@@ -47,13 +45,14 @@ function AntMoveSystem:update(dt)
             -- Deliver food to nest
             if entity.hasFood and
                 util.distanceBetween(position.x, position.y, nestPosition.x,
-                                     nestPosition.y) < 50 then
+                                     nestPosition.y) <
+                entity.nest:get("dimension").width then
                 entity.nest:receiveFood(entity.carryCapacity)
                 entity.hasFood = false
             end
 
             if entity.scentlocation and not entity.hasFood then
-                entity.target = entity.scentlocation
+                entity.target = entity.scentlocation:get("position")
             end
 
             -- Search for food
@@ -61,6 +60,12 @@ function AntMoveSystem:update(dt)
                 entity.TimePassedAnt > math.random(2, 4) then
                 entity.TimePassedAnt = 0
                 entity.target = Components.Position(util.travelRandomly())
+            end
+
+            -- Scent is gone after there is no more food
+            if entity.scentlocation and entity.scentlocation:get("food").amount <
+                1 and not entity.hasFood then
+                entity.scentlocation = nil
             end
 
             -- if out of bounds 
