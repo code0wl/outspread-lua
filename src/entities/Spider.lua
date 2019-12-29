@@ -6,6 +6,7 @@ local Spider = class('Spider', Actor)
 function Spider:initialize(spiderConfig)
     Actor.initialize(self)
 
+    self.type = 3
     self.carryThreshold = 30
     self:add(Components.Position(spiderConfig.x, spiderConfig.y))
     self:add(Components.Spider(true))

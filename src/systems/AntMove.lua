@@ -17,7 +17,6 @@ local antFilter = function(item, other)
             other.scentlocation = item.scentlocation
             return nil
         end
-
     end
 
     --  handle dead vars

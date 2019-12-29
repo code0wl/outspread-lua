@@ -2,7 +2,6 @@ require("Global")
 require("Mouse")
 require("Debug")
 require("PrepareImages")
-local input = {text = ""}
 
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")

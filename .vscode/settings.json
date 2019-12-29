@@ -18,7 +18,8 @@
         "world",
         "UIControl",
         "UI_DRAW",
-        "suit"
+        "suit",
+        "playerColony"
     ],
     "files.exclude": {
         "**/.git": true,

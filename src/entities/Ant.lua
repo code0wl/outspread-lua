@@ -14,7 +14,6 @@ function Ant:initialize(antConfig)
     self.target = Components.Position(nestPosition.x, nestPosition.y)
 
     self:add(Components.Position(nestPosition.x, nestPosition.y))
-    self:add(Components.Scale(.4))
     self:add(Components.Ant(true))
 
 end

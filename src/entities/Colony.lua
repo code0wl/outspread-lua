@@ -6,12 +6,14 @@ function Colony:initialize(colonyConfig)
     self.type = colonyConfig.type
     self.population = colonyConfig.population
 
-    engine:addEntity(Nest:new({
+    self.nest = Nest:new({
         type = self.type,
         x = colonyConfig.x,
         y = colonyConfig.y,
         population = colonyConfig.population
-    }))
+    })
+
+    engine:addEntity(self.nest)
 
 end
 

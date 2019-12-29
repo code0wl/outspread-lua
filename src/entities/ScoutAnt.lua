@@ -1,18 +1,18 @@
 local Ant = require('entities.Ant')
 
-local SoldierAnt = class('SoldierAnt', Ant)
+local ScoutAnt = class('ScoutAnt', Ant)
 
-function SoldierAnt:initialize(antConfig)
+function ScoutAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
 
-    self.carryCapacity = 2
-    self:add(Components.Dimension(16, 27))
-    self:add(Components.Scale(.6))
-    self:add(Components.Velocity(70))
+    self.carryCapacity = 0
+    self:add(Components.Dimension(8, 14))
+    self:add(Components.Scale(.2))
+    self:add(Components.Velocity(80))
     self:add(Components.Energy(10, 5))
-    self:add(Components.Food(20))
-    self:add(Components.Attack(10))
-    self:add(Components.Health(50))
+    self:add(Components.Food(1))
+    self:add(Components.Attack(0))
+    self:add(Components.Health(1))
 
     local nestPosition = antConfig.nest:get('position')
     world:add(self, nestPosition.x, nestPosition.y, 10, 10)
@@ -30,4 +30,4 @@ function SoldierAnt:initialize(antConfig)
 
 end
 
-return SoldierAnt
+return ScoutAnt

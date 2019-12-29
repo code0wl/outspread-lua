@@ -28,7 +28,6 @@ function util.setDirection(actorX, actorY, velocity, target, dt)
     local angle = util.getAngle(target.y, actorY, target.x, actorX)
     local cos = math.cos(angle)
     local sin = math.sin(angle)
-
     return actorX + velocity * cos * dt, actorY + velocity * sin * dt
 end
 
