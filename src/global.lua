@@ -5,7 +5,7 @@ Lm = love.mouse
 Lk = love.keyboard
 
 -- helper libs
-suit = require("libs/suit")
+suit = require("libs/_suit")
 sti = require("libs/sti")
 anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
