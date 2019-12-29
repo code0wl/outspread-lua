@@ -10,7 +10,7 @@ sti = require("libs/sti")
 anim8 = require('libs/anim8')
 inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
-local lovetoys = require("libs.lovetoys")
+local lovetoys = require("libs._lovetoys")
 lovetoys.initialize({globals = true})
 
 -- collision
