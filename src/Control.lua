@@ -64,6 +64,18 @@ function Control.update(dt)
         playerColony.nest.ants.scouts = playerColony.nest.ants.scouts + 1
     end
 
+    suit.layout:reset(380, windowHeight - 80)
+
+    suit.layout:row(100, 30)
+
+    if suit.Button("World", suit.layout:row()).hit then GameState = 2 end
+
+    suit.layout:reset(500, windowHeight - 80)
+
+    suit.layout:row(100, 30)
+
+    if suit.Button("Level", suit.layout:row()).hit then GameState = 1 end
+
 end
 
 return Control

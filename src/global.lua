@@ -13,6 +13,14 @@ class = require("libs.middleclass")
 local lovetoys = require("libs._lovetoys")
 lovetoys.initialize({globals = true})
 
+-- Game state management
+-- 1 detailed game
+-- 2 world view
+-- 3 main menu
+-- 4 options menu
+-- 5 options settings
+GameState = 1
+
 -- collision
 local bump = require("libs.bump")
 world = bump.newWorld(16)
