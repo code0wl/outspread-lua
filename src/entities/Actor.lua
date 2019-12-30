@@ -4,7 +4,6 @@ function Actor:initialize()
     Entity.initialize(self)
     self.scentLocation = nil
     self.isAlive = true
-    self:add(Components.Animation(true))
 end
 
 function Actor:attack(animal)

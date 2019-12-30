@@ -22,7 +22,7 @@ end
 
 function love.update(dt)
     engine:update(dt)
-    Player:update()
+    -- Player:update()
     Control.update(dt)
 end
 
@@ -31,26 +31,21 @@ function love.draw()
     local currentX, currentY = Cam:getPosition()
 
     -- Camera
-    if GameState == 1 then
-        Cam:draw(function(l, t, w, h)
+    Cam:draw(function(l, t, w, h)
 
-            Lg.draw(bg_image, QuadBQ, 0, 0)
+        Lg.draw(bg_image, QuadBQ, 0, 0)
 
-            -- Draw player phermones
-            for _, phermone in ipairs(Player.phermones) do
-                Lg.setColor(255, 153, 153)
-                Lg.circle('fill', phermone.x, phermone.y, 5)
-            end
+        -- Draw player phermones
+        for _, phermone in ipairs(Player.phermones) do
+            Lg.setColor(255, 153, 153)
+            Lg.circle('fill', phermone.x, phermone.y, 5)
+        end
 
-            engine:draw()
+        engine:draw()
 
-            UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
+        UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
 
-        end)
-
-    end
-
-    if GameState == 2 then print('some shit') end
+    end)
 
     suit.draw()
 

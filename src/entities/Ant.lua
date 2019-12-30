@@ -5,6 +5,7 @@ function Ant:initialize(antConfig)
     Actor.initialize(self)
 
     self:add(Components.Ant(true))
+    self:add(Components.Animation(true))
     self.TimePassedAnt = 0
     self.type = antConfig.type
     self.hasFood = false
