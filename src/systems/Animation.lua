@@ -1,7 +1,7 @@
 -- move System
 local AnimationSystem = class("AnimationSystem", System)
 
-function AnimationSystem:requires() return {"animation"} end
+function AnimationSystem:requires() return {"animation", "health"} end
 
 function AnimationSystem:update(dt)
     for _, entity in pairs(self.targets) do

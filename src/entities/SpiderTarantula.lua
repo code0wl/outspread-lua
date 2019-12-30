@@ -5,7 +5,7 @@ function SpiderTarantula:initialize(spiderConfig)
     Spider.initialize(self, spiderConfig)
 
     self:add(Components.Dimension(180, 150))
-    self:add(Components.Health(100))
+    self:add(Components.Health(200))
     self:add(Components.Velocity(80))
     self:add(Components.Energy(10, 50))
     self:add(Components.Attack(100))

@@ -6,11 +6,11 @@ local asset = {}
 function asset.generateWorldAssets()
 
     for _, obj in pairs(level1.layers["player_nest"].objects) do
-        playerColony = Colony:new({
+        PlayerColony = Colony:new({
             type = 1,
             x = obj.x,
             y = obj.y,
-            population = 1500,
+            population = 10,
             width = obj.width,
             height = obj.height
         })
@@ -21,7 +21,7 @@ function asset.generateWorldAssets()
             type = 2,
             x = obj.x,
             y = obj.y,
-            population = 1500,
+            population = 10,
             width = obj.width,
             height = obj.height
         })

@@ -45,7 +45,7 @@ function Control.update(dt)
     suit.layout:row(100, 30)
 
     if suit.Button("Worker", suit.layout:row()).hit then
-        playerColony.nest.ants.workers = playerColony.nest.ants.workers + 1
+        PlayerColony.nest.ants.workers = PlayerColony.nest.ants.workers + 1
     end
 
     suit.layout:reset(140, windowHeight - 80)
@@ -53,7 +53,7 @@ function Control.update(dt)
     suit.layout:row(100, 30)
 
     if suit.Button("Soldier", suit.layout:row()).hit then
-        playerColony.nest.ants.soldiers = playerColony.nest.ants.soldiers + 1
+        PlayerColony.nest.ants.soldiers = PlayerColony.nest.ants.soldiers + 1
     end
 
     suit.layout:reset(260, windowHeight - 80)
@@ -61,7 +61,7 @@ function Control.update(dt)
     suit.layout:row(100, 30)
 
     if suit.Button("Scout", suit.layout:row()).hit then
-        playerColony.nest.ants.scouts = playerColony.nest.ants.scouts + 1
+        PlayerColony.nest.ants.scouts = PlayerColony.nest.ants.scouts + 1
     end
 
     suit.layout:reset(380, windowHeight - 80)

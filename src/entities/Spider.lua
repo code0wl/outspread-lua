@@ -12,8 +12,7 @@ function Spider:initialize(spiderConfig)
     self:add(Components.Spider(true))
     self:add(Components.Animation(true))
     self:add(Components.Stats(true))
-
-    self.target = Components.Position(0, 0)
+    self.target = Components.Position(500, 500)
 
     -- Create timer component
     self.TimePassedSpider = 0

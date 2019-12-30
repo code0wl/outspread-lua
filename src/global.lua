@@ -43,7 +43,7 @@ FoodSprites = {food = Lg.newImage("images/food/food.png")}
 
 -- Player class
 Player = require("entities/Player")
-playerColony = nil
+PlayerColony = nil
 
 -- ECS engine 
 engine = Engine()
