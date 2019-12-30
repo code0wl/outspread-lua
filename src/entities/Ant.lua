@@ -5,11 +5,14 @@ function Ant:initialize(antConfig)
     Actor.initialize(self)
 
     self:add(Components.Ant(true))
-    self:add(Components.Animation(true))
     self.TimePassedAnt = 0
     self.type = antConfig.type
     self.hasFood = false
     self.nest = antConfig.nest
+
+    if antConfig.type == 1 then 
+        self:add(Components.Player(true))
+    end
 
     -- Delta for nest location
     self.nestPosition = antConfig.nest:get('position')
