@@ -5,13 +5,26 @@ function Ant:initialize(antConfig)
     Actor.initialize(self)
 
     self:add(Components.Ant(true))
+    self:add(Components.Animation(true))
     self.TimePassedAnt = 0
     self.type = antConfig.type
     self.hasFood = false
     self.nest = antConfig.nest
 
-    if antConfig.type == 1 then 
+    if self.type == 1 then
+        self.image = BlackWalk
+        local grid =  anim8.newGrid(16, 27, BlackWalk:getWidth(),
+        BlackWalk:getHeight() + 1)
         self:add(Components.Player(true))
+        self.animation = anim8.newAnimation(grid('1-5', 1, '1-5',
+        2, '1-5', 3),
+0.04)
+    else
+        self.image = RedWalk
+        local grid =  anim8.newGrid(16, 27, RedWalk:getWidth(),
+        RedWalk:getHeight() + 1)
+        self.animation = anim8.newAnimation(grid('1-5', 1, '1-5', 2,
+        '1-5', 3), 0.04)
     end
 
     -- Delta for nest location

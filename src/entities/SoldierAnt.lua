@@ -17,18 +17,7 @@ function SoldierAnt:initialize(antConfig)
     local nestPosition = antConfig.nest:get('position')
     world:add(self, nestPosition.x, nestPosition.y, 10, 10)
 
-    -- Make a util
-    if self.type == 1 then
-        self.image = BlackWalk
-        self.grid = BlackWalkAnimationGrid
-        self.animation = BlackWalkAnimation
-        self:add(Components.SoldierAnt(true))
-    else
-        self.image = RedWalk
-        self.grid = RedWalkAnimationGrid
-        self.animation = RedWalkAnimation
-    end
-
+    if antConfig.type == 1 then self:add(Components.SoldierAnt(true)) end
 end
 
 return SoldierAnt

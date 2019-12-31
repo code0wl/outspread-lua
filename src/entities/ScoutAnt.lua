@@ -17,18 +17,7 @@ function ScoutAnt:initialize(antConfig)
     local nestPosition = antConfig.nest:get('position')
     world:add(self, nestPosition.x, nestPosition.y, 2, 2)
 
-    -- Make a util
-    if self.type == 1 then
-        self.image = BlackWalk
-        self.grid = BlackWalkAnimationGrid
-        self:add(Components.ScoutAnt(true))
-        self.animation = BlackWalkAnimation
-    else
-        self.image = RedWalk
-        self.grid = RedWalkAnimationGrid
-        self.animation = RedWalkAnimation
-    end
-
+    if antConfig.type == 1 then self:add(Components.ScoutAnt(true)) end
 end
 
 return ScoutAnt

@@ -14,20 +14,10 @@ function WorkerAnt:initialize(antConfig)
     self:add(Components.Attack(1))
     self:add(Components.Health(10))
 
-    -- Make a util
-    if self.type == 1 then
-        self.image = BlackWalk
-        self.grid = BlackWalkAnimationGrid
-        self.animation = BlackWalkAnimation
-        self:add(Components.WorketAnt(true))
-    else
-        self.image = RedWalk
-        self.grid = RedWalkAnimationGrid
-        self.animation = RedWalkAnimation
-    end
-
     local nestPosition = antConfig.nest:get('position')
     world:add(self, nestPosition.x, nestPosition.y, 5, 5)
+
+    if antConfig.type == 1 then self:add(Components.WorketAnt(true)) end
 
 end
 
