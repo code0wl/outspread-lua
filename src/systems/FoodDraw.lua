@@ -10,12 +10,12 @@ function FoodDrawSystem:draw()
 
         if entity.hasFood then
             if type == 2 then
-                love.graphics.setColor(0, 0, 0)
+                Lg.setColor(0, 0, 0)
             else
-                love.graphics.setColor(1, 0, 0)
+                Lg.setColor(1, 0, 0)
             end
             Lg.circle('fill', position.x, position.y, 4, 4)
-            love.graphics.setColor(255, 255, 255)
+            Lg.setColor(255, 255, 255)
         end
     end
 end

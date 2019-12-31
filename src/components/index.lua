@@ -17,6 +17,10 @@ require("components.Spider")
 require("components.Ant")
 require("components.Player")
 
+require("components.SoldietAnt")
+require("components.Worker")
+require("components.ScoutAnt")
+
 require("components.Animation")
 require("components.Stats")
 require("components.Scale")

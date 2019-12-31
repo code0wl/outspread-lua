@@ -19,6 +19,7 @@ function WorkerAnt:initialize(antConfig)
         self.image = BlackWalk
         self.grid = BlackWalkAnimationGrid
         self.animation = BlackWalkAnimation
+        self:add(Components.WorketAnt(true))
     else
         self.image = RedWalk
         self.grid = RedWalkAnimationGrid

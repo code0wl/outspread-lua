@@ -1,6 +1,6 @@
 require("Global")
 require("Mouse")
-require("Debug")
+require("HUD")
 require("PrepareImages")
 
 local asset = require("Assets")
@@ -22,7 +22,7 @@ end
 
 function love.update(dt)
     engine:update(dt)
-    -- Player:update()
+    Player:update()
     Control.update(dt)
 end
 
@@ -49,7 +49,7 @@ function love.draw()
 
     suit.draw()
 
-    PrintDetailsToScreen()
+    Hud()
 
 end
 

@@ -22,6 +22,7 @@ function SoldierAnt:initialize(antConfig)
         self.image = BlackWalk
         self.grid = BlackWalkAnimationGrid
         self.animation = BlackWalkAnimation
+        self:add(Components.SoldierAnt(true))
     else
         self.image = RedWalk
         self.grid = RedWalkAnimationGrid

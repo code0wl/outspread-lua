@@ -47,3 +47,8 @@ PlayerColony = nil
 
 -- ECS engine 
 engine = Engine()
+
+-- costs balance
+WorkerPrice = 10
+SoldierPrice = 100
+ScoutPrice = 5

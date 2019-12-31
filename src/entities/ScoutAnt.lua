@@ -21,6 +21,7 @@ function ScoutAnt:initialize(antConfig)
     if self.type == 1 then
         self.image = BlackWalk
         self.grid = BlackWalkAnimationGrid
+        self:add(Components.ScoutAnt(true))
         self.animation = BlackWalkAnimation
     else
         self.image = RedWalk
