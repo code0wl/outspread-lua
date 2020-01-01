@@ -9,7 +9,8 @@ function SpiderTarantula:initialize(spiderConfig)
     self:add(Components.Velocity(80))
     self:add(Components.Energy(10, 50))
     self:add(Components.Attack(100))
-    self:add(Components.Scale(1))
+    self:add(Components.Scale(1.2))
+
     self.image = WalkingTarantula
 
     local grid = anim8.newGrid(150, 180, self.image:getWidth(),

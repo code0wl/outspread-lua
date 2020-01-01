@@ -6,6 +6,7 @@ function ScoutAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
 
     self.carryCapacity = 0
+
     self:add(Components.Dimension(8, 14))
     self:add(Components.Scale(.2))
     self:add(Components.Velocity(280))

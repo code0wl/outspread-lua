@@ -1,9 +1,10 @@
 -- move System
 local SpiderMoveSystem = class("SpiderMoveSystem", System)
 
-function SpiderMoveSystem:requires() return {"spider"} end
+function SpiderMoveSystem:requires() return {"spider", "energy"} end
 
-local spiderFilter = function(item, other) return 'bounce' end
+local spiderFilter =
+    function(item, other) return item.attack(other) 'bounce' end
 
 function SpiderMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
@@ -14,11 +15,16 @@ function SpiderMoveSystem:update(dt)
 
             entity.TimePassedSpider = entity.TimePassedSpider + 1 * dt
 
+            print('target', entity.target.x)
+
             if entity.TimePassedSpider > math.random(3, 6) then
                 energy.amount = energy.amount - .5
                 entity.TimePassedSpider = 0
                 entity.target = Components.Position(util.travelRandomly())
             end
+
+            entity.angle = util.getAngle(entity.target.y, position.y,
+                                         entity.target.x, position.x)
 
             local futureX = position.x
             local futureY = position.y
