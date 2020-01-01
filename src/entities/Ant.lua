@@ -2,10 +2,10 @@ local Actor = require('entities.Actor')
 local Ant = class('Ant', Actor)
 
 local function createAnt(image) 
-    local grid = anim8.newGrid(26 , 16, image:getWidth() + 1,
+    local grid = anim8.newGrid(26 , 16, image:getWidth() ,
     image:getHeight())
     return anim8.newAnimation(grid('1-3', 1, '1-3',
-        2, '1-3', 3, '1-3', 4, '1-3', 5),
+        2),
 0.04)
 end
 
