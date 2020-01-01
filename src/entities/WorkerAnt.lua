@@ -11,7 +11,7 @@ function WorkerAnt:initialize(antConfig)
     self:add(Components.Velocity(100))
     self:add(Components.Energy(10, 5))
     self:add(Components.Food(5))
-    self:add(Components.Attack(1))
+    self:add(Components.Attack(2))
     self:add(Components.Health(10))
 
     local nestPosition = antConfig.nest:get('position')

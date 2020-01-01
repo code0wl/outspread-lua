@@ -72,9 +72,6 @@ function AntMoveSystem:update(dt)
                 entity.target = nestPosition
             end
 
-            entity.angle = util.getAngle(entity.target.y, position.y,
-                                         entity.target.x, position.x)
-
             local futureX = position.x
             local futureY = position.y
 

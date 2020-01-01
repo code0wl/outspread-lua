@@ -1,7 +1,7 @@
 -- Create a draw System.
 local DrawSystem = class("DrawSystem", System)
 
-function DrawSystem:requires() return {"position", "scale", "dimension"} end
+function DrawSystem:requires() return {"position", "dimension", "scale"} end
 
 function DrawSystem:draw()
     for _, entity in pairs(self.targets) do
@@ -12,14 +12,12 @@ function DrawSystem:draw()
         if entity.animation then
             entity.animation:draw(entity.image, position.x, position.y,
                                   util.getAngle(entity.target.y, position.y,
-                                                entity.target.x, position.x) -
-                                      1.6 + math.pi, scale.amount, scale.amount,
+                                                entity.target.x, position.x),
+                                  scale.amount, scale.amount,
                                   util.getCenter(dimension.width),
                                   util.getCenter(dimension.height))
-        elseif entity.image then
-            Lg.draw(entity.image, position.x, position.y, self.angle,
-                    scale.amount, scale.amount)
         else
+            --  refactor to draw other elements other than nest
             Lg.draw(TerrainSprites.terrain, entity.graphic, position.x,
                     position.y, nil, scale.amount, scale.amount)
         end

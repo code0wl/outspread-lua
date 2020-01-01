@@ -11,4 +11,8 @@ function Actor:attack(animal)
     self.scentLocation = animal:get('position')
 end
 
+function Actor:eat(animal) 
+    print('eating', animal)
+end
+
 return Actor
