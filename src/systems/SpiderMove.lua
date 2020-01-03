@@ -22,25 +22,29 @@ end
 
 function SpiderMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
-        local position = entity:get("position")
-        local velocity = entity:get("velocity")
+        if entity.isAlive then
+            local position = entity:get("position")
+            local velocity = entity:get("velocity")
 
-        entity.TimePassedSpider = entity.TimePassedSpider + 1 * dt
+            entity.TimePassedSpider = entity.TimePassedSpider + 1 * dt
 
-        -- Search for food
-        if entity.TimePassedSpider > math.random(6, 10) then
-            entity.TimePassedSpider = 0
-            entity.target = Components.Position(util.travelRandomly())
+            -- Search for food
+            if entity.TimePassedSpider > math.random(6, 10) then
+                entity.TimePassedSpider = 0
+                entity.target = Components.Position(util.travelRandomly())
+            end
+
+            local futureX = position.x
+            local futureY = position.y
+
+            local nextX, nextY = world:move(entity, futureX, futureY,
+                                            spiderFiler)
+
+            position.x, position.y = util.setDirection(nextX, nextY,
+                                                       velocity.speed,
+                                                       entity.target, dt)
+
         end
-
-        local futureX = position.x
-        local futureY = position.y
-
-        local nextX, nextY = world:move(entity, futureX, futureY, spiderFiler)
-
-        position.x, position.y = util.setDirection(nextX, nextY, velocity.speed,
-                                                   entity.target, dt)
-
     end
 end
 
