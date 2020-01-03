@@ -1,4 +1,5 @@
-local DrawSystem = require("systems.Draw")
+local AntDrawSystem = require("systems.AntDraw")
+local StaticDrawSystem = require("systems.StaticDraw")
 local FoodDrawSystem = require("systems.FoodDraw")
 local SpiderMoveSystem = require("systems.SpiderMove")
 local AntMoveSystem = require("systems.AntMove")
@@ -13,7 +14,7 @@ local SpiderTarantula = require("entities.SpiderTarantula")
 local OutSpreadEngine = {}
 
 function OutSpreadEngine.addSystems()
-    local spider = SpiderTarantula:new({x = 100, y = 100})
+    local spider = SpiderTarantula:new({x = 800, y = 800})
 
     -- Test for engine
     engine:addEntity(spider)
@@ -28,7 +29,8 @@ function OutSpreadEngine.addSystems()
 
     -- Draw systems
     engine:addSystem(FoodDrawSystem(), "draw")
-    engine:addSystem(DrawSystem(), "draw")
+    engine:addSystem(AntDrawSystem(), "draw")
+    engine:addSystem(StaticDrawSystem(), "draw")
     engine:addSystem(StatsSystem(), "draw")
 
 end
