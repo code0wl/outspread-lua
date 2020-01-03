@@ -19,7 +19,6 @@ QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
 function love.load()
     asset.generateWorldAssets()
     OutSpreadEngine.addSystems()
-    WorldMap:load()
 end
 
 function love.update(dt)
@@ -54,6 +53,8 @@ function love.draw()
     end
 
     if GameState == 2 then print('lets put a backgorund here') end
+
+    if GameState == 2 then WorldMap:draw() end
 
     suit.draw()
 
