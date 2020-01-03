@@ -1,7 +1,7 @@
 -- Create a draw System.
 local StaticDrawSystem = class("StaticDrawSystem", System)
 
-function StaticDrawSystem:requires() return {"nest"} end
+function StaticDrawSystem:requires() return {"nest", "food"} end
 
 function StaticDrawSystem:draw()
     for _, entity in pairs(self.targets) do

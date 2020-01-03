@@ -4,6 +4,10 @@ function util.getCenter(value) return value / 2 end
 
 function util.getAngle(y1, y2, x1, x2) return math.atan2(y1 - y2, x1 - x2) end
 
+function util.getAngleSpider(y1, y2, x1, x2)
+    return math.atan2(y1 - y2, x1 - x2) * math.pi
+end
+
 function util.distanceBetween(x1, y1, x2, y2)
     return math.sqrt((y2 - y1) ^ 2 + (x2 - x1) ^ 2)
 end

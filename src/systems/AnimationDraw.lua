@@ -1,9 +1,11 @@
 -- Create a draw System.
-local SpiderDrawSystem = class("SpiderDrawSystem", System)
+local AnimationDrawSystem = class("AnimationDrawSystem", System)
 
-function SpiderDrawSystem:requires() return {"ant"} end
+function AnimationDrawSystem:requires()
+    return {"position", "scale", "dimension", "animation"}
+end
 
-function SpiderDrawSystem:draw()
+function AnimationDrawSystem:draw()
     for _, entity in pairs(self.targets) do
         local position = entity:get("position")
         local dimension = entity:get("dimension")
@@ -20,4 +22,4 @@ function SpiderDrawSystem:draw()
 
 end
 
-return SpiderDrawSystem
+return AnimationDrawSystem
