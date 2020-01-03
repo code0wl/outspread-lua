@@ -12,7 +12,7 @@ function Actor:attack(animal)
 end
 
 function Actor:eat(animal) 
-    print('eating', animal)
+    self:get("health").amount = animal:get('health').amount + self:get('food').amount
 end
 
 return Actor
