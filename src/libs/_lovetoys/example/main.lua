@@ -1,9 +1,6 @@
 -- Importing lovetoys
 lovetoys = require("lib/lovetoys")
-lovetoys.initialize({
-    globals = true,
-    debug = true
-})
+lovetoys.initialize({globals = true, debug = true})
 
 -- Identifier components
 require("components/identifier/IsCircle")
@@ -43,22 +40,23 @@ ParticleUpdateSystem = require("systems/particle/ParticleUpdateSystem")
 TestSystem = require("systems/test/TestSystem")
 MultipleRequirementsSystem = require("systems/test/MultipleRequirementsSystem")
 
-
 -- Events
 require("events/KeyPressed")
 require("events/MousePressed")
 
-local DrawablePolygon, Timing, IsCircle, Position = Component.load({"DrawablePolygon", "Timing", "IsCircle", "Position"})
+local DrawablePolygon, Timing, IsCircle, Position =
+    Component.load({"DrawablePolygon", "Timing", "IsCircle", "Position"})
 
 function love.load()
 
     -- Creation of a new world
     love.physics.setMeter(64)
-    world = love.physics.newWorld(0, 9.81*80, true)
+    world = love.physics.newWorld(0, 9.81 * 80, true)
     -- Enabling the collision functions
-    world:setCallbacks(beginContact, endContact)
+    world:setCallbacks(beginContact)
 
-    love.window.setMode(1000, 600, {fullscreen=false, vsync=true, resizable=false})
+    love.window.setMode(1000, 600,
+                        {fullscreen = false, vsync = true, resizable = false})
 
     -- Loading particle image
     particle1 = love.graphics.newImage("gfx/particle1.png")
@@ -76,14 +74,14 @@ function love.load()
     mainkeysystem = MainKeySystem()
 
     -- The collisionmanager is beeing registered as a listener for the "BeginContact" event.
-    eventmanager:addListener("KeyPressed", mainkeysystem, mainkeysystem .fireEvent)
+    eventmanager:addListener("KeyPressed", mainkeysystem,
+                             mainkeysystem.fireEvent)
     eventmanager:addListener("KeyPressed", testsystem, testsystem.fireEvent)
 
     -- Logic (update) systems are beeing added to the engine
     engine:addSystem(TimerSystem())
     engine:addSystem(PhysicsPositionSyncSystem())
     engine:addSystem(ParticleUpdateSystem())
-
 
     -- Drawing systems are beeing added to the engine
     engine:addSystem(PolygonDrawSystem())
@@ -106,7 +104,6 @@ function love.load()
     end
 end
 
-
 function love.update(dt)
     -- Engine update function
     engine:update(dt)
@@ -119,7 +116,8 @@ function love.draw()
     love.graphics.print("Press 's' for spawning circles", 10, 30)
     love.graphics.print("Press 'd' for deleting all spawned circles", 10, 50)
     love.graphics.print("Press 'e' for stopping the CircleDrawSystem", 10, 70)
-    love.graphics.print("Press 'w' for starting the CircleDrawSystem again", 10, 90)
+    love.graphics.print("Press 'w' for starting the CircleDrawSystem again", 10,
+                        90)
     engine:draw()
 end
 
@@ -131,6 +129,5 @@ function love.mousepressed(x, y, button)
     eventmanager:fireEvent(MousePressed(x, y, button))
 end
 
---Collision function
-function beginContact(a, b, coll)
-end
+-- Collision function
+function beginContact(a, b, coll) end

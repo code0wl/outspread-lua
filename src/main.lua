@@ -3,6 +3,7 @@ require("Mouse")
 require("HUD")
 require("PrepareImages")
 
+local WorldMap = require("WorldMap")
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
@@ -18,6 +19,7 @@ QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
 function love.load()
     asset.generateWorldAssets()
     OutSpreadEngine.addSystems()
+    WorldMap:load()
 end
 
 function love.update(dt)
