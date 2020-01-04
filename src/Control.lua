@@ -48,10 +48,6 @@ local function renderHUD()
 
     suit.layout:reset(500, windowHeight - 80)
 
-    suit.layout:row(100, 30)
-
-    if suit.Button("Level", suit.layout:row()).hit then GameState = 1 end
-
 end
 
 function Control.update(dt)

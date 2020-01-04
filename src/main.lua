@@ -30,7 +30,10 @@ function love.update(dt)
         Player:update(dt)
     end
 
-    if GameState == 2 then Cam:setWorld(0, 0, 500, 500) end
+    if GameState == 2 then
+        Cam:setScale(1)
+        Cam:setWorld(0, 0, 500, 500)
+    end
 
     Control.update(dt)
 end
