@@ -36,25 +36,22 @@ function love.draw()
     local mouseX, mouseY = Lm.getPosition()
     local currentX, currentY = Cam:getPosition()
 
-    if GameState == 1 then
+    -- Camera for detailed view
+    Cam:draw(function(l, t, w, h)
 
-        -- Camera for detailed view
-        Cam:draw(function(l, t, w, h)
+        if GameState == 1 then
 
             -- make dynamic background
             Lg.draw(bg_image, QuadBQ, 0, 0)
 
             engine:draw()
+        end
 
-            UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
+        if GameState == 2 then WorldMap:draw() end
 
-        end)
+        UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
 
-    end
-
-    if GameState == 2 then print('lets put a backgorund here') end
-
-    if GameState == 2 then WorldMap:draw() end
+    end)
 
     suit.draw()
 

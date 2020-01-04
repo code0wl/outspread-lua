@@ -19,7 +19,7 @@ lovetoys.initialize({globals = true})
 -- 3 main menu
 -- 4 options menu
 -- 5 options settings
-GameState = 1
+GameState = 2
 
 -- collision
 local bump = require("libs.bump")
