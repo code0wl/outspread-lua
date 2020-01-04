@@ -14,8 +14,8 @@ function WorldMap:draw()
                                        (block_depth * (grid_size / 2))
 
             -- make into objects and loop
-            Lg.draw(Grass, Lg.getWidth() / grid_size + deltaX,
-                    Lg.getHeight() / grid_size + deltaY)
+            Lg.draw(Grass, Lg.getWidth() / grid_size + deltaX - block_width,
+                    Lg.getHeight() / grid_size + deltaY + block_height)
 
             suit.layout:reset(Lg.getWidth() / 2 + deltaX,
                               Lg.getHeight() / 2 + deltaY)
