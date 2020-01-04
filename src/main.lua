@@ -27,7 +27,7 @@ function love.update(dt)
     if GameState == 1 then
         Cam:setWorld(0, 0, GlobalWidth, GlobalHeight)
         engine:update(dt)
-        Player:update()
+        Player:update(dt)
     end
 
     if GameState == 2 then Cam:setWorld(0, 0, 500, 500) end
@@ -44,12 +44,11 @@ function love.draw()
             -- make dynamic background
             Lg.draw(bg_image, QuadBQ, 0, 0)
             engine:draw()
+            UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
         end)
     end
 
     if GameState == 2 then Cam:draw(function(l, t, w, h) WorldMap:draw() end) end
-
-    UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
 
     suit.draw()
 
