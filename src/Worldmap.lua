@@ -20,6 +20,8 @@ function WorldMap:draw()
                 graphic = Dirt
             elseif level == 13 then
                 graphic = Rock
+            elseif level == 20 then
+                graphic = Sand
             else
                 graphic = Grass
             end
