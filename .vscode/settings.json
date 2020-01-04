@@ -19,7 +19,8 @@
         "UIControl",
         "UI_DRAW",
         "suit",
-        "playerColony"
+        "playerColony",
+        "gamera"
     ],
     "files.exclude": {
         "**/.git": true,

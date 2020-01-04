@@ -22,12 +22,14 @@ function love.load()
 end
 
 function love.update(dt)
+
     if GameState == 1 then
+        Cam:setWorld(0, 0, GlobalWidth, GlobalHeight)
         engine:update(dt)
         Player:update()
     end
 
-    if GameState == 2 then print('some content to check performance') end
+    if GameState == 2 then Cam:setWorld(0, 0, 500, 500) end
 
     Control.update(dt)
 end
@@ -36,22 +38,21 @@ function love.draw()
     local mouseX, mouseY = Lm.getPosition()
     local currentX, currentY = Cam:getPosition()
 
-    -- Camera for detailed view
-    Cam:draw(function(l, t, w, h)
-
-        if GameState == 1 then
-
+    if GameState == 1 then
+        Cam:draw(function(l, t, w, h)
             -- make dynamic background
             Lg.draw(bg_image, QuadBQ, 0, 0)
-
             engine:draw()
-        end
+            UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
+        end)
+    end
 
-        if GameState == 2 then WorldMap:draw() end
-
-        UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
-
-    end)
+    if GameState == 2 then
+        Cam:draw(function(l, t, w, h)
+            WorldMap:draw()
+            UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
+        end)
+    end
 
     suit.draw()
 
