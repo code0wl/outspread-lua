@@ -7,4 +7,5 @@ Grass = Lg.newImage("images/tiles/dirt_grass_small.png")
 Dirt = Lg.newImage("images/tiles/dirt_small.png")
 Rock = Lg.newImage("images/tiles/rocks_small.png")
 Sand = Lg.newImage("images/tiles/sand_small.png")
+SomeGrass = Lg.newImage("images/tiles/dirt_some_grass_small.png")
 
