@@ -8,6 +8,7 @@ local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
 
+-- needs to be variable
 local bg_image = Lg.newImage("/images/background/background.png")
 
 bg_image:setWrap("repeat", "repeat")
@@ -43,16 +44,12 @@ function love.draw()
             -- make dynamic background
             Lg.draw(bg_image, QuadBQ, 0, 0)
             engine:draw()
-            UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
         end)
     end
 
-    if GameState == 2 then
-        Cam:draw(function(l, t, w, h)
-            WorldMap:draw()
-            UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
-        end)
-    end
+    if GameState == 2 then Cam:draw(function(l, t, w, h) WorldMap:draw() end) end
+
+    UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
 
     suit.draw()
 
