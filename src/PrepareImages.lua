@@ -4,3 +4,5 @@ WalkingTarantula = Lg.newImage(
                        "images/spiders/spider1/spritesheets/sheet_spider_walk-small.png")
 Grass = Lg.newImage("images/tiles/dirt_grass_small.png")
 
+Dirt = Lg.newImage("images/tiles/dirt_small.png")
+

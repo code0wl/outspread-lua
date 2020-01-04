@@ -6,6 +6,7 @@ function WorldMap:draw()
     local block_depth = block_height / 2.25
     local level = 0
     local grid_size = 5
+    local graphic = nil
 
     for x = 1, grid_size do
         for y = 1, grid_size do
@@ -15,7 +16,13 @@ function WorldMap:draw()
                                        (block_depth * (grid_size / 2))
 
             -- make into objects and loop
-            Lg.draw(Grass,
+            if level == 2 or level == 10 then
+                graphic = Dirt
+            else
+                graphic = Grass
+            end
+
+            Lg.draw(graphic,
                     Lg.getWidth() / grid_size + deltaX - block_width + 60,
                     Lg.getHeight() / grid_size + deltaY + block_height + 15)
 
