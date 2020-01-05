@@ -18,17 +18,12 @@ function WorldMap:draw()
             -- make into objects and loop
             if level > 10 and level < 15 then
                 graphic = SomeGrass
-                BackgroundImage = Lg.newImage(
-                                      "/images/background/grass-ground.jpg")
-            elseif level > 15 and level > 20 then
+            elseif level > 15 and level < 20 then
                 graphic = Sand
-                BackgroundImage = Lg.newImage("/images/background/ground.jpg")
             elseif level == 25 then
                 graphic = Rock
-                BackgroundImage = Lg.newImage("/images/background/rocks.jpg")
             else
                 graphic = Grass
-                BackgroundImage = Lg.newImage("/images/background/grass.jpg")
             end
 
             Lg.draw(graphic,
@@ -41,7 +36,19 @@ function WorldMap:draw()
             Lg.setColor(0, 0, 0, .4)
             suit.layout:row(40, 20)
             if suit.Button(level, suit.layout:row()).hit then
-                print(level)
+                -- make into objects and loop
+                if level > 10 and level < 15 then
+                    BackgroundImage = Lg.newImage("/images/background/dirt.png")
+                elseif level > 15 and level < 20 then
+                    BackgroundImage = Lg.newImage(
+                                          "/images/background/beach_sand.png")
+                elseif level == 25 then
+                    BackgroundImage =
+                        Lg.newImage("/images/background/rocks.jpg")
+                else
+                    BackgroundImage =
+                        Lg.newImage("/images/background/grass.jpg")
+                end
                 GameState = 1
             end
             Lg.setColor(255, 255, 255, 1)
