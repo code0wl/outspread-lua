@@ -9,3 +9,4 @@ Rock = Lg.newImage("images/tiles/rocks_small.png")
 Sand = Lg.newImage("images/tiles/sand_small.png")
 SomeGrass = Lg.newImage("images/tiles/dirt_some_grass_small.png")
 
+BackgroundImage = Lg.newImage("/images/background/grass.jpg")

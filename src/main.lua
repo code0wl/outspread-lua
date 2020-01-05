@@ -9,13 +9,6 @@ local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
 
 -- needs to be variable
-local bg_image = Lg.newImage("/images/background/background.png")
-
-bg_image:setWrap("repeat", "repeat")
-
--- note how the Quad's width and height are larger than the image width and height.
-QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, bg_image:getWidth(),
-                    bg_image:getHeight())
 
 function love.load()
     asset.generateWorldAssets()
@@ -23,6 +16,11 @@ function love.load()
 end
 
 function love.update(dt)
+
+    BackgroundImage:setWrap("repeat", "repeat")
+
+    QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight,
+                        BackgroundImage:getWidth(), BackgroundImage:getHeight())
 
     if GameState == 1 then
         Cam:setWorld(0, 0, GlobalWidth, GlobalHeight)
@@ -45,7 +43,7 @@ function love.draw()
     if GameState == 1 then
         Cam:draw(function(l, t, w, h)
             -- make dynamic background
-            Lg.draw(bg_image, QuadBQ, 0, 0)
+            Lg.draw(BackgroundImage, QuadBQ, 0, 0)
             engine:draw()
             UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
         end)

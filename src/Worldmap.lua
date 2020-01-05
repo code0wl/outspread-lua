@@ -16,16 +16,18 @@ function WorldMap:draw()
                                        (block_depth * (grid_size / 2))
 
             -- make into objects and loop
-            if level > 0 and level < 10 then
-                graphic = Grass
-            elseif level > 10 and level < 20 then
+            if level > 10 and level < 20 then
                 graphic = SomeGrass
+                BackgroundImage = Lg.newImage(
+                                      "/images/background/grass-ground.jpg")
             elseif level <= 20 and level > 23 then
                 graphic = Sand
+                BackgroundImage = Lg.newImage("/images/background/ground.jpg")
             elseif level == 25 then
                 graphic = Rock
             else
                 graphic = Grass
+                BackgroundImage = Lg.newImage("/images/background/grass.jpg")
             end
 
             Lg.draw(graphic,
