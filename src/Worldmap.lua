@@ -25,6 +25,7 @@ function WorldMap:draw()
                 BackgroundImage = Lg.newImage("/images/background/ground.jpg")
             elseif level == 25 then
                 graphic = Rock
+                BackgroundImage = Lg.newImage("/images/background/rocks.jpg")
             else
                 graphic = Grass
                 BackgroundImage = Lg.newImage("/images/background/grass.jpg")
