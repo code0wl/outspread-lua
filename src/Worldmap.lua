@@ -47,7 +47,7 @@ function WorldMap:draw()
                         Lg.newImage("/images/background/rocks.jpg")
                 else
                     BackgroundImage =
-                        Lg.newImage("/images/background/grass.jpg")
+                        Lg.newImage("/images/background/grass.png")
                 end
                 GameState = 1
             end
