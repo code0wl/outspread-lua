@@ -3,27 +3,26 @@ local AntMoveSystem = class("AntMoveSystem", System)
 
 function AntMoveSystem:requires() return {"ant"} end
 
-local antFilter = function(item, other)
-    local itemAlive = item.isAlive
+local antFilter = function(ant, other)
+    local antAlive = ant.isAlive
     local otherAlive = other.isAlive
     local otherDead = not other.isAlive
 
-    --  Handle all actions if ant is alive
-    if itemAlive and otherAlive then
-        if item.type ~= other.type then
-            item:attack(other)
+    if antAlive and otherAlive then
+        if ant.type ~= other.type then
+            ant:attack(other)
             return 'bounce'
-        elseif item.scentlocation and not other.scentlocation then
-            other.scentlocation = item.scentlocation
+        elseif ant.scentlocation and not other.scentlocation then
+            other.scentlocation = ant.scentlocation
             return nil
         end
     end
 
     --  handle dead vars
-    if not item.hasFood and itemAlive and item.carryCapacity and otherDead then
-        item:carry(other)
-        item.scentlocation = other
-        item.hasFood = true
+    if not ant.hasFood and antAlive and ant.carryCapacity and otherDead then
+        ant:carry(other)
+        ant.scentlocation = other
+        ant.hasFood = true
         return nil
     end
 
@@ -61,6 +60,12 @@ function AntMoveSystem:update(dt)
                 entity.target = Components.Position(util.travelRandomly())
             end
 
+            if not entity.scentlocation and not entity.hasFood and
+                util.distanceBetween(position.x, position.y, entity.target.x,
+                                     entity.target.y) < 3 then
+                entity.target = Components.Position(util.travelRandomly())
+            end
+
             -- Scent is gone after there is no more food
             if entity.scentlocation and entity.scentlocation:get("food").amount <
                 1 and not entity.hasFood then
@@ -71,6 +76,8 @@ function AntMoveSystem:update(dt)
             if util.isOutOfBounds(position.x, position.y) then
                 entity.target = nestPosition
             end
+
+            -- if out of bounds 
 
             local futureX = position.x
             local futureY = position.y
@@ -84,4 +91,5 @@ function AntMoveSystem:update(dt)
 
     end
 end
+
 return AntMoveSystem

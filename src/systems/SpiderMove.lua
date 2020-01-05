@@ -34,6 +34,11 @@ function SpiderMoveSystem:update(dt)
                 entity.target = Components.Position(util.travelRandomly())
             end
 
+            if util.distanceBetween(position.x, position.y, entity.target.x,
+                                    entity.target.y) < 3 then
+                entity.target = Components.Position(util.travelRandomly())
+            end
+
             local futureX = position.x
             local futureY = position.y
 

@@ -7,7 +7,6 @@ function Spider:initialize(dimension)
     Actor.initialize(self)
 
     self.TimePassedSpider = 0
-    self.type = 3
     self:add(Components.Spider(true))
     self:add(Components.Animation(true))
     self.target = Components.Position(GlobalWidth / 2, GlobalHeight / 2)
