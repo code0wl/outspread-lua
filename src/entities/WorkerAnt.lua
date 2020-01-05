@@ -7,7 +7,7 @@ function WorkerAnt:initialize(antConfig)
 
     self.carryCapacity = 2
     self:add(Components.Dimension(16, 27))
-    self:add(Components.Scale(.4))
+    self:add(Components.Scale(.5))
     self:add(Components.Velocity(100))
     self:add(Components.Energy(10, 5))
     self:add(Components.Food(5))
