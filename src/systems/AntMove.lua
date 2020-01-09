@@ -11,6 +11,7 @@ local antFilter = function(ant, other)
     if antAlive and otherAlive then
         if ant.type ~= other.type then
             ant:attack(other)
+            ant.scentlocation = other
             return 'bounce'
         elseif ant.scentlocation and not other.scentlocation then
             other.scentlocation = ant.scentlocation

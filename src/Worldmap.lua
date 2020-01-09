@@ -1,19 +1,23 @@
 local WorldMap = class("WorldMap")
 
 function WorldMap:draw()
-    local block_width = Grass:getWidth()
-    local block_height = Grass:getHeight()
+    local block_width = 300
+    local block_height = 300
     local block_depth = block_height / 2.25
     local level = 0
     local grid_size = 5
     local graphic = nil
+    local mouseX, mouseY = Lm.getPosition()
 
     for x = 1, grid_size do
         for y = 1, grid_size do
             level = level + 1
-            local deltaX, deltaY = ((y - x) * (block_width / 2)), ((x + y) *
-                                       (block_depth / 2)) -
-                                       (block_depth * (grid_size / 2))
+            local deltaX, deltaY = ((y - x) * (util.getCenter(block_width))),
+                                   ((x + y) * (util.getCenter(block_depth))) -
+                                       (block_depth * util.getCenter(grid_size))
+
+            local dx, dy = util.getCenter(Lg.getWidth()) / grid_size - deltaX,
+                           util.getCenter(Lg.getHeight()) / grid_size + deltaY
 
             -- make into objects and loop
             if level > 10 and level < 15 then
@@ -26,34 +30,18 @@ function WorldMap:draw()
                 graphic = Grass
             end
 
-            Lg.draw(graphic,
-                    Lg.getWidth() / grid_size + deltaX - block_width + 60,
-                    Lg.getHeight() / grid_size + deltaY + block_height / 2)
-
-            suit.layout:reset(Lg.getWidth() / 2 + deltaX,
-                              Lg.getHeight() / 2 + deltaY - 100)
-
-            Lg.setColor(0, 0, 0, .4)
-            suit.layout:row(40, 20)
-            if suit.Button(level, suit.layout:row()).hit then
-                -- make into objects and loop
-                if level > 10 and level < 15 then
-                    BackgroundImage = Lg.newImage("/images/background/dirt.png")
-                elseif level > 15 and level < 20 then
-                    BackgroundImage = Lg.newImage(
-                                          "/images/background/beach_sand.png")
-                elseif level == 25 then
-                    BackgroundImage =
-                        Lg.newImage("/images/background/rocks.jpg")
-                else
-                    BackgroundImage =
-                        Lg.newImage("/images/background/grass.png")
-                end
-                GameState = 1
+            if mouseX >= dx and mouseX < dx + util.getCenter(block_width) and
+                mouseY >= dy and mouseY < dy + util.getCenter(block_width) then
+                print(mouseX, mouseY, dx, dy)
+                Lg.draw(graphic, dx, dy, 0, 1.15, 1.15)
+            else
+                Lg.draw(graphic, dx, dy)
             end
-            Lg.setColor(255, 255, 255, 1)
+
         end
+
     end
+
 end
 
 return WorldMap
