@@ -10,3 +10,9 @@ Sand = Lg.newImage("images/tiles/sand_small.png")
 SomeGrass = Lg.newImage("images/tiles/dirt_some_grass_small.png")
 
 BackgroundImage = Lg.newImage("/images/background/grass.jpg")
+
+BackgroundDirt = Lg.newImage("/images/background/dirt.png")
+
+BackgroundSand = Lg.newImage("/images/background/beach_sand.png")
+
+BackgroundRocks = Lg.newImage("/images/background/rocks.jpg")

@@ -38,6 +38,21 @@ function WorldMap:draw()
                 Lg.draw(graphic, dx, dy)
             end
 
+            function love.mousepressed(mx, my, button)
+                if button == 1 then
+                    if level > 10 and level < 15 then
+                        BackgroundImage = BackgroundDirt
+                    elseif level > 15 and level < 20 then
+                        BackgroundImage = BackgroundSand
+                    elseif level == 25 then
+                        BackgroundImage = BackgroundRocks
+                    else
+                        BackgroundImage = BackgroundGrass
+                    end
+                    GameState = 1
+                end
+            end
+
         end
 
     end
