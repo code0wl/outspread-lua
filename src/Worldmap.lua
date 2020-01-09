@@ -16,7 +16,7 @@ function WorldMap:draw()
                                    ((x + y) * (util.getCenter(block_depth))) -
                                        (block_depth * util.getCenter(grid_size))
 
-            local dx, dy = util.getCenter(Lg.getWidth()) / grid_size - deltaX,
+            local dx, dy = util.getCenter(Lg.getWidth()) / grid_size + deltaX,
                            util.getCenter(Lg.getHeight()) / grid_size + deltaY
 
             -- make into objects and loop
@@ -48,7 +48,7 @@ function WorldMap:draw()
                     end
                 end
 
-                Lg.draw(graphic, dx, dy, 0, 1.15, 1.15)
+                Lg.draw(graphic, dx, dy - 100)
             else
                 Lg.draw(graphic, dx, dy)
             end
