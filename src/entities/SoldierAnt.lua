@@ -5,7 +5,7 @@ local SoldierAnt = class('SoldierAnt', Ant)
 function SoldierAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
 
-    self.carryCapacity = nil
+    self.carryCapacity = 4
     self:add(Components.Dimension(16, 27))
     self:add(Components.Scale(.6))
     self:add(Components.Velocity(70))
