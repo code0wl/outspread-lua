@@ -42,7 +42,7 @@ function WorldMap:draw()
                         elseif level == 25 then
                             BackgroundImage = BackgroundRocks
                         else
-                            BackgroundImage = BackgroundGrass
+                            BackgroundImage = BackgroundImageGrass
                         end
                         GameState = 1
                     end

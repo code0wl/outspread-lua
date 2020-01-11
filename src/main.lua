@@ -17,11 +17,14 @@ end
 
 function love.update(dt)
 
-    BackgroundImage:setWrap("repeat", "repeat")
+    if BackgroundImage then 
+        BackgroundImage:setWrap("repeat", "repeat")
 
-    QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight,
-                        BackgroundImage:getWidth(), BackgroundImage:getHeight())
-
+            QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight,
+                                BackgroundImage:getWidth(), BackgroundImage:getHeight())
+        
+    end
+    
     if GameState == 1 then
         Cam:setWorld(0, 0, GlobalWidth, GlobalHeight)
         engine:update(dt)
