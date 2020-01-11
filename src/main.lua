@@ -28,7 +28,6 @@ function love.update(dt)
     if GameState == 1 then
         Cam:setWorld(0, 0, GlobalWidth, GlobalHeight)
         engine:update(dt)
-        Player:update(dt)
     end
 
     if GameState == 2 then

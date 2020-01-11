@@ -20,7 +20,7 @@ local antFilter = function(ant, other)
     end
 
     --  handle dead vars
-    if not ant.hasFood and antAlive and ant.carryCapacity and otherDead then
+    if not ant.hasFood and antAlive and otherDead then
         ant:carry(other)
         ant.scentlocation = other
         ant.hasFood = true
@@ -31,7 +31,8 @@ end
 
 function AntMoveSystem:update(dt)
     for _, entity in pairs(self.targets) do
-        if entity.isAlive then
+
+        if entity.isAlive and not entity.player then
             local position = entity:get('position')
             local velocity = entity:get('velocity')
             local nestPosition = entity.nest:get('position')

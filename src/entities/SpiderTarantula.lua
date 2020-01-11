@@ -7,7 +7,7 @@ function SpiderTarantula:initialize(spiderConfig)
     Spider.initialize(self, dimensions)
 
     self:add(Components.Dimension(dimensions.width, dimensions.height))
-    self:add(Components.Health(200))
+    self:add(Components.Health(4000))
     self:add(Components.Velocity(80))
     self:add(Components.Energy(10, 50))
     self:add(Components.Attack(100))
@@ -16,7 +16,7 @@ function SpiderTarantula:initialize(spiderConfig)
     self:add(Components.Stats(true))
     self:add(Components.Position(spiderConfig.x, spiderConfig.y))
 
-    world:add(self, spiderConfig.x, spiderConfig.y, 60, 60)
+    world:add(self, spiderConfig.x, spiderConfig.y, 100, 100)
 end
 
 return SpiderTarantula

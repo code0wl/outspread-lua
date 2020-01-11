@@ -10,10 +10,10 @@ function Nest:initialize(nestConfig)
     self:add(Components.Static(true))
     self:add(Components.Food(0))
 
-
     self.ants = {soldiers = 0, workers = nestConfig.population, scouts = 0}
 
     self.type = nestConfig.type
+
     self.graphic = Lg.newQuad(300, 70, 80, 80,
                               TerrainSprites.terrain:getDimensions())
 

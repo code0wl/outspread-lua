@@ -42,9 +42,9 @@ TerrainSprites = {terrain = Lg.newImage("images/terrain/terrain.png")}
 -- food map
 FoodSprites = {food = Lg.newImage("images/food/food.png")}
 
--- Player class
-Player = require("entities/Player")
+-- player instance
 PlayerColony = nil
+PlayerInstance = nil
 
 -- ECS engine 
 engine = Engine()
