@@ -1,9 +1,9 @@
-require("Global")
+require("global")
 require("Mouse")
 require("HUD")
 require("PrepareImages")
 
-local WorldMap = require("WorldMap")
+local WorldMap = require("Worldmap")
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
