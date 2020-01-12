@@ -1,13 +1,21 @@
 -- move System
 local AnimationSystem = class("AnimationSystem", System)
 
-function AnimationSystem:requires() return {"animation"} end
+function AnimationSystem:requires()
+    return {"animation"}
+end
 
 function AnimationSystem:update(dt)
     for _, entity in pairs(self.targets) do
-        if entity.isAlive then entity.animation:update(dt) end
+        local position = entity:get("position")
+        local dimension = entity:get("dimension")
+        if
+            util.distanceBetween(entity.target.x, entity.target.y, position.x, position.y) > dimension.width and
+                entity.isAlive
+         then
+            entity.animation:update(dt)
+        end
     end
 end
 
 return AnimationSystem
-

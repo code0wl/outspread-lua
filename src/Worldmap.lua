@@ -1,9 +1,9 @@
 local WorldMap = class("WorldMap")
 
 function WorldMap:draw()
-    local block_width = 300
-    local block_height = 300
-    local block_depth = block_height / 2.25
+    local blockWidth = 300 / 2
+    local blockHeight = 300 / 2
+    local block_depth = blockHeight / 2.25
     local level = 0
     local grid_size = 5
     local graphic = nil
@@ -13,7 +13,7 @@ function WorldMap:draw()
         for y = 1, grid_size do
             level = level + 1
             local deltaX, deltaY =
-                ((y - x) * (util.getCenter(block_width))),
+                ((y - x) * (util.getCenter(blockWidth))),
                 ((x + y) * (util.getCenter(block_depth))) - (block_depth * util.getCenter(grid_size))
 
             local dx, dy =
@@ -32,7 +32,10 @@ function WorldMap:draw()
             end
 
             local mouseCoorsX, mouseCoorsY = Cam:toWorld(mouseX, mouseY)
-            if mouseCoorsX >= dx and mouseCoorsX < dx + 120 and mouseCoorsY >= dy and mouseCoorsY < dy + 120 then
+            if
+                mouseCoorsX >= dx and mouseCoorsX < dx + blockWidth and mouseCoorsY >= dy and
+                    mouseCoorsY < dy + blockHeight
+             then
                 function love.mousepressed(mx, my, button)
                     if button == 1 then
                         if level > 10 and level < 15 then
@@ -49,9 +52,9 @@ function WorldMap:draw()
                     print(BackgroundImage)
                 end
 
-                Lg.draw(graphic, dx, dy - 10)
+                Lg.draw(graphic, dx, dy - 10, nil, .5)
             else
-                Lg.draw(graphic, dx, dy)
+                Lg.draw(graphic, dx, dy, nil, .5)
             end
         end
     end

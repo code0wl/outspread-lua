@@ -20,9 +20,9 @@ function OutSpreadEngine.addSystems()
     engine:addEntity(spider)
 
     -- Update systems
-    engine:addSystem(SpiderMoveSystem(), "update")
+    -- engine:addSystem(SpiderMoveSystem(), "update")
     engine:addSystem(AntMoveSystem(), "update")
-    engine:addSystem(AnimationSystem(), 'update')
+    engine:addSystem(AnimationSystem(), "update")
     engine:addSystem(HealthSystem(), "update")
     engine:addSystem(BuildSystem(), "update")
     engine:addSystem(PlayerMoveSystem(), "update")
@@ -32,7 +32,6 @@ function OutSpreadEngine.addSystems()
     engine:addSystem(AnimationDrawSystem(), "draw")
     engine:addSystem(StaticDrawSystem(), "draw")
     engine:addSystem(StatsSystem(), "draw")
-
 end
 
 return OutSpreadEngine

@@ -1,12 +1,9 @@
-local Actor = require('entities.Actor')
-local Ant = class('Ant', Actor)
+local Actor = require("entities.Actor")
+local Ant = class("Ant", Actor)
 
-local function createAnt(image) 
-    local grid = anim8.newGrid(26 , 16, image:getWidth() ,
-    image:getHeight())
-    return anim8.newAnimation(grid('1-3', 1, '1-3',
-        2),
-0.04)
+local function createAnt(image)
+    local grid = anim8.newGrid(26, 16, image:getWidth(), image:getHeight() + 3)
+    return anim8.newAnimation(grid("1-3", 1, "1-3", 2), 0.1)
 end
 
 function Ant:initialize(antConfig)
@@ -20,7 +17,7 @@ function Ant:initialize(antConfig)
     self.nest = antConfig.nest
 
     -- Delta for nest location
-    self.nestPosition = antConfig.nest:get('position')
+    self.nestPosition = antConfig.nest:get("position")
     self.target = self.nestPosition
     self:add(Components.Position(self.nestPosition.x, self.nestPosition.y))
 
@@ -32,11 +29,10 @@ function Ant:initialize(antConfig)
         self.image = RedWalk
         self.animation = createAnt(RedWalk)
     end
-
 end
 
 function Ant:carry(actor)
-    actor:get('food').amount = actor:get('food').amount - 1
+    actor:get("food").amount = actor:get("food").amount - 1
 end
 
 function Ant:collectFood(animal)
