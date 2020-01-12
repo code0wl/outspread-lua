@@ -13,8 +13,7 @@ function PlayerMoveSystem:update(dt)
         if entity.isAlive then
             function love.mousepressed(x, y, button)
                 if button == 1 then
-                    print("moving towards", x, y)
-                    entity.target = Components.Position(x, y)
+                    entity.target = Components.Position(Cam:toWorld(x, y))
                 end
             end
 
