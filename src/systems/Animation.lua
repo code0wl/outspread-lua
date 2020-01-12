@@ -10,7 +10,7 @@ function AnimationSystem:update(dt)
         local position = entity:get("position")
         local dimension = entity:get("dimension")
         if
-            util.distanceBetween(entity.target.x, entity.target.y, position.x, position.y) > dimension.width and
+            util.distanceBetween(entity.target.x, entity.target.y, position.x, position.y) > dimension.width / 2 and
                 entity.isAlive
          then
             entity.animation:update(dt)
