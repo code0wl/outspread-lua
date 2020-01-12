@@ -20,7 +20,7 @@ function OutSpreadEngine.addSystems()
     engine:addEntity(spider)
 
     -- Update systems
-    -- engine:addSystem(SpiderMoveSystem(), "update")
+    engine:addSystem(SpiderMoveSystem(), "update")
     engine:addSystem(AntMoveSystem(), "update")
     engine:addSystem(AnimationSystem(), "update")
     engine:addSystem(HealthSystem(), "update")
