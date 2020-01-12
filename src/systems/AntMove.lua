@@ -80,7 +80,6 @@ function AntMoveSystem:update(dt)
             end
 
             -- if out of bounds 
-
             local futureX = position.x
             local futureY = position.y
 

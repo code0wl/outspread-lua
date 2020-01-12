@@ -25,16 +25,6 @@ local function dragMouse(x, y, dx, dy)
         Cam:setPosition(currentX - dx, currentY - dy)
     end
 
-    if Lm.isDown(1) then
-        local l, t, w, h = Cam:getWindow()
-        print(l, t, w, h)
-        local phermone = {x = l + x, y = t + y}
-        table.insert(Player.phermones, phermone)
-    end
-end
-
-function love.mousepressed(x, y, button, istouch)
-    if button == 1 then Player.phermones = {} end
 end
 
 -- fix zoom bug when max zoom is active user can keep scrolling
