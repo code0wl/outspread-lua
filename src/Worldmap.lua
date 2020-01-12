@@ -31,26 +31,25 @@ function WorldMap:draw()
                 graphic = Grass
             end
 
-            if
-                mouseX >= dx and mouseX < dx + util.getCenter(block_width) and mouseY >= dy and
-                    mouseY < dy + util.getCenter(block_width)
-             then
+            local mouseCoorsX, mouseCoorsY = Cam:toWorld(mouseX, mouseY)
+            if mouseCoorsX >= dx and mouseCoorsX < dx + 120 and mouseCoorsY >= dy and mouseCoorsY < dy + 120 then
                 function love.mousepressed(mx, my, button)
                     if button == 1 then
                         if level > 10 and level < 15 then
-                            BackgroundImage = BackgroundSand
+                            BackgroundImage = BackgroundImageGrass
                         elseif level > 15 and level < 20 then
                             BackgroundImage = BackgroundSand
                         elseif level == 25 then
-                            BackgroundImage = BackgroundSand
+                            BackgroundImage = BackgroundRocks
                         else
-                            BackgroundImage = BackgroundSand
+                            BackgroundImage = BackgroundDirt
                         end
                         GameState = 1
                     end
+                    print(BackgroundImage)
                 end
 
-                Lg.draw(graphic, dx, dy - 100)
+                Lg.draw(graphic, dx, dy - 10)
             else
                 Lg.draw(graphic, dx, dy)
             end
