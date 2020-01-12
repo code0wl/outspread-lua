@@ -12,12 +12,13 @@ function WorldMap:draw()
     for x = 1, grid_size do
         for y = 1, grid_size do
             level = level + 1
-            local deltaX, deltaY = ((y - x) * (util.getCenter(block_width))),
-                                   ((x + y) * (util.getCenter(block_depth))) -
-                                       (block_depth * util.getCenter(grid_size))
+            local deltaX, deltaY =
+                ((y - x) * (util.getCenter(block_width))),
+                ((x + y) * (util.getCenter(block_depth))) - (block_depth * util.getCenter(grid_size))
 
-            local dx, dy = util.getCenter(Lg.getWidth()) / grid_size + deltaX,
-                           util.getCenter(Lg.getHeight()) / grid_size + deltaY
+            local dx, dy =
+                util.getCenter(Lg.getWidth()) / grid_size + deltaX,
+                util.getCenter(Lg.getHeight()) / grid_size + deltaY
 
             -- make into objects and loop
             if level > 10 and level < 15 then
@@ -30,19 +31,20 @@ function WorldMap:draw()
                 graphic = Grass
             end
 
-            if mouseX >= dx and mouseX < dx + util.getCenter(block_width) and
-                mouseY >= dy and mouseY < dy + util.getCenter(block_width) then
-
+            if
+                mouseX >= dx and mouseX < dx + util.getCenter(block_width) and mouseY >= dy and
+                    mouseY < dy + util.getCenter(block_width)
+             then
                 function love.mousepressed(mx, my, button)
                     if button == 1 then
                         if level > 10 and level < 15 then
-                            BackgroundImage = BackgroundDirt
+                            BackgroundImage = BackgroundSand
                         elseif level > 15 and level < 20 then
                             BackgroundImage = BackgroundSand
                         elseif level == 25 then
-                            BackgroundImage = BackgroundRocks
+                            BackgroundImage = BackgroundSand
                         else
-                            BackgroundImage = BackgroundImageGrass
+                            BackgroundImage = BackgroundSand
                         end
                         GameState = 1
                     end
@@ -52,12 +54,8 @@ function WorldMap:draw()
             else
                 Lg.draw(graphic, dx, dy)
             end
-
         end
-
     end
-
 end
 
 return WorldMap
-
