@@ -46,6 +46,22 @@ local function renderHUD()
     if suit.Button("World", suit.layout:row()).hit then
         GameState = 2
     end
+
+    suit.layout:reset(500, windowHeight - 80)
+
+    suit.layout:row(100, 30)
+
+    if suit.Button("Swarm", suit.layout:row()).hit then
+    -- some swarm controls
+    end
+
+    suit.layout:reset(620, windowHeight - 80)
+
+    suit.layout:row(100, 30)
+
+    if suit.Button("Disband", suit.layout:row()).hit then
+    -- some swarm controls
+    end
 end
 
 function Control.update(dt)
