@@ -44,6 +44,7 @@ FoodSprites = {food = Lg.newImage("images/food/food.png")}
 
 -- player instance
 PlayerColony = nil
+Phermones = nil
 
 -- ECS engine
 engine = Engine()

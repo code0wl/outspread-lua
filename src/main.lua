@@ -10,10 +10,6 @@ local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
 local player = Phermones:new()
 
-Swarm = false
-
--- needs to be variable
-
 function love.load()
     asset.generateWorldAssets()
     OutSpreadEngine.addSystems()
