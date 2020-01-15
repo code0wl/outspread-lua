@@ -1,6 +1,6 @@
-local Ant = require('entities.Ant')
+local Ant = require("entities.Ant")
 
-local WorkerAnt = class('WorkerAnt', Ant)
+local WorkerAnt = class("WorkerAnt", Ant)
 
 function WorkerAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
@@ -14,13 +14,12 @@ function WorkerAnt:initialize(antConfig)
     self:add(Components.Attack(2))
     self:add(Components.Health(10))
 
-    local nestPosition = antConfig.nest:get('position')
+    local nestPosition = antConfig.nest:get("position")
     world:add(self, nestPosition.x, nestPosition.y, 5, 5)
 
-    if antConfig.player then self:add(Components.Player(true)) end
-
-    if antConfig.type == 1 then self:add(Components.WorketAnt(true)) end
-
+    if antConfig.type == 1 then
+        self:add(Components.WorketAnt(true))
+    end
 end
 
 return WorkerAnt

@@ -3,10 +3,12 @@ require("Mouse")
 require("HUD")
 require("PrepareImages")
 
+local Phermones = require("entities.Phermones")
 local WorldMap = require("Worldmap")
 local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
+local player = Phermones:new()
 
 Swarm = false
 

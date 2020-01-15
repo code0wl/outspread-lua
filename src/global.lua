@@ -7,7 +7,7 @@ Lk = love.keyboard
 -- helper libs
 suit = require("libs/_suit")
 sti = require("libs/sti")
-anim8 = require('libs/anim8')
+anim8 = require("libs/anim8")
 inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
 Tween = require("libs.tween")
@@ -29,7 +29,7 @@ world = bump.newWorld(16)
 -- create instance for Camera
 GlobalWidth = 4000
 GlobalHeight = 2500
-local gamera = require('libs.gamera')
+local gamera = require("libs.gamera")
 Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
 
@@ -44,9 +44,8 @@ FoodSprites = {food = Lg.newImage("images/food/food.png")}
 
 -- player instance
 PlayerColony = nil
-PlayerInstance = nil
 
--- ECS engine 
+-- ECS engine
 engine = Engine()
 
 -- costs balance

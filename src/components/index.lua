@@ -10,6 +10,7 @@ require("components.Health")
 require("components.Attack")
 require("components.Food")
 require("components.Static")
+require("components.Phermones")
 
 require("components.Nest")
 require("components.Colony")
