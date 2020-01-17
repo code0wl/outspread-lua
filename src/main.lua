@@ -18,7 +18,6 @@ end
 function love.update(dt)
     if BackgroundImage then
         BackgroundImage:setWrap("repeat", "repeat")
-
         QuadBQ = Lg.newQuad(0, 0, GlobalWidth, GlobalHeight, BackgroundImage:getWidth(), BackgroundImage:getHeight())
     end
 
@@ -51,11 +50,7 @@ function love.draw()
     end
 
     if GameState == 2 then
-        Cam:draw(
-            function(l, t, w, h)
-                WorldMap:draw()
-            end
-        )
+        WorldMap:draw()
     end
 
     suit.draw()

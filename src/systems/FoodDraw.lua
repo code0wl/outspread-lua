@@ -1,4 +1,3 @@
--- Create a draw System.
 local FoodDrawSystem = class("FoodDrawSystem", System)
 
 function FoodDrawSystem:requires()
@@ -14,7 +13,7 @@ function FoodDrawSystem:draw()
             if type == 2 then
                 Lg.setColor(0, 0, 0)
             else
-                Lg.setColor(1, 0, 0)
+                Lg.setColor(255, 0, 0)
             end
             Lg.circle("fill", position.x, position.y, 4, 4)
             Lg.setColor(255, 255, 255)
