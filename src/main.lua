@@ -27,8 +27,7 @@ function love.update(dt)
     end
 
     if GameState == 2 then
-        Cam:setScale(1)
-        Cam:setWorld(0, 0, 500, 500)
+        Cam:setWorld(0, 0, Lg.getWidth(), Lg.getHeight())
     end
 
     Control.update(dt)
@@ -50,7 +49,14 @@ function love.draw()
     end
 
     if GameState == 2 then
-        WorldMap:draw()
+        Cam:draw(
+            function(l, t, w, h)
+                if GameState == 2 then
+                    WorldMap:draw()
+                    UpdateCameraLocation(mouseX, mouseY, currentX, currentY)
+                end
+            end
+        )
     end
 
     suit.draw()
