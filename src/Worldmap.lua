@@ -20,41 +20,41 @@ function WorldMap:draw()
                 util.getCenter(Lg.getWidth()) / grid_size + deltaX,
                 util.getCenter(Lg.getHeight()) / grid_size + deltaY
 
-            -- make into objects and loop
             if level > 10 and level < 15 then
-                graphic = SomeGrass
+                graphic = {image = SomeGrass, id = 1}
             elseif level > 15 and level < 20 then
-                graphic = Sand
+                graphic = {image = Sand, id = 2}
             elseif level == 25 then
-                graphic = Rock
+                graphic = {image = Rock, id = 3}
             else
-                graphic = Grass
+                graphic = {image = Grass, id = 4}
             end
 
             local mouseCoorsX, mouseCoorsY = Cam:toWorld(mouseX, mouseY)
+
             if
                 mouseCoorsX >= dx and mouseCoorsX < dx + blockWidth and mouseCoorsY >= dy and
                     mouseCoorsY < dy + blockHeight
              then
                 function love.mousepressed(mx, my, button)
                     if button == 1 then
-                        if level > 10 and level < 15 then
+                        if graphic.id == 1 then
                             BackgroundImage = BackgroundImageGrass
-                        elseif level > 15 and level < 20 then
+                        elseif graphic.id == 2 then
                             BackgroundImage = BackgroundSand
-                        elseif level == 25 then
+                        elseif graphic.id == 3 then
                             BackgroundImage = BackgroundRocks
                         else
                             BackgroundImage = BackgroundDirt
                         end
+                        -- Change to game view
                         GameState = 1
                     end
-                    print(BackgroundImage)
                 end
 
-                Lg.draw(graphic, dx, dy - 10, nil, .5)
+                Lg.draw(graphic.image, dx, dy - 10, nil, .5)
             else
-                Lg.draw(graphic, dx, dy, nil, .5)
+                Lg.draw(graphic.image, dx, dy, nil, .5)
             end
         end
     end
