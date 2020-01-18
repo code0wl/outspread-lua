@@ -1,6 +1,7 @@
 require("global")
 require("Mouse")
 require("PrepareImages")
+require("HUD")
 
 local Phermones = require("entities.Phermones")
 local WorldMap = require("Worldmap")
@@ -55,6 +56,8 @@ function love.draw()
             end
         )
     end
+
+    Hud()
 
     suit.draw()
 end

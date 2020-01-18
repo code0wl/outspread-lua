@@ -3,7 +3,8 @@ local Levels = require "Levels"
 local Colony = require("entities.Colony")
 
 function WorldMap:create(level)
-    Colony:new(
+    PlayerColony =
+        Colony:new(
         {
             type = level.colony.type,
             x = level.location.x,
@@ -57,7 +58,7 @@ function WorldMap:draw()
             )
 
             function love.mousepressed(x, y, button)
-                if button == 1 and GameState == 2 then
+                if inBetween and button == 1 and GameState == 2 then
                     self:create(level)
                     GameState = 1
                     BackgroundImage = level.background
