@@ -47,7 +47,7 @@ function WorldMap:draw()
             mouseCoorsX < level.location.x + level.colony.population / 10 * 2 and
             mouseCoorsY < level.location.y + level.colony.population / 10 * 2
 
-        if inBetween then
+        if inBetween and gameState == 1 then
             Lg.rectangle(
                 "fill",
                 level.location.x,
