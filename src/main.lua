@@ -9,7 +9,6 @@ local Control = require("Control")
 local player = Phermones:new()
 
 function love.load()
-    WorldMap.create()
     OutSpreadEngine.addSystems()
 end
 

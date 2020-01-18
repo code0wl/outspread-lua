@@ -2,14 +2,26 @@ local WorldMap = class("WorldMap")
 local Levels = require "Levels"
 local Colony = require("entities.Colony")
 
-function WorldMap:create()
-    for i, level in ipairs(Levels) do
+function WorldMap:create(level)
+    Colony:new(
+        {
+            type = level.colony.type,
+            x = level.location.x,
+            y = level.location.y,
+            population = level.colony.population,
+            width = level.width,
+            height = level.height
+        }
+    )
+
+    if level.rivals then
+        local rival = level.rivals
         Colony:new(
             {
-                type = 1,
-                x = level.location.x,
-                y = level.location.y,
-                population = 3000,
+                type = rival.type,
+                x = rival.x,
+                y = rival.y,
+                population = rival.population,
                 width = level.width,
                 height = level.height
             }
@@ -40,6 +52,7 @@ function WorldMap:draw()
 
             function love.mousepressed(x, y, button)
                 if button == 1 then
+                    self:create(level)
                     GameState = 1
                     BackgroundImage = level.background
                 end
