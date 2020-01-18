@@ -14,11 +14,6 @@ local SpiderTarantula = require("entities.SpiderTarantula")
 local OutSpreadEngine = {}
 
 function OutSpreadEngine.addSystems()
-    local spider = SpiderTarantula:new({x = 800, y = 800})
-
-    -- Test for engine
-    engine:addEntity(spider)
-
     -- Update systems
     engine:addSystem(SpiderMoveSystem(), "update")
     engine:addSystem(AntMoveSystem(), "update")

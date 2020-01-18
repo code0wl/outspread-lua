@@ -27,6 +27,12 @@ function WorldMap:create(level)
             }
         )
     end
+
+    for i, predator in ipairs(level.predators) do
+        -- Test for engine
+        -- create predator enigne that adds entity
+        local p = predator.type:new({x = predator.x, y = predator.y})
+    end
 end
 
 function WorldMap:draw()

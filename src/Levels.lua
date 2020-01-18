@@ -1,8 +1,16 @@
+local SpiderTarantula = require("entities.SpiderTarantula")
+
 local Levels = {
     -- level 1
     {
         location = {x = 40, y = util.getCenter(Lg.getHeight()) - 30},
-        predators = {},
+        predators = {
+            {
+                type = SpiderTarantula,
+                x = 10,
+                y = 10
+            }
+        },
         rivals = {
             type = 2,
             x = 600,
