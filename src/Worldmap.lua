@@ -47,7 +47,7 @@ function WorldMap:draw()
             mouseCoorsX < level.location.x + level.colony.population / 10 * 2 and
             mouseCoorsY < level.location.y + level.colony.population / 10 * 2
 
-        if inBetween and gameState == 1 then
+        if inBetween then
             Lg.rectangle(
                 "fill",
                 level.location.x,
@@ -57,7 +57,7 @@ function WorldMap:draw()
             )
 
             function love.mousepressed(x, y, button)
-                if button == 1 then
+                if button == 1 and GameState == 2 then
                     self:create(level)
                     GameState = 1
                     BackgroundImage = level.background
