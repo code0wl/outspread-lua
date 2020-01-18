@@ -15,7 +15,7 @@ function FoodDrawSystem:draw()
             else
                 Lg.setColor(255, 0, 0)
             end
-            Lg.circle("fill", position.x, position.y, 4, 4)
+            Lg.rectangle("fill", position.x, position.y, 2, 2)
             Lg.setColor(255, 255, 255)
         end
     end

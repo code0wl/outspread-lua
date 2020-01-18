@@ -1,11 +1,11 @@
 -- Create a draw System.
-local FoodDrawSystem = class("FoodDrawSystem", System)
+local PhermonesDrawSystem = class("PhermonesDrawSystem", System)
 
-function FoodDrawSystem:requires()
+function PhermonesDrawSystem:requires()
     return {"phermones"}
 end
 
-function FoodDrawSystem:draw()
+function PhermonesDrawSystem:draw()
     for _, entity in pairs(self.targets) do
         local position = entity:get("phermones")
 
@@ -21,4 +21,4 @@ function FoodDrawSystem:draw()
     end
 end
 
-return FoodDrawSystem
+return PhermonesDrawSystem

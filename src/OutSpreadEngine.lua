@@ -23,10 +23,10 @@ function OutSpreadEngine.addSystems()
 
     -- Draw systems
     engine:addSystem(PhermonesDrawSystem(), "draw")
-    engine:addSystem(FoodDrawSystem(), "draw")
     engine:addSystem(AnimationDrawSystem(), "draw")
     engine:addSystem(StaticDrawSystem(), "draw")
     engine:addSystem(StatsSystem(), "draw")
+    engine:addSystem(FoodDrawSystem(), "draw")
 end
 
 return OutSpreadEngine
