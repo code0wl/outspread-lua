@@ -10,5 +10,5 @@ function Hud()
     Lg.print("Soldiers: " .. engine:getEntityCount("soldier"), 10, 10)
     Lg.print("Workers: " .. engine:getEntityCount("worker"), 110, 10)
     Lg.print("Scouts: " .. engine:getEntityCount("scout"), 220, 10)
-    Lg.print("Food: " .. PlayerColony.nest:get("food").amount, 330, 10)
+    -- Lg.print("Food: " .. PlayerColony.nest:get("food").amount, 330, 10)
 end

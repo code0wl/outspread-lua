@@ -1,17 +1,15 @@
 require("global")
 require("Mouse")
-require("HUD")
 require("PrepareImages")
 
 local Phermones = require("entities.Phermones")
 local WorldMap = require("Worldmap")
-local asset = require("Assets")
 local OutSpreadEngine = require("OutSpreadEngine")
 local Control = require("Control")
 local player = Phermones:new()
 
 function love.load()
-    asset.generateWorldAssets()
+    WorldMap.create()
     OutSpreadEngine.addSystems()
 end
 
@@ -60,6 +58,4 @@ function love.draw()
     end
 
     suit.draw()
-
-    Hud()
 end

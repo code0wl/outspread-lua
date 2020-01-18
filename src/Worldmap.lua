@@ -1,5 +1,21 @@
 local WorldMap = class("WorldMap")
 local Levels = require "Levels"
+local Colony = require("entities.Colony")
+
+function WorldMap:create()
+    for i, level in ipairs(Levels) do
+        Colony:new(
+            {
+                type = 1,
+                x = level.location.x,
+                y = level.location.y,
+                population = 3000,
+                width = level.width,
+                height = level.height
+            }
+        )
+    end
+end
 
 function WorldMap:draw()
     local mouseX, mouseY = Lm.getPosition()
@@ -10,16 +26,16 @@ function WorldMap:draw()
     for i, level in ipairs(Levels) do
         local inBetween =
             mouseCoorsX >= level.location.x and mouseCoorsY >= level.location.y and
-            mouseCoorsX < level.location.x + level.population / 10 * 2 and
-            mouseCoorsY < level.location.y + level.population / 10 * 2
+            mouseCoorsX < level.location.x + level.colony.population / 10 * 2 and
+            mouseCoorsY < level.location.y + level.colony.population / 10 * 2
 
         if inBetween then
             Lg.rectangle(
                 "fill",
                 level.location.x,
                 level.location.y,
-                level.population / 10 + 5,
-                level.population / 10 + 5
+                level.colony.population / 10 + 5,
+                level.colony.population / 10 + 5
             )
 
             function love.mousepressed(x, y, button)
@@ -29,7 +45,13 @@ function WorldMap:draw()
                 end
             end
         else
-            Lg.rectangle("fill", level.location.x, level.location.y, level.population / 10, level.population / 10)
+            Lg.rectangle(
+                "fill",
+                level.location.x,
+                level.location.y,
+                level.colony.population / 10,
+                level.colony.population / 10
+            )
         end
     end
 end
