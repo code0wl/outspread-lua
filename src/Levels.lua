@@ -15,7 +15,7 @@ local Levels = {
             type = 2,
             x = 600,
             y = 600,
-            population = 1000,
+            population = 500,
             width = 50,
             height = 50
         },
@@ -23,11 +23,11 @@ local Levels = {
             type = 1,
             x = 100,
             y = 200,
-            population = 1000,
+            population = 500,
             width = 50,
             height = 50
         },
-        background = BackgroundRocks
+        background = BackgroundDirt
     }
 
     -- level 2
