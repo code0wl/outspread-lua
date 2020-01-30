@@ -9,8 +9,6 @@ local HealthSystem = require("systems.Health")
 local BuildSystem = require("systems.Build")
 local PhermonesDrawSystem = require("systems.PhermonesDraw")
 
-local SpiderTarantula = require("entities.SpiderTarantula")
-
 local OutSpreadEngine = {}
 
 function OutSpreadEngine.addSystems()

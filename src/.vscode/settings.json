@@ -1,5 +1,15 @@
 {
     "Lua.diagnostics.globals": [
-        "Lg"
+        "Lg",
+        "engine",
+        "Engine",
+        "util",
+        "world",
+        "class",
+        "love",
+        "suit",
+        "sti",
+        "anim8",
+        "inspect"
     ]
 }
