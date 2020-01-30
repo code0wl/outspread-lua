@@ -1,6 +1,6 @@
 function love.conf(t)
-    t.window.width = 1440
-    t.window.height = 1080
+    t.window.width = 1536
+    t.window.height = 960
     t.window.highdpi = true
     t.modules.physics = false
     t.window.title = "Angry Ants simulation"

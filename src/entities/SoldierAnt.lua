@@ -1,6 +1,6 @@
-local Ant = require('entities.Ant')
+local Ant = require("entities.Ant")
 
-local SoldierAnt = class('SoldierAnt', Ant)
+local SoldierAnt = class("SoldierAnt", Ant)
 
 function SoldierAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
@@ -14,10 +14,12 @@ function SoldierAnt:initialize(antConfig)
     self:add(Components.Attack(10))
     self:add(Components.Health(50))
 
-    local nestPosition = antConfig.nest:get('position')
+    local nestPosition = antConfig.nest:get("position")
     world:add(self, nestPosition.x, nestPosition.y, 10, 10)
 
-    if antConfig.type == 1 then self:add(Components.SoldierAnt(true)) end
+    if antConfig.type == 1 then
+        self:add(Components.SoldierAnt(true))
+    end
 end
 
 return SoldierAnt
