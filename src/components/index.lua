@@ -24,6 +24,9 @@ require("components.ScoutAnt")
 
 require("components.Animation")
 require("components.Stats")
-require("components.Scale")
+require("components.Attached")
+require("components.BodyPart")
+require("components.ParticleEffect")
+require("components.FoodPellet")
 
 return Components

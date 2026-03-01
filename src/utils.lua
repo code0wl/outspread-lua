@@ -32,6 +32,15 @@ function util.isOutOfBounds(x, y)
     return x < 0 or y < 0 or x > GlobalWidth or y > GlobalHeight
 end
 
+-- Random point within a radius of a home location, clamped to map bounds
+function util.travelNear(cx, cy, radius)
+    local angle = math.random() * math.pi * 2
+    local dist  = math.random() * radius
+    local x     = math.max(0, math.min(GlobalWidth, cx + math.cos(angle) * dist))
+    local y     = math.max(0, math.min(GlobalHeight, cy + math.sin(angle) * dist))
+    return x, y
+end
+
 function util.setDirection(actorX, actorY, velocity, target, dt)
     local angle = util.getAngle(target.y, actorY, target.x, actorX)
     local cos = math.cos(angle)

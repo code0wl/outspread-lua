@@ -1,4 +1,16 @@
-local Control = {}
+local Control  = {}
+local GameData = require("GameData")
+local Levels   = require("Levels")
+
+-- Returns true when no rival (type == 2) ants are still alive
+local function rivalsDefeated()
+    for _, e in pairs(engine.entities) do
+        if e.isAlive and e.type == 2 then
+            return false
+        end
+    end
+    return true
+end
 
 local function renderHUD()
     if PlayerColony then
@@ -32,6 +44,13 @@ local function renderHUD()
         suit.layout:reset(380, windowHeight - 80)
         suit.layout:row(100, 30)
         if suit.Button("World", suit.layout:row()).hit then
+            -- Auto-conquer if rivals have been wiped out in this realm
+            if CurrentLevelIdx and rivalsDefeated() then
+                local ld = GameData.levels[CurrentLevelIdx]
+                if ld and ld.status ~= "conquered" then
+                    GameData.conquer(CurrentLevelIdx, Levels)
+                end
+            end
             GameState = 2
         end
     end

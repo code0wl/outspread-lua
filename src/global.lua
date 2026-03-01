@@ -12,7 +12,7 @@ inspect = require("libs/inspect/inspect")
 class = require("libs.middleclass")
 Tween = require("libs.tween")
 local lovetoys = require("libs._lovetoys")
-lovetoys.initialize({globals = true})
+lovetoys.initialize({ globals = true })
 
 -- Game state management
 -- 1 detailed game
@@ -34,22 +34,24 @@ Cam = gamera.new(0, 0, GlobalWidth, GlobalHeight)
 Cam:setWindow(0, 0, Lg.getWidth(), Lg.getHeight())
 
 -- own util
-util = require("utils")
+util             = require("utils")
 
 -- terain map
-TerrainSprites = {terrain = Lg.newImage("images/terrain/terrain.png")}
+TerrainSprites   = { terrain = Lg.newImage("images/terrain/terrain.png") }
 
 -- food map
-FoodSprites = {food = Lg.newImage("images/food/food.png")}
+FoodSprites      = { food = Lg.newImage("images/food/food.png") }
 
 -- player instance
-PlayerColony = nil
-Phermones = nil
+PlayerColony     = nil
+Phermones        = nil
+CurrentLevelIdx  = nil -- index of the currently active level (set on Enter Realm)
+CurrentLevelMode = nil -- "fresh" | "conquered" | "normal"
 
 -- ECS engine
-engine = Engine()
+engine           = Engine()
 
 -- costs balance
-WorkerPrice = 10
-SoldierPrice = 100
-ScoutPrice = 5
+WorkerPrice      = 10
+SoldierPrice     = 100
+ScoutPrice       = 5

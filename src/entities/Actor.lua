@@ -11,8 +11,13 @@ function Actor:attack(animal)
     self.scentLocation = animal:get('position')
 end
 
-function Actor:eat(animal) 
-    self:get("health").amount = animal:get('health').amount + self:get('food').amount
+function Actor:eat(animal)
+    -- Guard: animal must have a health component to eat
+    local animalHealth = animal:has("health") and animal:get("health")
+    if not animalHealth then return end
+    local myHealth = self:get("health")
+    if not myHealth then return end
+    myHealth.amount = animalHealth.amount + self:get("food").amount
 end
 
 return Actor

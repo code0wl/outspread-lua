@@ -3,14 +3,23 @@ require("Mouse")
 require("PrepareImages")
 require("HUD")
 
-local Phermones = require("entities.Phermones")
-local WorldMap = require("Worldmap")
+local Phermones       = require("entities.Phermones")
+local Levels          = require("Levels")
+local WorldMap        = require("Worldmap")
 local OutSpreadEngine = require("OutSpreadEngine")
-local Control = require("Control")
-local player = Phermones:new()
+local Control         = require("Control")
+local GameData        = require("GameData")
+local SaveSystem      = require("SaveSystem")
+local player          = Phermones:new()
 
 function love.load()
     OutSpreadEngine.addSystems()
+    GameData.init(Levels)
+end
+
+function love.keypressed(key)
+    if key == "f5" then SaveSystem.save(GameData) end
+    if key == "f9" then SaveSystem.load(GameData) end
 end
 
 function love.update(dt)
@@ -28,6 +37,7 @@ function love.update(dt)
         Cam:setWorld(0, 0, Lg.getWidth(), Lg.getHeight())
     end
 
+    GameData.update(dt, Levels)
     Control.update(dt)
 end
 
