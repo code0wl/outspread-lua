@@ -29,7 +29,10 @@ local function turnToward(current, desired, maxStep)
 end
 
 local antFilter = function(ant, other)
-    local antAlive = ant.isAlive
+    -- Rocks are plain tables (no ECS methods) — slide around them
+    if other.isRock then return "slide" end
+
+    local antAlive   = ant.isAlive
     local otherAlive = other.isAlive
     local otherDead = not other.isAlive
 
@@ -38,14 +41,18 @@ local antFilter = function(ant, other)
             ant:attack(other)
             ant.scentlocation = other
             return "bounce"
-        elseif ant.scentlocation and not other.scentlocation then
-            other.scentlocation = ant.scentlocation
-            return nil
+        elseif other.has and other:has("ant") then
+            -- Same colony: share scent knowledge, then slide around each other
+            if ant.scentlocation and not other.scentlocation then
+                other.scentlocation = ant.scentlocation
+            end
+            return "slide"
         end
     end
 
     --  handle dead vars
-    if not ant.hasFood and antAlive and otherDead then
+    if (ant.carryCapacity and ant.carryCapacity > 0)
+       and not ant.hasFood and antAlive and otherDead then
         -- Spider body parts require several ants nearby before any one can lift
         if other:has("bodyPart") then
             local required = other:get("bodyPart").requiredCarriers
@@ -87,8 +94,8 @@ function AntMoveSystem:update(dt)
             if not entity.heading then
                 entity.heading     = math.random() * math.pi * 2
                 entity.wanderPhase = math.random() * math.pi * 2
-                -- stable ±1 lateral sign for spreading alongside trail-mates
                 entity.spreadSign  = ((entity.id or math.random(0, 1)) % 2 == 0) and 1 or -1
+                entity.baseSpeed   = velocity.speed  -- cache original speed
             end
 
             entity.TimePassedAnt = entity.TimePassedAnt + dt
@@ -172,10 +179,23 @@ function AntMoveSystem:update(dt)
                 desiredAngle     = desiredAngle + alignNudge
             end
 
+            -- ── Conquered territory: wide lazy patrol ─────────────────────
+            local conquered = (CurrentLevelMode == "conquered")
+            if conquered and not entity.scentlocation and not entity.hasFood
+               and util.distanceBetween(position.x, position.y,
+                       entity.target.x, entity.target.y) < 80
+            then
+                entity.target = Components.Position(
+                    math.random(100, GlobalWidth  - 100),
+                    math.random(100, GlobalHeight - 100)
+                )
+            end
+
             -- ── Wander offset (slow sinusoidal drift) ─────────────────────
-            local wanderAmp        = (entity.scentlocation or entity.hasFood)
-                and WANDER_AMP_SCENT or WANDER_AMP
-            local wander           = math.sin(now * WANDER_FREQ + entity.wanderPhase) * wanderAmp
+            -- Wider, lazier swing in conquered territory (no threats to react to)
+            local wanderAmp = (entity.scentlocation or entity.hasFood) and WANDER_AMP_SCENT
+                              or (conquered and WANDER_AMP * 2.0 or WANDER_AMP)
+            local wander    = math.sin(now * WANDER_FREQ + entity.wanderPhase) * wanderAmp
 
             -- ── Curved turn — clamp rotation rate ─────────────────────────
             entity.heading         = turnToward(entity.heading, desiredAngle + wander, TURN_RATE * dt)

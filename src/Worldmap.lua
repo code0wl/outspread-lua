@@ -91,11 +91,54 @@ end
 --   "fresh"     - first entry: one pioneer scout, starter food, no rivals, no predators
 --   "conquered" - re-entering a won realm: player nest only, no rivals
 --   "normal"    - accessible realm: full setup with rivals and predators
-local FRESH_FOOD   = 100
-local FRESH_SCOUTS = 1    -- pioneer scout count
+local FRESH_FOOD     = 100
+local FRESH_SCOUTS   = 1    -- pioneer scout count
+local STARTER_FOOD_CLUSTERS = 14  -- food piles scattered on first entry
+local STARTER_FOOD_AMOUNT   = 4   -- food per pellet (FoodPellet unit)
+
+local FoodPellet = require("entities.FoodPellet")
+
+local function spawnStarterFood()
+    local margin = 250
+    for _ = 1, STARTER_FOOD_CLUSTERS do
+        local x = math.random(margin, GlobalWidth  - margin)
+        local y = math.random(margin, GlobalHeight - margin)
+        -- spread=0 places the pellet exactly at x,y; small cluster spread keeps groups tight
+        FoodPellet:new({ x = x, y = y, food = STARTER_FOOD_AMOUNT,
+                         spread = 30, radius = 4,
+                         colour = { 0.95, 0.78, 0.18 } })
+    end
+end
+
+-- Rock colliders active in the bump world for the current level
+local _activeRocks = {}
+
+local function clearRocks()
+    for _, r in ipairs(_activeRocks) do
+        if world:hasItem(r) then world:remove(r) end
+    end
+    _activeRocks = {}
+end
+
+local function registerRocks(levelIdx)
+    local ld = GameData.levels[levelIdx]
+    if not ld or not ld.decor then return end
+    for _, d in ipairs(ld.decor) do
+        if d.kind == "rock" then
+            d.isRock = true   -- flag read by movement filters
+            world:add(d, d.x, d.y, d.w, d.h)
+            table.insert(_activeRocks, d)
+        end
+    end
+end
 
 function WorldMap:create(level, mode)
     mode = mode or "normal"
+
+    -- Remove previous level's rock colliders and register this level's
+    clearRocks()
+    GameData.generateDecor(CurrentLevelIdx or 1)
+    registerRocks(CurrentLevelIdx or 1)
 
     -- Starter food: fresh colonies get a small seed budget
     local startFood = (mode == "fresh") and FRESH_FOOD or level.colony.population
@@ -110,6 +153,9 @@ function WorldMap:create(level, mode)
     })
     -- Override the nest's starting food to our chosen amount
     PlayerColony.nest:get("food").amount = startFood
+
+    -- Always scatter real pickable food piles so workers have something to find
+    spawnStarterFood()
 
     if mode == "fresh" then
         -- Pioneer mode: no auto-built army, only the one scout in the queue.
@@ -242,8 +288,27 @@ function WorldMap:draw()
                                or "normal"
                     CurrentLevelIdx  = i
                     CurrentLevelMode = mode
-                    GameData.markEntered(i)
-                    self:create(level, mode)
+                    -- Ensure terrain features exist for this level
+                    GameData.generateDecor(i)
+                    -- Re-register rock colliders for this level (always safe to redo)
+                    clearRocks()
+                    registerRocks(i)
+                    -- Move any pending rival burrow into the active list
+                    if GameData.levels[i].pendingBurrow then
+                        table.insert(ActiveBurrows, GameData.levels[i].pendingBurrow)
+                        GameData.levels[i].pendingBurrow = nil
+                        GameData.addNotification(
+                            "Enemy scouts dug a burrow in this realm. Ants coming in ~45s!",
+                            { 1, 0.4, 0.1 }
+                        )
+                    end
+                    -- Only run the full init when the colony hasn't been created yet;
+                    -- returning players resume their existing colony.
+                    if not GameData.levels[i].initialized then
+                        GameData.markEntered(i)
+                        GameData.markInitialized(i)
+                        self:create(level, mode)
+                    end
                     GameState = 1
                     BackgroundImage = level.background
                 end

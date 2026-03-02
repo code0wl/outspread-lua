@@ -21,10 +21,76 @@ local SCOUT_DEATH_RATE  = 0.006 -- per-scout per-second mortality probability
 local CONTEST_INTERVAL  = 90    -- conquered level gets contested after this many seconds
 local CONTEST_RESOLVE   = 30    -- auto-resolve contest if player ignores it
 
+-- ─── Colony snapshot (persists to worldmap so HUD always shows) ────
+GameData.colony         = { soldiers = 0, workers = 0, scouts = 0, food = 0 }
+
+function GameData.updateColonySnapshot()
+    if not PlayerColony then return end
+    GameData.colony.soldiers = engine:getEntityCount("soldier")
+    GameData.colony.workers  = engine:getEntityCount("worker")
+    GameData.colony.scouts   = engine:getEntityCount("scout")
+    local nest               = PlayerColony.nest
+    if nest and nest:has("food") then
+        GameData.colony.food = math.floor(nest:get("food").amount)
+    end
+end
+
+-- ─── Terrain decoration ──────────────────────────────────────────────
+-- Deterministic per-level; generated once on first visit/load using a
+-- seeded RNG so rocks/bushes are always in the same spots.
+local DECOR_ROCKS  = 40
+local DECOR_BUSHES = 22
+
+function GameData.generateDecor(levelIdx)
+    local ld = GameData.levels[levelIdx]
+    if not ld or ld.decor then return end
+    local rng    = love.math.newRandomGenerator(levelIdx * 31337 + 99991)
+    local decor  = {}
+    local MARGIN = 120
+
+    local function rp()
+        return rng:random(MARGIN, GlobalWidth - MARGIN),
+            rng:random(MARGIN, GlobalHeight - MARGIN)
+    end
+
+    -- Rocks
+    for _ = 1, DECOR_ROCKS do
+        local x, y = rp()
+        local w    = rng:random(18, 70)
+        local h    = rng:random(12, 42)
+        local g    = 0.28 + rng:random() * 0.34
+        table.insert(decor, {
+            kind  = "rock",
+            x     = x - w * 0.5,
+            y     = y - h * 0.5,
+            w     = w,
+            h     = h,
+            rot   = rng:random() * math.pi,
+            color = { g * 0.95, g * 0.88, g * 0.75 },
+        })
+    end
+
+    -- Sparse vegetation
+    for _ = 1, DECOR_BUSHES do
+        local x, y = rp()
+        local r    = rng:random(8, 26)
+        local gv   = 0.15 + rng:random() * 0.22
+        table.insert(decor, {
+            kind  = "bush",
+            x     = x,
+            y     = y,
+            r     = r,
+            color = { 0.06 + rng:random() * 0.04, gv, 0.03 },
+        })
+    end
+
+    ld.decor = decor
+end
+
 -- ─── Notifications ──────────────────────────────────────────────────
-GameData.notifications  = {}
-local MAX_NOTIFS        = 6
-local NOTIF_LIFE        = 6 -- seconds each notification is visible
+GameData.notifications = {}
+local MAX_NOTIFS       = 6
+local NOTIF_LIFE       = 6  -- seconds each notification is visible
 
 function GameData.addNotification(text, color)
     -- Drop oldest if queue is full
@@ -45,14 +111,17 @@ function GameData.init(levels)
         if not GameData.levels[i] then
             GameData.levels[i] = {
                 status        = level.initialStatus or (i == 1 and "accessible" or "undiscovered"),
-                scoutTimer    = 0, -- countdown while expedition is travelling
-                scoutCount    = 0, -- number of scouts currently en route
-                scoutBaseTime = 0, -- original travel time when expedition started (for progress bar)
-                contestTimer  = 0, -- countdown to next contest event
-                -- Level 1 (home warren) is treated as already settled
-                entered       = (i == 1),
+                scoutTimer    = 0,
+                scoutCount    = 0,
+                scoutBaseTime = 0,
+                contestTimer  = 0,
+                entered       = (i == 1), -- true = "Enter Realm" label (home pre-set)
+                initialized   = false,    -- true only after create() has actually run
+                pendingBurrow = nil,
             }
         end
+        -- Generate terrain decorations (safe to call multiple times)
+        GameData.generateDecor(i)
     end
     -- Reveal neighbours of already-accessible/conquered levels
     GameData._refreshScouted(levels)
@@ -139,8 +208,15 @@ function GameData.update(dt, levels)
                 -- Only contest levels that have a rivals entry
                 if levels[idx] and levels[idx].rivals then
                     ld.status = "contested"
+                    -- Queue a rival burrow for when player next enters this level
+                    ld.pendingBurrow = {
+                        x      = math.random(400, GlobalWidth - 400),
+                        y      = math.random(300, GlobalHeight - 300),
+                        delay  = 45, -- seconds before ants pour out
+                        rivals = levels[idx].rivals,
+                    }
                     GameData.addNotification(
-                        "⚠  Rival scouts at Realm " .. idx .. "! Respond!",
+                        "⚠  Rival scouts at Realm " .. idx .. "! A burrow is being dug!",
                         { 1, 0.3, 0.2 }
                     )
                 end
@@ -227,6 +303,12 @@ end
 function GameData.markEntered(levelIdx)
     local ld = GameData.levels[levelIdx]
     if ld then ld.entered = true end
+end
+
+-- Mark that the colony has been initialised in this level (create() was run)
+function GameData.markInitialized(levelIdx)
+    local ld = GameData.levels[levelIdx]
+    if ld then ld.initialized = true end
 end
 
 return GameData

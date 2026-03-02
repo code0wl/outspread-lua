@@ -5,7 +5,7 @@ local SoldierAnt = class("SoldierAnt", Ant)
 function SoldierAnt:initialize(antConfig)
     Ant.initialize(self, antConfig)
 
-    self.carryCapacity = 4
+    self.carryCapacity = 0   -- soldiers fight only, no food carrying
     self:add(Components.Dimension(16, 27))
     self:add(Components.Scale(.6))
     self:add(Components.Velocity(70))

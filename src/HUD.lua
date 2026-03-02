@@ -1,18 +1,24 @@
+local _GameData = require("GameData")
+
 function Hud()
     -- hud draw
     Lg.setColor(0, 0, 0, .4)
-    Lg.rectangle("fill", 0, 0, Lg.getWidth() * .75, 35)
-    Lg.setColor(255, 255, 255, 1)
+    Lg.rectangle("fill", 0, 0, Lg.getWidth() * .80, 35)
+    Lg.setColor(1, 1, 1, 1)
 
-    Lg.print("Current FPS: " .. tostring(love.timer.getFPS()), Lg.getWidth() - 100, 10)
+    Lg.print("FPS: " .. tostring(love.timer.getFPS()), Lg.getWidth() - 80, 10)
 
-    -- player resources
-    Lg.print("Soldiers: " .. engine:getEntityCount("soldier"), 10, 10)
-    Lg.print("Workers: " .. engine:getEntityCount("worker"), 110, 10)
-    Lg.print("Scouts: " .. engine:getEntityCount("scout"), 220, 10)
-    if PlayerColony then
-        Lg.print("Food: " .. PlayerColony.nest:get("food").amount, 330, 10)
-    end
+    -- Colony stats always visible (cached snapshot updated during battle)
+    local col = _GameData.colony
+    Lg.setColor(0.85, 0.50, 0.20, 1)
+    Lg.print("Soldiers: " .. col.soldiers, 10, 10)
+    Lg.setColor(0.30, 0.90, 0.30, 1)
+    Lg.print("Workers: " .. col.workers, 130, 10)
+    Lg.setColor(0.40, 0.80, 1.00, 1)
+    Lg.print("Scouts: " .. col.scouts, 245, 10)
+    Lg.setColor(1.00, 0.85, 0.20, 1)
+    Lg.print("Food: " .. col.food, 345, 10)
+    Lg.setColor(1, 1, 1, 1)
 
     -- Pioneer mode reminder
     if CurrentLevelMode == "fresh" and GameState == 1 then
@@ -29,13 +35,12 @@ function Hud()
     end
 
     -- Notification overlay (screen-space, bottom-left stack)
-    local GameData = require("GameData")
-    local notifs   = GameData.notifications
-    local sw, sh   = Lg.getWidth(), Lg.getHeight()
-    local nw       = 380
-    local nh       = 26
-    local pad      = 4
-    local baseY    = sh - 60
+    local notifs = _GameData.notifications
+    local sw, sh = Lg.getWidth(), Lg.getHeight()
+    local nw     = 380
+    local nh     = 26
+    local pad    = 4
+    local baseY  = sh - 60
     for idx = #notifs, 1, -1 do
         local n     = notifs[idx]
         local age   = 1 - math.min(n.timer / 6, 1)

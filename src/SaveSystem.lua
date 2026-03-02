@@ -39,6 +39,8 @@ function SaveSystem.save(GameData)
             scoutBaseTime = ld.scoutBaseTime,
             contestTimer  = ld.contestTimer,
             entered       = ld.entered,
+            initialized   = ld.initialized,
+            pendingBurrow = ld.pendingBurrow,
         }
     end
 
@@ -90,6 +92,8 @@ function SaveSystem.load(GameData)
             GameData.levels[i].scoutBaseTime = ld.scoutBaseTime or 0
             GameData.levels[i].contestTimer  = ld.contestTimer or 0
             GameData.levels[i].entered       = ld.entered or false
+            GameData.levels[i].initialized   = ld.initialized or false
+            GameData.levels[i].pendingBurrow = ld.pendingBurrow or nil
         end
     end
 

@@ -17,7 +17,7 @@ function util.distanceBetween(x1, y1, x2, y2)
 end
 
 function util.travelRandomly()
-    return math.random(GlobalWidth, 0), math.random(GlobalHeight, 0)
+    return math.random(0, GlobalWidth), math.random(0, GlobalHeight)
 end
 
 function util.travelRandomlyOffScreen()

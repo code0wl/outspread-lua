@@ -48,6 +48,8 @@ Phermones        = nil
 CurrentLevelIdx  = nil -- index of the currently active level (set on Enter Realm)
 CurrentLevelMode = nil -- "fresh" | "conquered" | "normal"
 
+-- Rival burrows active in the current session
+ActiveBurrows    = {}
 -- ECS engine
 engine           = Engine()
 

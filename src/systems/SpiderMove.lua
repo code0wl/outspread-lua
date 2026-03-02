@@ -13,7 +13,10 @@ local function fleeTarget()
 end
 
 local spiderFiler = function(item, other)
-    local itemAlive = item.isAlive
+    -- Rocks are plain tables (no ECS methods) — slide around them
+    if other.isRock then return "slide" end
+
+    local itemAlive  = item.isAlive
     local otherAlive = other.isAlive
 
     if itemAlive and otherAlive then
